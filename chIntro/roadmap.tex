@@ -1,0 +1,134 @@
+%roadmap.tex
+\section{Thesis Outline}
+
+
+The main contributions of this Thesis are presented in Chapters
+\ref{chSMS_ID}, \ref{chUV_AID}, and \ref{chUV_AMBC}.
+%
+A stability analysis for each novel result is included.
+
+
+\noindent{\bf Chapter \ref{chModels} - Modeling Second-Order
+  Mechanical Systems:} This Chapter defines the notation, functions,
+state representations, and second-order plant models used in this
+Thesis.
+
+
+\noindent{\bf Chapter \ref{chSMS_ID} - State Estimation
+  and Parameter Identification for Simple Mechanical Systems (\acs{SMS}):}
+The standard models for \ac{UV} dynamic operation evolve on the set of
+rigid-body transformations, SE(3).  Thus, the first third of this
+Thesis is focused on utilizing the group structure of SO(3) and SE(3)
+in the development of one state observer and two \ac{AID} algorithms
+for \ac{SMS}.
+%
+These results are the theoretical antecedents of the \ac{UV} results
+reported in Chapters \ref{chUV_AID} and \ref{chUV_AMBC}.
+%
+The plant of the angular velocity observer is a 3-\ac{DOF}
+second-order rigid-body rotating under the influence of an externally
+applied torque.
+%
+Numerical simulations of the novel angular velocity observer and two
+previously reported observers are included.
+%
+The simulation results show similar performance of all three observers
+for most angular position trajectories and inertia tensors.
+%
+A novel \ac{AID} algorithm is reported for a 3-\ac{DOF}
+second-order rigid body rotating under the influence of an externally
+applied torque, along with a simulation study.
+%
+An \ac{AID} algorithm for \acp{OKC} is also reported.
+
+
+\noindent{\bf Chapter \ref{chUV_AID} - Adaptive Identification (\acs{AID}) for
+  Underwater Vehicles (\acs{UV}):}
+The \ac{UV} \ac{AID} algorithms reported herein estimate the plant
+parameters for hydrodynamic mass, quadratic drag, gravitational force,
+and buoyancy for a second-order rigid-body plant under the
+influence of actuator forces and torques.
+%
+An experimental comparison of \ac{AID} and conventional
+\ac{LS} %least squares parameter identification 
+is reported.
+%
+The experimental results corroborate the analytic stability analysis,
+showing that the adaptively estimated plant parameters are stable and
+converge to values that provide plant-model input-output behavior
+closely approximating the input-output behavior of the actual
+experimental \ac{UV}.
+%
+The \acp{AIDPM} are shown to be similar to the \acp{LSPM} in their
+ability to match the actual vehicle's input-output characteristics.
+
+
+
+\noindent{\bf Chapter \ref{chUV_AMBC} - Adaptive Model-Based Control
+  For Underwater Vehicles :}
+This Chapter reports two tracking controllers: a \ac{UV} \ac{MBC}
+algorithm which provides asymptotically exact trajectory-tracking, and
+a novel \ac{UV} \ac{AMBC} algorithm which provides asymptotically
+exact trajectory-tracking while estimating the parameters for
+hydrodynamic mass, quadratic drag, gravitational force, and buoyancy
+parameters for a fully-coupled second-order rigid-body \ac{UV} plant
+model.
+
+A comparative experimental evaluation of \ac{PDC} and
+\ac{AMBC} for \acp{UV} is reported.
+%
+To the best of the author's knowledge, this is the first such
+evaluation of model-based adaptive tracking control for underwater
+vehicles during simultaneous dynamic motion in all 6-\ac{DOF}.
+%
+This experimental evaluation revealed the presence of unmodeled
+thruster dynamics arising during reversals of the vehicle's thrusters,
+and that the unmodeled thruster dynamics
+%these short duration, small magnitude unmodeled deviations from the
+%  commanded input 
+can destabilize parameter adaptation.
+%
+The three major contributions of this experimental evaluation are: an
+experimental analysis of how unmodeled thruster dynamics can
+destabilize parameter adaptation, a two-step adaptive model-based
+control algorithm which is robust to the thruster modeling errors
+present, and a comparative experimental evaluation of \ac{AMBC} and
+\ac{PDC} for fully-actuated underwater vehicles
+preforming simultaneous 6-\ac{DOF} trajectory-tracking.
+
+
+
+\noindent{\bf Chapter \ref{chConc} - Conclusion:}
+Thesis results summarized and directions for future work presented.
+
+
+
+\noindent{\bf Appendix \ref{appenJHUHTF} - Johns Hopkins University
+  Hydrodynamic Test Facility:}
+The details of the Johns Hopkins University Hydrodynamic Test Facility
+and our experimental testing methodologies are presented.
+%
+This facility includes the \ac{JHUROV}, a fully actuated \ac{UV} used
+for the experimental trials reported in Chapters \ref{chUV_AID} and
+\ref{chUV_AMBC}.
+
+
+
+\noindent{\bf Appendix \ref{appenJacSE3} - Special Euclidean Group
+  Velocity Jacobian:}
+Details of the SE(3) Velocity Jacobian are reported.  These results
+are required for the \ac{UV} \ac{MBC} stability proof (Theorem
+\ref{chUV_AMBC.theo.UV_MBC}).
+%
+
+
+%say something like: 
+
+%Using  currently being preformed
+%between PD control, non-adaptive model-based control and adaptive
+%model-based control for a number of trajectories including set-point
+%control, single degree-of-freedom motion, planar motion and
+%simultaneous six-degree-of-freedom motion.  To the best of my
+%knowledge, this will be the first set of experiments to identify
+%classes of maneuvers where \ac{UV} operators can expect to see
+%performance gains from adaptive model based control.

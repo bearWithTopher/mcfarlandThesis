@@ -1,0 +1,48 @@
+\subsection{Angular Velocity Observer Conclusions}  
+\label{chSMS_ID.sec.AVO_conc}
+
+
+This Section reports a comparative analysis of three angular velocity
+observers for second-order rotational plants of the form
+(\ref{chModels.eq.SO3plant}) for which the inertia tensor is known,
+and the signals of angular position and torque input are available.
+Two very different previously reports angular velocity observers were
+reviewed \cite{Salcudean1991,Maithripala2004}.  We report one novel
+angular velocity observer together with a proof of its local
+asymptotic stability.  The results of a comparative numerical
+simulation study of the three observers is reported.  The observers
+were seen to provide similar performance over a range of inertia
+tensors, angular position profiles, and feedback gains.  For the range
+of inertia tensors used, each of the three observers were analytically
+guaranteed to converge to the correct angular velocity estimate.
+%
+However, these analytic stability analyses do not provide information
+on the rate of convergence.
+%
+Each simulated observer's angular velocity estimate converged to the
+plant state as expected; however, the coordinate free and body-frame
+observers (though more complex to implement) were not seen to display
+the underdamped behavior which appeared to degrade the world-frame
+observer's state estimate convergence rate for some of the simulated
+comparisons in our ensemble of simulation studies.
+%
+For simple second-order linear systems, underdamped behavior results
+from a poorly tuned combination of the proportional and derivative
+gains; we would expect similar performance for each of the three
+observers when state errors are small enough that the linearization
+assumptions used to match the gains are valid.
+%Since the structure of this
+%nonlinear observer prevents tuning both the proportional and
+%derivative gains, 
+%
+The lack of underdamped behavior in the coordinate free and body-frame
+observers could indicate that the additional nonlinear terms improve
+performance of both when the linearization assumptions are no longer
+valid.
+%
+However, the difference in structure of these three nonlinear
+observers makes it difficult to analytically prove the existence of
+such benefits.
+%
+Exploring these differences, as well as any link between the extra
+coordinate free and body-frame terms, is a topic for further research.

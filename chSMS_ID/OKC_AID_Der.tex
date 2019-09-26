@@ -1,0 +1,349 @@
+\subsection{\acs{OKC} State Error Coordinates}
+
+The \ac{AID} algorithm presented herein uses the joint velocity
+estimate $v\in \mathbb{R}^{n}$ and the parameter vector estimate
+$\OKCparamEst\in\mathbb{R}^{r}$ as its state variables. Let
+$\mathfrak{J}\subset\rSp{n}$ be the \ac{OKC}'s joint space and note
+estimated plant terms $\hat{M}$, $\hat{C}$, and $\hat{\OKCg}$ can be
+factored as
+%
+\begin{equation}
+\hat{M}(a)b+\hat{C}(a,c)d+\hat{\OKCg}(a)=\OKCreg(b,a,c,d)\OKCparamEst
+\end{equation}
+%
+for all $a,b,c,d\in\rSp{n}$ where
+\funDefn{\OKCreg}{\rSp{n}\times\mathfrak{J}\times\rSp{n}\times\rSp{n}}{\rSp{n\times
+    r}} is often termed the {\it regressor}.
+%
+We employ the following joint velocity and inertia tensor
+error coordinates
+%
+\begin{align}
+\Delta v&=v(t)-\dot{\OKCpos}(t)           \label{chSMS_ID.eq.OKC_AID_deltaVel} \\
+\Delta \OKCparam&=\OKCparamEst(t) - \OKCparam.    \label{chSMS_ID.eq.OKC_AID_deltaPar} 
+\end{align}
+%
+%Talk about eigenvalue conventions and vector-matrix norms here if
+%required 
+%
+Our goal is to develop an update law for $v$ and
+$\OKCparamEst$ which, for initial values of $\OKCparamEst(t_0)$ in the
+neighborhood of $\OKCparam$, guarantees that $\lim_{t\to
+  \infty}\Delta v=\vec{0}$ and $\lim_{t\to \infty}\Delta
+\OKCparamDot=\vec{0}$. Considering torque as the system input and
+joint velocity as the system output, the two limits above imply the
+input-output behavior of the estimator asymptotically converges to the
+input-output behavior of the plant.
+
+
+\subsection{Adaptive Identifier Description}
+
+
+
+\begin{OKC_AID} \label{chSMS_ID.theo.OKC_AID}
+  Consider the following \ac{AID} algorithm for plants of the form
+  (\ref{chModels.eq.OKCplant}):
+%
+  \begin{align}
+    \dot{v}&=\hat{M}^{-1}(\OKCpos) \left(\OKCinput - \hat{C}(\OKCpos,\dot{\OKCpos}) v
+      -\hat{\OKCg}(\OKCpos)- K\Delta v\right)
+                                              \label{chSMS_ID.eq.OKC_AID_estimator}\\
+    \OKCparamEstDot&= \OKCreg(\dot{v},\OKCpos,\dot{\OKCpos},v)^T\Delta v,
+                                              \label{chSMS_ID.eq.OKC_AID_identifier}
+  \end{align}
+%
+  where $K\in\rSp{n\times n}$ is \ac{SPD}, with the following assumptions:
+%
+  \begin{itemize}
+  \item $\OKCinput$, $\OKCpos$ and $\dot{\OKCpos}$ are bounded by assumption
+  \item $v(t_0)=\dot{\OKCpos}(t_0)$
+  \item $\exists \epsilon \in \rSp{}_+$ such that
+% 
+    \begin{equation}
+      \label{chSMS_ID.eq.OKC_AID_massLowerBound}
+      \|\Delta
+      \OKCparam(t_0)\|_2\leq \frac{1}{\sqrt{a_M r}}\left(\lambda_m-\epsilon\right)
+    \end{equation}
+%
+    where $\lambda_m$ is the smallest eigenvalue for $M(\OKCpos)$ in
+    any configuration and 
+%
+\begin{equation}
+  a_M=\max_{\hat{\theta}\in\{e_1,e_2,...,e_r\}}\left(\max_{\OKCpos\in\rSp{r}}\left(\eig(\hat{M}(\OKCpos))\right)\right)
+\end{equation}
+%
+where the set $\{e_i\}$ are the standard unit length basis vectors of the space $\rSp{r}$
+%$a_M=$ is the largest eigenvalue of
+%    $\hat{M}(\OKCpos)$ for any configuration corresponding to
+%    $\OKCparamEst=e_i$ for all the standard unit length basis vectors
+%    $e_i$ 
+(see Section \ref{chSMS_ID.sec.OKC_AID_boundM} for a
+    complete development of $a_M$).
+  \end{itemize}
+%
+  \noindent Under these conditions the joint velocity error will
+  be asymptotically stable in the sense of Lyapunov, i.e., $\lim_{t\to
+    \infty}\Delta v =\vec{0}$, and the model using the estimated
+  parameters will be indistinguishable from the model using the true
+  parameters for the given torque input, i.e., $\lim_{t\to
+    \infty}\Delta \OKCparamDot=0$.
+\end{OKC_AID}
+
+\subsection{Error System}\label{chSMS_ID.sec.OKC_AID_error}
+
+Consider (\ref{chModels.eq.OKCplant}),
+(\ref{chSMS_ID.eq.OKC_AID_estimator}), (\ref{chModels.eq.OKCplantW}),
+and (\ref{chSMS_ID.eq.OKC_AID_deltaPar}) as well as the fact that
+%
+\begin{equation*}
+\left(\OKCreg(b_1,a,c,d_1)-\OKCreg(b_2,a,c,d_2)\right)\OKCparam=M(a)(b_1-b_2)+C(a,c)(d_1-d_2)
+\end{equation*}
+%
+in the following equalities
+%
+\begin{align}
+  0&=\OKCinput-\OKCinput  \nonumber \\
+  &=\OKCreg(\dot{v},\OKCpos,\dot{\OKCpos},v)\OKCparamEst
+  + K\Delta v - \OKCreg(\ddot{\OKCpos},\OKCpos,\dot{\OKCpos},\dot{\OKCpos})\OKCparam \nonumber \\
+  &=\OKCreg(\dot{v},\OKCpos,\dot{\OKCpos},v)\Delta\OKCparam + K\Delta v+\left(
+    \OKCreg(\dot{v},\OKCpos,\dot{\OKCpos},v)
+    - \OKCreg(\ddot{\OKCpos},\OKCpos,\dot{\OKCpos},\dot{\OKCpos})\right)\OKCparam     \nonumber \\
+  &=\OKCreg(\dot{v},\OKCpos,\dot{\OKCpos},v)\Delta\OKCparam + K\Delta v +
+  M(\OKCpos)\Delta \dot{v}+C(\OKCpos,\dot{\OKCpos})\Delta v. 
+  \label{chSMS_ID.eq.OKC_torqueTrick}
+\end{align} 
+%
+The final equality of (\ref{chSMS_ID.eq.OKC_torqueTrick}) can be
+rewritten as
+%
+\begin{equation}\label{chSMS_ID.eq.OKC_AID_deltaJointAcc}
+\Delta\dot{v}=M^{-1}(\OKCpos)\left(-C(\OKCpos,\dot{\OKCpos})\Delta v 
+   -K\Delta v-\OKCreg(\dot{v},\OKCpos,\dot{\OKCpos},v)\Delta \OKCparam\right).
+\end{equation}
+
+\subsection{Lyapunov Stability}\label{chSMS_ID.sec.OKC_AID_lyap}
+
+Consider the following Lyapunov function candidate:
+%
+\begin{equation}\label{chSMS_ID.eq.OKC_AID_lyap}
+V(t)=\frac{1}{2}\Delta v^{T} M(\OKCpos) \Delta v + 
+     \frac{1}{2}\Delta \OKCparam^{T} \Delta \OKCparam.
+\end{equation}
+%
+$V(t)$ is
+%
+\begin{itemize}
+\item positive definite
+\item radially unbounded
+\item equal to zero if and only if $\Delta v=\vec{0}$ and
+$\Delta \OKCparam=\vec{0}$.
+\end{itemize}
+%
+Using (\ref{chSMS_ID.eq.OKC_AID_deltaJointAcc}) the time derivative of
+(\ref{chSMS_ID.eq.OKC_AID_lyap}) is
+%
+\begin{align*}
+\dot{V}(t)
+  =&\Delta v^{T} M(\OKCpos) \Delta \dot{v} 
+    +\frac{1}{2}\Delta v^{T} \dot{M}(\OKCpos) \Delta v 
+    +\Delta \OKCparam^{T} \Delta \OKCparamDot \nonumber \\
+  =&-\Delta v^{T} K \Delta v
+    +\Delta v^{T}\left(\frac{1}{2}\dot{M}(\OKCpos)-C(\OKCpos,\dot{\OKCpos})\right)\Delta v
+                                          \nonumber \\
+   &-\Delta v^{T} \OKCreg(\Delta \dot{v},\OKCpos,\dot{\OKCpos},\Delta v)\OKCparam
+    +\Delta \OKCparam^{T} \Delta \OKCparamDot %\nonumber \\
+\end{align*}
+%
+Using the fact that $\dot{M}(\OKCpos)-2C(\OKCpos,\dot{\OKCpos})$ is skew
+symmetric and the update law (\ref{chSMS_ID.eq.OKC_AID_identifier}) results in
+%
+\begin{equation}\label{chSMS_ID.eq.OKC_AID_lyapDot}
+\dot{V}(t)=-\Delta v^{T} K \Delta v.
+\end{equation} 
+%
+\sloppy{
+$\dot{V}(t)$ is negative definite in $\Delta v$ and negative
+semidefinite in the error coordinates $\Delta v$ and $\Delta \OKCparam$.
+Lyapunov's theorem and (\ref{chSMS_ID.eq.OKC_AID_lyap}) -
+(\ref{chSMS_ID.eq.OKC_AID_lyapDot}) imply that $\Delta v$ and $\Delta
+\OKCparam$ are bounded and stable.  The structure of $\dot{V}(t)$ implies
+that $\Delta v \in \mathcal{L}_2$, or equivalently
+$\lim_{t\to\infty}\left( \int_0^t\Delta v^T \Delta
+  v\right)^{1/2}<\infty$.  To ensure all the signals in
+(\ref{chSMS_ID.eq.OKC_AID_estimator}) are bounded, we must ensure that
+both $\hat{M}^{-1}(\OKCpos)$ and $\hat{M}(\OKCpos)$ remain bounded.}
+%
+%Note that the matrix $M(\OKCpos)$ is positive definite symmetric for all $\OKCpos$
+%and that the eigenvalues of $\hat{M}(\OKCpos)$ vary continuously with changes
+%in $\OKCparamEst$.  Therefore there exists a set of parameters
+%$\OKCparamEst$ for which $\hat{M}(\OKCpos)$ is Symmetric Positive Definite
+%for all $\OKCpos$ and further because $\Delta \OKCpos(t_o)=\vec{0}$, $0\leq
+%V(t)\leq V(t_0) $ and $V(t_0)=\Delta \OKCparam(t_0)^T\Delta
+%\OKCparam(t_0)=\|\Delta \OKCparam(t_0)\|^2$ then if $\hat{M}(\OKCpos)$ is Positive
+%Definite Symmetric for all $\OKCpos$ and for all $\hat{\OKCparam(t_0)}$ such
+%that $\|\OKCparam-\hat\OKCparam(t_0)\|\leq \|\Delta \OKCparam (t_0)\|$. For
+%$\OKCparamEst(t_0)$ which start in this set the above condition
+%guarantees that $\hat{M}^{-1}(\OKCpos)$ and $\hat{M}(\OKCpos)$ are positive
+%definite and bounded for all time.  
+%
+Section \ref{chSMS_ID.sec.OKC_AID_boundM} proves both are implied by the conditions
+specified in Theorem \ref{chSMS_ID.theo.OKC_AID}.
+%
+Since $\OKCinput$, $\OKCpos$, and $\dot{\OKCpos}$ are bounded by assumption,
+bounded $\Delta v$, $\hat{M}(\OKCpos)$, and $\hat{M}^{-1}(\OKCpos)$ imply that
+$\dot{\OKCpos}$ and $\OKCparamEstDot$ are bounded.  The bounded
+joint velocities imply $\Delta \dot{v}$ is bounded.  Note that
+bounded $\Delta \dot{v}$ and $\Delta v \in \mathcal{L}_2$
+implies
+%
+\begin{equation}
+\lim_{t\to \infty}\Delta v=\vec{0}.
+\end{equation}
+%
+Moreover, since every signal in $\OKCparamEstDot$ is
+bounded and $\lim_{t\to \infty}\Delta v=\vec{0}$ this implies
+%
+\begin{equation}
+\lim_{t\to \infty}\OKCparamEstDot=\vec{0}.
+\end{equation}
+%
+Thus the estimator's joint velocity asymptotically converges
+to the joint velocity of the actual plant, and the estimated plant
+parameters, $\OKCparamEst$, asymptotically converge to a constant
+value.
+
+The local stability of this \ac{OKC} \ac{AID} algorithm is proven if
+condition (\ref{chSMS_ID.eq.OKC_AID_massLowerBound}) is sufficient to
+bound the mass matrix estimate eigenvalues away from zero.
+
+
+
+\subsection{Bound for Estimated Inertia Matrix}\label{chSMS_ID.sec.OKC_AID_boundM}
+
+The final requirement to prove Theorem \ref{chSMS_ID.theo.OKC_AID} is
+that the condition $\|\Delta \OKCparam(t_0)\|_2\leq\frac{1}{\sqrt{a_M
+    r}}\left(\lambda_m-\epsilon\right)$ implies 
+$\hat{M}(\OKCpos,t)$ and $\hat{M}^{-1}(\OKCpos,t)$ are bounded for all
+time and all configurations.  Before showing the eigenvalues of
+$\hat{M}(\OKCpos,t)$ are bounded both above and below we need to
+further clarify some facts about manipulator mass matrices and define
+a useful vector semi-norm.
+
+Since $M(\OKCpos)$ is \ac{SPD} we know its largest and
+smallest singular values are its largest and smallest
+eigenvalues. Further, we know that for any physical manipulator every
+eigenvalue of $M(\OKCpos)$ is both positive and bounded for every joint
+configuration, $\OKCpos$, in the manipulator's joint space, $\mathfrak{J}$.
+%
+In the sequel, we will use the following definitions: 
+let the
+constants $\lambda_m,\lambda_M\in\rSp{}_+$ be such that
+$\lambda_m=\min_{\OKCpos\in\mathfrak{J}} \left(\min_{\|x\|_2=1}x^T M(\OKCpos) x
+\right)$ and $\lambda_M=\max_{\OKCpos\in\mathfrak{J}}\|M(\OKCpos)\|_2$.  Since
+$M(\OKCpos)$ is assumed to be completely known up to the uncertain base
+parameters, $\OKCparami$, this knowledge allows the complete
+specification of a set of functions
+$A_i:\mathbb{R}^n\to\mathbb{R}^{n\times n}$ such that
+%
+\begin{equation}
+M(\OKCpos)=\sum_{i=1}^r \OKCparami A_i(\OKCpos).
+\end{equation} 
+%
+Further, each $A_i(\OKCpos)$ is symmetric and bounded,
+i.e. $\forall i\quad\exists a_i\geq 0$ such that $\|A_i(\OKCpos)\|_2\leq a_i$
+$\forall \OKCpos\in \mathfrak{J}$. Based on these non-negative bounding
+scalars we define the following vector semi-norm
+%
+\begin{equation}
+\|b\|_a=\sum_{i=1}^r a_i |b_i|
+\end{equation}
+%
+where $b=[b_1~\cdots ~ b_r]^T\in \mathbb{R}^r$.  Note that for
+any two vector norms there exists a constant, $p$, such that
+$\|b\|_a\leq p \|b\|_2$ \cite{horn&johnson}. To find a conservative value
+for $p$ in the case of $\|\bullet\|_a$ and $\|\bullet\|_2$ we use that
+$0\leq(|b_i-b_j|)^2$ implies $2|b_i||b_j|\leq |b_i|^2 + |b_j|^2$
+$\forall i,j$.  Let $a_M$ be such that $\forall i\quad a_M\geq a_i$ and
+consider
+%
+\begin{align}
+  \|b\|_a^2
+  &=\left(\sum_{i=1}^r a_i |b_i|\right)^2                \nonumber \\
+  &=\sum_{i=1}^r a_i^2 |b_i|^2 +
+   \sum_{i=1}^{r-1}\sum_{j=i+1}^{r}2a_ia_j|b_i||b_j|        \nonumber \\
+  &\leq \sum_{i=1}^r a_M^2 |b_i|^2 +
+   \sum_{i=1}^{r-1}\sum_{j=i+1}^{r}2a_M^2|b_i||b_j|         \nonumber \\
+  &\leq a_M\left(\sum_{i=1}^r |b_i|^2 +\sum_{i=1}^{r-1} 
+   \sum_{j=i+1}^{r}\left(|b_i|^2 + |b_j|^2\right)\right)  \nonumber \\ 
+  &\leq a_M\left(\sum_{i=1}^r r |b_i|^2\right)           \nonumber \\ 
+  &\leq a_Mr\|b\|_2^2.
+\end{align}   
+%
+Since the square root is a strictly increasing function
+$\sqrt{a_M r}$ is a conservative value for $p$ because the previous
+inequality implies
+%
+\begin{equation}
+\|b\|_a\leq \sqrt{a_M r} \|b\|_2.
+\end{equation}
+
+Now let us turn to the task of bounding $\hat{M}(\OKCpos,t)$.  Note that the facts
+$0 \leq V(t) \leq V(t_0)$, $\Delta v(t_0)=\vec{0}$, and $ \Delta v
+^T(t) M(\OKCpos) \Delta v (t)\geq 0$ for all $t$ imply that the following
+inequality holds $\forall t \geq t_0$:
+%
+\begin{equation}
+\|\Delta \OKCparam(t)\|_2\leq \|\Delta \OKCparam(t_o)\|_2.
+\end{equation}
+%
+\noindent By defining Rayleigh-Ritz Theorem the minimum possible eigenvalue
+of $\hat{M}(\OKCpos,t)$ at a certain time, $\hat{\lambda}_m(t)$, is given by
+$\hat{\lambda}_m(t)=\min_{\OKCpos\in\mathfrak{J}}\left(\min_{\|x\|=1}x^T
+  \hat{M}(\OKCpos,t)x\right)$.  Defining $\Delta M$ such that
+$\OKCreg(a,b,c,d)\Delta \OKCparam=\Delta M(b)a+\Delta C(b,c)d+\Delta \OKCg(b)$ note
+the implied equality of $\hat{M}(\OKCpos,t)=M(\OKCpos)+\Delta M(\OKCpos,t)$.  Consider
+the following, 
+%
+%
+\begin{align}
+\hat{\lambda}_m
+  &=\min_{\OKCpos\in\mathfrak{J}}\left(\min_{\|x\|=1}x^T \left(M(\OKCpos)
+   +\Delta M(\OKCpos,t)\right) x \right)                        \nonumber \\
+  &\geq \min_{\OKCpos\in\mathfrak{J}}\min_{\|x\|=1}x^T M(\OKCpos) x -
+   \max_{\OKCpos\in\mathfrak{J}}\left(\max_{\|x\|=1}|x^T\Delta M (\OKCpos,t)x|\right)
+                                                          \nonumber \\ 
+  &\geq\lambda_m-\max_{\OKCpos\in\mathfrak{J}}\left(\max_{\|x\|=1}
+   |\sum_{i=1}^r \Delta\OKCparami(t)x^T A(\OKCpos) x|\right)       \nonumber \\ 
+  &\geq\lambda_m-\max_{\OKCpos\in\mathfrak{J}}\left(\sum_{i=1}^r \max_{\|x\|=1}
+   |\Delta\OKCparami(t)| |x^T A(\OKCpos) x|\right)                \nonumber \\ 
+  &\geq\lambda_m-\sum_{i=1}^r |\Delta\OKCparami(t)| a_i      \nonumber \\ 
+  &\geq\lambda_m-\|\Delta\OKCparam(t)\|_a                    \nonumber \\ 
+  &\geq\lambda_m-\sqrt{a_M r}\|\Delta\OKCparam(t)\|_2         \nonumber \\ 
+  &\geq\lambda_m-\sqrt{a_M r}\|\Delta\OKCparam(t_0)\|_2       \nonumber \\ 
+  &\geq\lambda_m-\sqrt{a_M r}\left(\frac{1}{\sqrt{a_M r}}
+   \left(\lambda_m-\epsilon\right)\right)                 \nonumber \\ 
+  &\geq\epsilon.
+\end{align}
+%
+\noindent The previous inequality shows that the condition $\exists
+\epsilon\in\mathbb{R}_+$ such that $\|\Delta
+\OKCparam(t_0)\|_2\leq\frac{1}{\sqrt{a_M r}}\left(\lambda_m-\epsilon\right)$
+implies that $M(\OKCpos)$ is invertible for all time.  Similarly,
+%
+\begin{align}
+\hat{\lambda}_M
+  &=\max_{\OKCpos\in\mathfrak{J}}\left(\max_{\|x\|=1}x^T \left(M(\OKCpos)
+   +\Delta M(\OKCpos,t)\right) x \right)                        \nonumber \\
+  &\leq\lambda_M +
+   \max_{\OKCpos\in\mathfrak{J}}\left(\max_{\|x\|=1}|x^T\Delta M (\OKCpos,t)x|\right)
+                                                          \nonumber \\ 
+  &\leq\lambda_M+\|\Delta\OKCparam(t)\|_a                    \nonumber \\ 
+  &\leq\lambda_M+\left(\lambda_m-\epsilon\right)
+\end{align}
+%
+%
+\noindent which implies that $\hat{M}(\OKCpos,t)$ is bounded for all time
+since $\epsilon<\lambda_m$.
+
+
+

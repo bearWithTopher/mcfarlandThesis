@@ -1,0 +1,83 @@
+This Thesis reports several novel algorithms for state observation,
+parameter identification, and control of second-order plants.
+%
+A stability proof for each novel result is included.
+%
+The primary contributions are adaptive algorithms for \ac{UV}
+plant parameter identification and model-based control.
+%
+Where possible, comparative experimental evaluations of the novel
+\ac{UV} algorithms were conducted using the Johns Hopkins University
+Hydrodynamic Test Facility.
+
+
+The \ac{UV} \ac{AID} algorithms reported herein estimate the plant
+parameters (hydrodynamic mass, quadratic drag, gravitational force,
+and buoyancy parameters) of second-order rigid-body \ac{UV} plants
+under the influence of actuator forces and torques.
+%
+Previous adaptive parameter identification methods have focused on
+model-based adaptive tracking controllers; however, these approaches
+are not applicable when the plant is either uncontrolled, under
+open-loop control, or using any control law other than a specific
+adaptive tracking controller.
+%
+The \ac{UV} \ac{AID} algorithms reported herein do not require
+simultaneous reference trajectory-tracking control, nor do they require
+instrumentation of linear acceleration or angular acceleration.
+%
+Thus, these results are applicable in the commonly occurring cases of
+uncontrolled vehicles, vehicles under open-loop control, vehicles
+using control methods prescribed to meet other application-specific
+considerations, and vehicles not instrumented to measure angular
+acceleration.
+% 
+In comparative experimental evaluations, \acp{AIDPM} were shown to
+accurately model experimentally measured \ac{UV} performance.
+
+
+The \ac{UV} \ac{MBC} and \ac{AMBC} algorithms reported herein provide
+asymptotically exact trajectory-tracking for fully coupled
+second-order rigid-body \ac{UV} plants.
+%
+In addition, the \ac{AMBC} algorithm estimates the plant parameters
+(hydrodynamic mass, quadratic drag, gravitational force, and buoyancy
+parameters) for this class of plants.
+%
+A two-step \ac{AMBC} algorithm is also reported which first identifies
+gravitational plant parameters to be used in a separate \ac{AMBC}
+algorithm for trajectory-tracking.
+%
+% A two-step \ac{AMBC} algorithm is reported which
+% %
+% \begin{itemize}
+% \item identifies the gravitational plant parameters
+% %without requiring knowlege of the mass and drag parameters
+% using a special class of quasi-static reference trajectories and
+% %
+% \item uses the identified gravitational plant parameters in a seperate
+% \ac{AMBC} algorithm which estimates the mass and drag plant parameters.
+% \end{itemize}
+%
+%
+%An experimental analysis investigates the destabilizing effects of
+%unmodeled thruster dynamics on this \ac{AMBC} for certain classes of
+%reference trajectories. 
+%
+We report a comparative experimental analysis of \ac{PDC} and \ac{AMBC}
+during simultaneous motion in all degrees-of-freedom. This analysis shows:
+\begin{itemize}
+\item \ac{AMBC} (i.e. simultaneous adaptation of all plant parameter estimates)
+can be unstable in the presence of unmodeled thruster dynamics
+% 
+\item two-step \ac{AMBC} is robust to the presence of unmodeled
+thruster dynamics, and
+%
+\item two-step \ac{AMBC} provides 30\% better position tracking
+performance and 8\% worse velocity tracking performance over \ac{PDC}.
+\end{itemize}
+%
+To the best of our knowledge, the reported comparative experimental
+evaluation of \ac{AMBC} and \ac{PDC} is the first to consider
+trajectory-tracking performance during simultaneous motion in all
+degrees-of-freedom.

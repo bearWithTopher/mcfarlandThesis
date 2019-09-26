@@ -1,0 +1,51 @@
+\section{SE(3) Velocity Jacobian Bilinear se(3) Pose Multiplication Simplification}
+\label{appenJacSE3.sec.PsiHatAinvPsiEquality}
+
+In this Section we prove
+%
+\begin{equation}\label{appenJacSE3.eq.PsiHatAinvPsiEquality}
+\psi^T\left(\hat{\mathcal{A}}^{-T}(\psi)+\hat{\mathcal{A}}^{-1}(\psi)\right)\psi=\psi^T\psi.
+\end{equation}
+%
+Consider inserting (\ref{appenJacSE3.eq.hatAinv2}) into the left side
+of (\ref{appenJacSE3.eq.PsiHatAinvPsiEquality}).  
+%
+Note that the definition of $\mathcal{A}^{-1}$ in (\ref{chModels.eq.Ainv}) and
+$\soThreeMap{q}q=\vec{0}$ imply the following facts:
+\begin{itemize}
+\item$\mathcal{A}^{-1}(q)q=q$,
+\item$\frac{1-\alpha(\|q\|)}{\|q\|^2}\soThreeMap{\xi}\soThreeMap{q}q=\vec{0}$, and
+\item $\mathcal{B}_2(\|q\|)\mathcal{B}_3\left( \xi, q\right)q=\vec{0}$.
+\end{itemize}
+%
+These facts imply
+%
+\begin{equation}
+\psi^T\left(\hat{\mathcal{A}}^{-1}(\psi)\right)\psi=\psi^T
+\left[ \begin{array}{cc}
+     \mathcal{A}^{-1}(q) & \frac{1-\alpha(\|q\|)}{\|q\|^2}\soThreeMap{q}\soThreeMap{\xi} \\
+      0_{3 \times 3}     & 0_{3 \times 3}   \\
+\end{array} \right]\psi.
+\end{equation}
+%
+From which we can see
+%
+\begin{align}
+\frac{1}{2}\psi^T\left(\hat{\mathcal{A}}^{-1}(\psi)+\hat{\mathcal{A}}^{-T}(\psi)\right)\psi
+%\nonumber \\
+=&\frac{1}{2}\xi^T\left(\mathcal{A}^{-1}(q)+\mathcal{A}^{-T}(q)\right)\xi+
+\nonumber \\
+&\frac{1-\alpha(\|q\|)}{2 \|q\|^2}\left(\xi^T\soThreeMap{q}\soThreeMap{\xi}q+
+q^T \soThreeMap{\xi}\soThreeMap{q}\xi\right)+q^Tq
+\nonumber \\
+=&\xi^T \xi+q^T q+
+\nonumber \\
+ &\frac{1-\alpha(\|q\|)}{2 \|q\|^2}\left(2\xi^T \soThreeMap{q}^2 \xi- 
+2\xi^T \soThreeMap{q}\soThreeMap{q}\xi\right)
+\nonumber \\
+=&\psi^T\psi
+\nonumber
+\end{align}
+%
+%This equality is required to prove Theorem
+%\ref{chUV_AMBC.theo.UV_MBC}

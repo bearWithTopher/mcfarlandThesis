@@ -1,0 +1,378 @@
+\section{3-\acs{DOF} \acs{UV} Rotational Dynamics \acs{AID}}
+\label{chUV_AID.sec.UV_SO3_AID}
+
+
+This Section reports a novel nonlinear \ac{AID} algorithm for plants
+of the form (\ref{chModels.eq.UVSO3plant}), a model of 3-\ac{DOF}
+\ac{UV} rotational dynamics.
+%
+A local stability analysis is also included. 
+%
+This proof of Theorem \ref{chUV_AID.theo.UV_SO3_AID} is provided in
+two parts.
+%
+First, in Section \ref{chUV_AID.sec.UVSO3_AID_errSys}, the error system
+is developed.
+%
+Then, in Section \ref{chUV_AID.sec.UVSO3_AID_convProof}, we prove the result.  
+
+
+%This Section reports an extension to the \ac{AID} algorithm addressed
+%in Theorem \ref{chSMS_ID.theo.SO3_AID} to include quadratic drag and a
+%buoyancy driven torque, as in mechanical plant models for the
+%rotational dynamics of \ac{UV} of the form
+%
+%\subsection{Adaptive Identification of Rotating Submerged Plant Subject to an  External Torque}
+%\label{sec.ROVAID}
+%This Section reports an extension to the adaptive identifier
+%stated in Theorem \ref{chSMS_ID.theo.SO3_AID} to include quadratic drag and a
+%buoyancy driven torque, as in mechanical plants of the form
+%(\ref{chModels.eq.UVSO3plant}). 
+
+
+
+
+\begin{UV_SO3_AID}
+\label{chUV_AID.theo.UV_SO3_AID}
+Consider the following \ac{AID} algorithm for plants of the form
+(\ref{chModels.eq.UVSO3plant}):
+%
+\begin{align}
+  \dot{\hat{\omega}}=&\hat{I}^{-1}\left( \mathcal{J}(\hat{I}\omega)\omega
+  +\sum_{i=1}^3 |\omega_i|\hat{C}_i\omega+\mathcal{J}(\hat{b})R^T e_3
+  + \tau \right) - a \Delta \omega   \label{chUV_AID.eq.UV_SO3_Estimator}\\
+  \dot{\hat{I}}=&-\frac{\gamma_1}{2}\left(\psi_4 \omega^T 
+    +\omega \psi_4^T-\Delta\omega \psi_3^T
+  -\psi_3 \Delta\omega^T\right)\label{chUV_AID.eq.UV_SO3_MassId}\\
+  \dot{\hat{C_i}}=&-\gamma_2|\omega_i|\Delta\omega \omega^T
+  \label{chUV_AID.eq.UV_SO3_DragId}\\
+   \dot{\hat{b}}=&-\gamma_3\mathcal{J}(R^T e_3)\Delta\omega
+  \label{chUV_AID.eq.UV_SO3_BuoyId}
+\end{align}
+%
+\noindent with the following definitions:
+%
+\begin{itemize}
+\item $a,\gamma_1,\gamma_2,\gamma_3\in\mathbb{R}_+$,
+\item $\psi_4=\mathcal{J}(\omega)\Delta \omega$,
+\item $\psi_3=\hat{I}^{-1}\left(\mathcal{J}(\hat{I}\omega)\omega
+  +\sum_{i=1}^3 |\omega_i|\hat{C}_i \omega+\mathcal{J}(\hat{b})R^T e_3
+  +\tau\right)$
+\end{itemize} 
+%
+\noindent and the following assumptions:
+%
+\begin{itemize}
+\item $\tau(t)$ is bounded by assumption 
+\item $\hat{I}(t_0)$ is \ac{SPD}
+\item $\hat{\omega}(t_0)=\omega(t_0)$
+\item $\exists \epsilon \in \mathbb{R}_+$ such that
+  $ \lambda_3 \geq\left(\|\Delta I(t_0)\|_F^2 +
+   \frac{\gamma_1}{\gamma_2}\sum_{i=1}^3 \|\Delta C_i(t_0)\|_F^2 + 
+   \frac{\gamma_1}{\gamma_3}\|\Delta b(t_0)\|_2^2\right)^{1/2}+\epsilon.$
+\end{itemize}
+%
+\noindent Under these conditions the estimated angular velocity error
+will be asymptotically stable in the sense of Lyapunov, i.e.,
+$\lim_{t\to \infty}\Delta \omega=\vec{0}$, and parameter estimates
+converge to constant values.
+\end{UV_SO3_AID}
+
+\noindent This local stability result implies that the plant parameter
+estimates converge to values that provide plant model input/output
+behavior identical to that of the actual experimental plant for the
+given input torque $\tau(t)$.
+%
+%Using the Lyapunov equation
+%
+%\begin{equation}\label{chUV_AID.eq.SO3_UV_AID_lyap}
+%V(t)=\frac{1}{2}\Delta \omega^{T} I \Delta \omega +
+%     \frac{1}{2\gamma_1}\tr\left(\Delta I \Delta I^{T}\right)+
+%     \frac{1}{2\gamma_2}\sum_{i=1}^3\tr\left(\Delta C_i \Delta
+%       C_i^{T}\right)+
+%     \frac{1}{2\gamma_3}\Delta b^T \Delta b,
+%\end{equation}
+%
+%\noindent proof of this \ac{AID} algorithm is similar in structure to
+%those presented for Theorems \ref{chSMS_ID.theo.SO3_AID} and
+%\ref{chUV_AID.theo.UV_SE3_AID}.  This proof is omitted for brevity.
+
+
+\subsection{\ac{UV} Rotational Dynamics \ac{AID} Error System}
+\label{chUV_AID.sec.UVSO3_AID_errSys}
+
+Note that (\ref{chUV_AID.eq.deltaI}) implies $I\hat{I}^{-1} =
+\mathbb{I} - \Delta I \hat{I}^{-1}$ and consider the following expression for
+the angular velocity error dynamics
+%
+\begin{align}
+I\Delta \dot{\omega}=
+   &I\hat{I}^{-1}\left(\soThreeMap{\hat{I}\omega}\omega+
+    \sum_{i=1}^3 |\omega_i|\hat{C}_i\omega+\soThreeMap{\hat{b}}R^T e_3+
+   \tau \right) - aI\Delta \omega
+\nonumber \\
+   &-\soThreeMap{I\omega}\omega
+    -\sum_{i=1}^3 |\omega_i|C_i\omega-\soThreeMap{b}R^T e_3
+    - \tau
+\nonumber \\
+  =&-a I \Delta\omega -\soThreeMap{\omega}\Delta I\omega -\Delta I \hat{I}^{-1}
+     \left(\soThreeMap{\hat{I}\omega}\omega+\tau\right)  
+\nonumber \\
+   &+\left(\mathbb{I} - \Delta I\hat{I}^{-1}\right)\left(\sum_{i=1}^3 |\omega_i|\hat{C}_i\omega\right)
+    -\left(\sum_{i=1}^3 |\omega_i|C_i\omega\right)
+\nonumber \\
+   &+\left(\mathbb{I} - \Delta I\hat{I}^{-1}\right)\soThreeMap{\hat{b}}R^T e_3
+    -\soThreeMap{b}R^T e_3
+\nonumber \\
+  =&-a I \Delta\omega -\soThreeMap{\omega}\Delta I\omega 
+    +\sum_{i=1}^3 |\omega_i|\Delta C_i\omega
+    +\soThreeMap{\Delta b}R^T e_3
+\nonumber \\
+   &-\Delta I \hat{I}^{-1}\left(\soThreeMap{\hat{I}\omega}\omega+
+    \sum_{i=1}^3 |\omega_i|\hat{C}_i\omega+
+    \soThreeMap{\hat{b}}R^T e_3+\tau\right)
+\nonumber \\
+  =&-a I \Delta\omega -\soThreeMap{\omega}\Delta I\omega
+    +\Delta I \psi_3 
+    +\sum_{i=1}^3 |\omega_i|\Delta C_i\omega
+    +\soThreeMap{\Delta b}R^T e_3
+\label{chUV_AID.eq.UV_SO3_Ideltawdot}
+\end{align}
+%
+
+\subsection{\ac{UV} Rotational Dynamics \ac{AID} Convergence Proof}
+\label{chUV_AID.sec.UVSO3_AID_convProof}
+
+
+Consider the following Lyapunov function candidate
+%
+\begin{equation}\label{chUV_AID.eq.UV_SO3_lyap}
+V(t)=\frac{1}{2}\Delta \omega^{T} I \Delta \omega +
+     \frac{1}{2\gamma_1}\tr\left(\Delta I \Delta I^{T}\right)+
+     \frac{1}{2\gamma_2}\sum_{i=1}^3\tr\left(\Delta C_i \Delta
+       C_i^{T}\right)+
+     \frac{1}{2\gamma_3}\Delta b^T \Delta b.
+\end{equation}
+%
+\noindent $V(t)$ is
+%
+\begin{itemize}
+\item positive definite
+%\item radially unbounded
+\item equal to zero if and only if $\Delta \omega=\vec{0}$, $\Delta
+  I=0_{3\times 3}$, $\forall i$ $\Delta C_i=0_{3\times 3}$, and $\Delta b=\vec{0}$.
+\end{itemize}
+%
+\noindent From (\ref{chUV_AID.eq.UV_SO3_Ideltawdot}) and the facts
+that for any matrices $A$ and $B$ of appropriate dimension
+$\tr(AB)=\tr(BA)$ and for any $x_1,x_2,x_3\in\mathbb{R}^3 \quad
+x_1^T\soThreeMap{x_2}x_3=x_2^T\soThreeMap{x_3}x_1$, the time
+derivative of (\ref{chUV_AID.eq.UV_SO3_lyap}) is
+%
+\begin{align}
+  \dot{V}(t)=&\frac{1}{2}\left(\Delta \dot{\omega}^{T} I \Delta \omega
+    + \Delta \omega^{T} I \Delta \dot{\omega}\right)+
+  \frac{1}{\gamma_1}\tr\left(\Delta I \Delta \dot{I}^{T}\right)+
+  \frac{1}{\gamma_2}\sum_{i=1}^3\tr\left(\Delta C_i \Delta
+    \dot{C}_i^{T}\right)+ \frac{1}{\gamma_3}\Delta b^T \Delta \dot{b}
+  \nonumber \\
+  =&-a\Delta\omega^T I\Delta\omega + \frac{1}{2}\left(\omega^T\Delta I
+    \soThreeMap{\omega}\Delta\omega-\Delta\omega^T\soThreeMap{\omega}
+    \Delta I \omega- \psi_3^T\Delta I\Delta \omega
+    -\Delta\omega^T\Delta I \psi_3\right)
+   \nonumber \\
+   &+\frac{1}{\gamma_1}\tr\left(\Delta I \Delta \dot{I}^{T}\right)+
+    \Delta\omega^T\left(\sum_{i=1}^3 |\omega_i|\Delta C_i\right)\omega+
+    \frac{1}{\gamma_2}\sum_{i=1}^3\tr\left(\Delta C_i \Delta
+    \dot{C}_i^{T}\right) 
+   \nonumber \\
+   & +\Delta\omega^T\soThreeMap{\Delta b}R^T e_3 +
+     \frac{1}{\gamma_3}\Delta b^T \Delta \dot{b}
+\nonumber \\
+%  =&-a\Delta\omega^T I\Delta\omega + \frac{1}{2}\left(\omega^T\Delta I
+%    \soThreeMap{\omega}\Delta\omega-\Delta\omega^T\soThreeMap{\omega}
+%    \Delta I \omega- \psi_3^T\Delta I\Delta \omega
+%    -\Delta\omega^T\Delta I \psi_3\right)
+%   \nonumber \\
+%   &+\frac{1}{\gamma_1}\tr\left(\Delta I \Delta \dot{I}^{T}\right)+
+%    \Delta\omega^T\left(\sum_{i=1}^3 |\omega_i|\Delta C_i\right)\omega+
+%    \frac{1}{\gamma_2}\sum_{i=1}^3\tr\left(\Delta C_i \Delta
+%    \dot{C}_i^{T}\right) 
+%   \nonumber \\
+%   & +\Delta\omega^T\soThreeMap{\Delta b}R^T e_3 +
+%     \frac{1}{\gamma_3}\Delta b^T \Delta \dot{b}
+%   \nonumber \\
+  =&-a\Delta\omega^T I\Delta\omega + \frac{1}{2}\tr\left(\Delta I\left(
+    \soThreeMap{\omega}\Delta\omega\omega^T-
+     \omega \Delta\omega^T \soThreeMap{\omega} - \Delta \omega \psi_3^T
+    -\psi_3\Delta\omega^T\right)\right)
+   \nonumber \\
+   &+\frac{1}{\gamma_1}\tr\left(\Delta I \Delta \dot{I}^{T}\right)+
+    \sum_{i=1}^3\tr\left(|\omega_i|\Delta C_i\omega \Delta\omega^T\right)+
+    \frac{1}{\gamma_2}\sum_{i=1}^3\tr\left(\Delta C_i \Delta
+    \dot{C}_i^{T}\right) 
+   \nonumber \\
+   & +\Delta b^T\soThreeMap{R^T e_3}\Delta \omega +
+     \frac{1}{\gamma_3}\Delta b^T \Delta \dot{b}
+\label{chUV_AID.eq.UV_SO3_lyapDotLong}
+\end{align}
+%
+Note the actual plant parameters are constant, thus $\Delta\dot{
+  I}=\dot{\hat{I}}$, $\Delta\dot{ C_i}=\dot{\hat{C}}_i$, and
+$\Delta\dot{ b}=\dot{\hat{b}}$.
+%
+Using the fact that $\psi_4=\soThreeMap{\omega}\Delta\omega$ and
+substituting
+(\ref{chUV_AID.eq.UV_SO3_MassId})-(\ref{chUV_AID.eq.UV_SO3_BuoyId})
+into (\ref{chUV_AID.eq.UV_SO3_lyapDotLong}) yields
+%
+\begin{equation}\label{chUV_AID.eq.UV_SO3_lyapDot}
+\dot{V}(t)=-a\Delta \omega^T I \Delta \omega,
+\end{equation}
+%
+\noindent which is negative definite in $\Delta \omega$ and negative
+semi-definite in the error coordinates $\Delta I$, $\Delta
+C_i$, and $\Delta b$.  By Lyapunov's direct method,
+(\ref{chUV_AID.eq.UV_SO3_lyap}) and (\ref{chUV_AID.eq.UV_SO3_lyapDot})
+imply that all error coordinates are bounded and stable.  The
+structure of $\dot{V}(t)$ implies that $\Delta \omega \in \mathcal{L}_2$
+or, equivalently, $\lim_{t\to\infty}\left( \int_{t_0}^t\Delta \omega^T
+  \Delta \omega\right)^{1/2}<\infty$.  
+%
+We must ensure every signal in
+(\ref{chUV_AID.eq.UV_SO3_Estimator})-(\ref{chUV_AID.eq.UV_SO3_BuoyId})
+is bounded.  
+%
+With $\omega$, $\tau$, $\Delta \omega$, $\Delta I$, $\Delta C_i$,
+and $\Delta b$ bounded, $I$, $C_i$, and $b$
+constant, and given
+(\ref{chUV_AID.eq.deltaw})-(\ref{chUV_AID.eq.deltabSO3}) we can
+conclude that $\hat{\omega}$, $\hat{I}$, $\hat{C}_i$, and
+$\hat{b}$ are bounded. All that remains is showing that $\hat{I}^{-1}$ is
+bounded.
+%
+Note for $\forall t>t_0$ the following hold:
+\begin{itemize}
+\item 
+$\frac{1}{\gamma_2}\sum_{i=1}^3\tr\left(\Delta C_i(t) \Delta
+  C_i^T(t)\right)\geq 0$
+\item 
+$\frac{1}{\gamma_3}\Delta b^T(t) \Delta b(t) \geq 0$
+\item 
+$0 \leq V(t) \leq V(t_0)$
+\item 
+$\Delta \omega(t_0)=\vec{0}$ 
+\item
+$ \Delta \omega^T(t) I \Delta \omega (t)\geq 0$
+\item 
+$\frac{1}{\gamma_1}\tr\left(\Delta I(t) \Delta I^T(t)\right)=
+\frac{1}{\gamma_1}\sum_{i=1}^3|\Delta\lambda_i(t)|^2=\frac{1}{\gamma_1}\|\Delta
+I(t)\|_F^2$
+\end{itemize}
+%
+These facts can be used to show
+%
+\begin{align}
+  \frac{1}{\gamma_1}\|\Delta I(t)\|_F^2
+  \leq&\frac{1}{\gamma_1}\tr\left(\Delta I(t) \Delta I^T(t)\right)
+  \nonumber \\
+  \leq&\frac{1}{\gamma_1}\tr\left(\Delta I(t) \Delta I^T(t)\right) +
+  \Delta \omega^T(t) I \Delta \omega (t)
+%\nonumber \\
+       +\frac{1}{\gamma_2}\sum_{i=1}^3\tr\left(\Delta C_i(t) \Delta C_i^{T}(t)\right)
+\nonumber \\
+      & +\frac{1}{\gamma_3}\Delta b^T(t) \Delta b(t) 
+\nonumber \\
+   \leq&2 V(t)
+\nonumber \\
+   \leq&2 V(t_0)
+\nonumber \\
+   \leq&\frac{1}{\gamma_1}\|\Delta I(t_0)\|_F^2 +
+        \frac{1}{\gamma_2}\sum_{i=1}^3 \|\Delta C_i(t_0)\|_F^2 + 
+%\nonumber \\
+       \frac{1}{\gamma_3}\|\Delta b(t_0)\|^2.
+%\nonumber
+\end{align}
+%
+or equivalently,
+%
+\begin{equation}
+\|\Delta I(t)\|_F\leq\left(\|\Delta I(t_0)\|_F^2 +
+        \frac{\gamma_1}{\gamma_2}\sum_{i=1}^3 \|\Delta C_i(t_0)\|_F^2 + 
+       \frac{\gamma_1}{\gamma_3}\|\Delta b(t_0)\|^2\right)^{1/2}.
+\end{equation}
+%
+By the Rayleigh-Ritz Theorem, $\min_{\|x\|=1}
+x^T \hat{I}(t) x=\hat{\lambda}_3(t)$.  Additionally since
+$\hat{I}(t)=I+\Delta I(t)$ and by assumption
+%
+$\left(\|\Delta I(t_0)\|_F^2 + \frac{\gamma_1}{\gamma_2}\sum_{i=1}^3
+  \|\Delta C_i(t_0)\|_F^2 + \frac{\gamma_1}{\gamma_3}\|\Delta
+  b(t_0)\|^2\right)^{1/2} +\epsilon\leq \lambda_3$,
+%
+the following inequalities hold:
+%
+\begin{align}
+\hat{\lambda}_3(t)
+ &= \min_{\|x\|=1}\left(x^T I x + x^T \Delta I(t) x\right)
+\nonumber \\
+ &\geq\min_{\|x\|=1}\left(x^T I x\right)-\max_{\|x\|=1}|x^T\Delta I(t)x|
+\nonumber \\
+ &\geq\lambda_3-\|\Delta I(t)\|_2
+\nonumber \\
+ &\geq\lambda_3-\left(\sum_{i=1}^3|\Delta\lambda_i(t)|^2\right)^{1/2}
+\nonumber \\
+ &\geq\lambda_3-\|\Delta I(t)\|_F
+\nonumber \\
+ &\geq\lambda_3-\left(\|\Delta I(t_0)\|_F^2 +
+\frac{\gamma_1}{\gamma_2}\sum_{i=1}^3 \|\Delta C_i(t_0)\|_F^2
++\frac{\gamma_1}{\gamma_3}\|\Delta b(t_0)\|^2\right)^{1/2}
+\nonumber \\
+ &\geq\lambda_3-\left(\lambda_3-\epsilon\right)
+\nonumber \\
+ &\geq\epsilon
+\end{align}
+%
+where $\epsilon$ is a finite positive scalar and we use the fact that
+$\|\Delta I(t)\|_2^2=\max(|\Delta \lambda_1(t)|^2,|\Delta
+\lambda_3(t)|^2)$ because the singular values of a symmetric matrix
+are equal to the absolute values of its eigenvalues.
+%
+The above inequality guarantees that all eigenvalues of $\hat{I}(t)$
+are positive and bounded away from zero for all time. 
+%
+The fact that all signals in (\ref{chModels.eq.UVSO3plant}) and
+(\ref{chUV_AID.eq.UV_SO3_Estimator}) are bounded implies that $\dot{\omega}$
+and $\dot{\hat{\omega}}$ are bounded.  
+%
+These bounded signals imply that $\Delta \dot{\omega}$ is bounded.  
+%
+Note that bounded $\Delta \dot{\omega}$ and $\Delta \omega \in \mathcal{L}_2$
+implies% $\lim_{t\to \infty}\Delta \omega=\vec{0}$.
+%
+\begin{equation}
+\lim_{t\to \infty}\Delta \omega=\vec{0}.
+\end{equation}
+%
+%\noindent 
+Since every signal in the parameter update equations
+(\ref{chUV_AID.eq.UV_SO3_MassId})-(\ref{chUV_AID.eq.UV_SO3_BuoyId})
+are bounded and $\lim_{t\to \infty}\Delta \omega=\vec{0}$ this implies
+%$\lim_{t\to \infty}\dot{\hat{M}}=0_{6 \times 6}$, $\lim_{t\to
+%  \infty}\dot{\hat{D}}_i=0_{6 \times 6}$, $\lim_{t\to
+%  \infty}\dot{\hat{g}}=0$, $\lim_{t\to \infty}\dot{\hat{g}}=0$, and
+%  $\lim_{t\to \infty}\dot{\hat{b}}=\vec{0}$.
+%
+\begin{align}
+\lim_{t\to \infty}&\dot{\hat{I}}=0_{3 \times 3},
+\nonumber \\
+\lim_{t\to \infty}&\dot{\hat{C}}_i=0_{3 \times 3}\; \; \forall i\in\left\{1,2,3\right\},
+\nonumber \\
+\lim_{t\to \infty}&\dot{\hat{b}}=\vec{0}.
+%\nonumber
+\end{align}
+%\noindent 
+The estimator's angular velocity asymptotically converge to the
+angular velocity of the actual plant, and the estimated parameters
+converge to constant values.  Thus, the local stability of the
+reported \ac{AID} algorithm for \ac{UV} rotational dynamics is proven.

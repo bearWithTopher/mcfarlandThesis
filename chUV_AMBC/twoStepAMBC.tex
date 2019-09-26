@@ -1,0 +1,66 @@
+\subsection{Two-Step \ac{AMBC}}\label{chUV_AMBC.sec.twoStepMethod}
+
+In the sequel we will find it convenient to adaptively identify
+subsets of plant parameters. Note that
+(\ref{chUV_AMBC.eq.MBC_regressor}) is linear in the parameters, thus
+there exists a set of functions \funDefn{\MBCregi}
+{\realSpace{6}\times\realSpace{6}\times\realSpace{6}\times\SE3}
+{\realSpace{6}}
+%
+such that 
+%
+\begin{equation}
+%\hspace*{-3mm}
+\sum_{i=1}^{241}\MBCregi({^a}\dot{v}_d,\Delta v, {^a}v_d , {^w_a}H)\theta_{UV_i}
+=\MBCreg({^a}\dot{v}_d,\Delta v, {^a}v_d , {^w_a}H)\theta_{UV}.
+\end{equation}
+%
+\noindent If a subset of parameter values in $\theta_{UV}$ is known
+{\it a priori} then, based on Theorems \ref{chUV_AMBC.theo.UV_MBC} and
+\ref{chUV_AMBC.theo.UV_AMBC}, an \ac{AMBC} can be developed to
+estimate the remaining unknown parameters.  Any \acp{AMBC} of this
+form achieve asymptotically exact trajectory-tracking canceling the
+contribution to vehicle dynamics due to known parameters (as shown in
+Section \ref{chUV_AMBC.theo.UV_MBC}) and use parameter update laws to
+adaptively estimate of the unknown parameters (as shown in Section
+\ref{chUV_AMBC.theo.UV_AMBC}). If $K_\theta$ is assumed to be
+diagonal, each \ac{AMBC} of this form will be equivalent to using the
+\ac{AMBC} from Theorem \ref{chUV_AMBC.theo.UV_AMBC}, with each known
+parameter initialized to its known value and its associated parameter
+gain within $K_\theta$ set to zero.  A two-step \ac{AMBC} algorithm presented
+herein independently estimates two disparate sets of parameters in two
+successive experimental trials.
+
+
+The structure of (\ref{chUV_AMBC.eq.UVSE3plant}) allows the
+identification of dynamic and gravitational parameters to be conducted
+in a two-step process.  The first step is identifying $g$ and $b$
+estimates during quasi-static motion in pitch and roll.
+%
+For quasi-static motion (i.e. nearly zero velocity and acceleration)
+in these \ac{DOF}, the following model is sufficient to describe
+vehicle dynamics
+%
+\begin{equation} \label{chUV_AMBC.eq.plantQS}
+  0=\mathcal{G}({^w_a}H)+u 
+\end{equation}
+%
+where all inertial and drag terms are assumed to be negligible because
+they are either quadratic in velocity or linear in acceleration.  
+%
+The validity of this model implies using the adaptive tracking
+controller from Theorem \ref{chUV_AMBC.theo.UV_AMBC} to track a slow
+reference trajectory in pitch and roll will identify estimates of $g$
+and $b$ without requiring the simultaneous estimation of mass and drag
+parameters.
+
+The second step \ac{AMBC} algorithm estimates the inertial and drag
+parameters (i.e. $M$ and $D$) while using the gravitational parameter
+values identified in step one.  Using the controller from Theorem
+\ref{chUV_AMBC.theo.UV_AMBC} with constant $\hat{b}$ and $\hat{g}$ set
+to their previously identified values, this controller can be used to
+track any reference trajectory while identifying estimates of the
+vehicle's mass and drag.  This partitioning of the parameter
+identification process will be important in the sequel when we
+consider the effects of unmodeled thruster dynamics on \ac{AMBC}.
+

@@ -1,0 +1,46 @@
+\section{UV vehicle dynamics}
+
+
+We model a UV as a rigid-\body with added hydrodynamic mass, quadratic
+drag, gravitational force, and buoyancy moving under the influence of
+external torques $\tau \in \mathbb{R}^{3}$ and forces $f \in
+\mathbb{R}^{3}$. The commonly accepted second-order finite-dimensional
+lumped parameter dynamic model for rigid-body UV,
+written in the body-frame, is 
+\vspace*{-5mm}
+
+\begin{align} \label{eq.plantROV}
+{^w_a}\dot{H}=&{^w_a}H \widehat{{^a}v_a}
+\nonumber \\
+  M{^a}\dot{v}_a=&\ad_{{^a}v_a}^T M {^a}v_a+\mathcal{D}({^a}v_a)+\mathcal{G}({^w_a}H)+u 
+\end{align}
+
+\noindent where
+%\begin{equation}
+%\mathcal{D}(v)=\sum_{i=1}^6 |v_i|D_i v
+%\end{equation} 
+%
+%\begin{equation}
+%mathcal{G}(R)=\left[ \begin{array}{c} g R^T e_3   
+%    \\ \mathcal{J}(b)R^T e_3 \\ \end{array}\right],
+%\end{equation}
+%TM_FOR_SPACE_COULD_MOVE_INLINE
+%
+%\noindent 
+$\mathcal{D}(v)=\sum_{i=1}^6 |v_i|D_i v$,
+$\mathcal{G}(H)=\left[ \begin{array}{c} g R^T e_3 \\ \mathcal{J}(b)R^T
+    e_3 \\ \end{array}\right]$,
+$e_3=\left[ \begin{array}{c} 0\\ 0\\
+    1\\ \end{array}\right]$, $u=\left[ \begin{array}{c} f \\ \tau
+    \\ \end{array}\right]$, $M\in \mathbb{R}^{6 \times 6}$ is the
+vehicle's mass matrix, the set $D_i\in \mathbb{R}^{6 \times 6}$
+($i=1\cdots6$) make up a general 6 DOF coupled quadratic drag matrix,
+$g\in \mathbb{R}$ summarizes the force of gravity on the vehicle, and
+$b\in\mathbb{R}^3$ characterizes the torque experienced by the vehicle
+when the center of buoyancy is not directly on top of the center of
+gravity.% \cite{fossen}.  
+
+
+Note that (\ref{eq.plantROV}) is linear in the parameters, thus we
+can define a parameter vector, $\theta\in\mathbb{R}^{241}$ composed of
+the 241 unique scalar parameter terms in (\ref{eq.plantROV}).   

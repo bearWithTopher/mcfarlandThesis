@@ -1,0 +1,83 @@
+%\section{State Representation and \ac{UV} Dynamics}
+
+\subsection{\ac{UV} States: Actual and Desired}
+\label{chUV_AMBC.sec.states}
+
+Throughout this Section we will be concerned with two state trajectories
+in SE(3): the actual state trajectory of the vehicle and the desired
+or reference state trajectory of the vehicle.
+%
+We denote the actual state (i.e. 6-\ac{DOF} pose and velocity) with
+the subscript $a$ and denote the desired reference state of the
+vehicle with $d$.
+%
+These states will be represented in three reference frames: states
+represented in the (assumed inertial) world-frame will be indicated
+using a leading superscript $w$, states represented in the actual
+body-frame will be indicated using a leading superscript $a$, and
+states represented in the desired body-frame will be indicated using a
+leading superscript $d$.
+%
+Homogeneous transforms between these different reference frames will
+use leading superscripts and subscripts to indicate the transform
+being preformed, for instance the homogeneous matrix ${^w_a}H$, when
+multiplied by a vector represented in the actual vehicle reference
+frame, would provide that vector's world reference frame coordinates,
+e.g. ${^w}x={^w_a}H{^a}x$.
+%
+We represent the actual pose of the vehicle in exponential coordinates
+as $\psi_a\in\mathbb{R}^6$ and the actual velocity of the vehicle as
+${^a}v_a\in\mathbb{R}^6$. 
+%
+Note that for ${^w_a}R\in\SO3$, the rotation matrix from the actual
+body-frame to the world-frame, and $p_a\in\mathbb{R}^3$, the position
+of the vehicle, we have
+%
+${^w_a}H=\left[ \begin{array}{cc}
+    {^w_a}R      & p_a  \\
+    0_{1 \times 3}  & 1  \\
+  \end{array} \right]
+=e^{\widehat{\psi_a}}$.
+%
+Note that for ${^a}\nu_a\in\mathbb{R}^3$, the vehicle's body-frame
+translational velocity, and ${^a}\omega_a\in\mathbb{R}^3$, the
+vehicle's body-frame angular velocity, we have the equality
+%
+${^a}v_a=\left[ \begin{array}{cc} {^a}\nu_a^T &
+    {^a}\omega_a^T \\ \end{array} \right]^T$.
+%
+We similarly represent the desired pose and velocity of the vehicle as
+$\psi_d\in\mathbb{R}^6$ and ${^d}v_d\in\mathbb{R}^6$ with the
+desired-frame homogeneous matrix, rotation matrix, position,
+translational velocity, and angular velocity represented as ${^w_d}H$,
+${^w_d}R$, $p_d$, ${^d}\nu_d$, and ${^d}\omega_d$, respectively.
+
+\subsection{\ac{UV} Dynamics}
+\label{chUV_AMBC.sec.UV_dynamics}
+
+We make the common assumption of modeling a \ac{UV} as a rigid-body with
+added hydrodynamic mass, quadratic drag, gravitational force, and
+buoyancy moving under the influence of external control torques $\tau
+\in \mathbb{R}^{3}$ and control forces $f \in \mathbb{R}^{3}$ applied
+by the vehicle's thrusters. Section \ref{chModels.sec.UVSE3plant}
+presents this second-order finite-dimensional lumped-parameter dynamic
+model for a fully submerged rigid-body \ac{UV}, written in the
+body-frame (\ref{chModels.eq.UVSE3plant}).  Using the state
+representation conventions from Section \ref{chUV_AMBC.sec.states},
+the model (\ref{chModels.eq.UVSE3plant}) can be written as
+%
+\begin{align} \label{chUV_AMBC.eq.UVSE3plant}
+{^w_a}\dot{H}=&{^w_a}H \widehat{{^a}v_a}
+\nonumber \\
+  M{^a}\dot{v}_a=&\ad_{{^a}v_a}^T M {^a}v_a+\mathcal{D}({^a}v_a)+\mathcal{G}({^w_a}H)+u.
+\end{align}
+%
+\noindent where $\mathcal{D}(v)=\sum_{i=1}^6 |v_i|D_i v$.  Note
+(\ref{chUV_AMBC.eq.UVSE3plant}) is linear in $\{M,\;D,\;g,\;b\}$ and
+be parametrized by $\theta_{UV}$ as defined in
+(\ref{chModels.eq.paramVecUV}). Further information on the functions,
+parameters, and state representations of (\ref{chUV_AMBC.eq.UVSE3plant})
+are described in Sections \ref{chModels.sec.functionDefn} and
+\ref{chModels.sec.UVSE3plant}.
+ 
+

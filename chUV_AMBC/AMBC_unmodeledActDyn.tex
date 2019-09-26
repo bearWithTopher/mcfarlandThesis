@@ -1,0 +1,66 @@
+\section{Experimental Evaluation of \ac{UV} \ac{AMBC} \\
+            with Unmodeled Actuator Dynamics}
+\label{chUV_AMBC.sec.unmodeledActDyn}
+
+
+
+%As discussed in the introduction to Section
+%\ref{chUV_AMBC.sec.theory}, the widespread realization of tracking
+%performance gains provided by \ac{UV} \ac{MBC} might require \ac{AMBC}
+%since \ac{UV} mass and drag parameters can not be computed
+%analytically.
+%TM_ADD_IN_IDEA? The introduction to Chapter \ref{chUV_AID} talks more
+%about the inability to analytically commpute parameters... 
+%
+This Section reports a comparative experimental evaluation between
+\ac{UV} \ac{AMBC} and \ac{UV} \ac{PDC} for typical operational
+maneuvers.
+%
+Although experimental implementations of \ac{UV} \ac{AMBC} algorithms
+have been reported\cite{yoerger.icra91, yuhICRA1999,
+  antonelli&sarkar.cst2001, smallwood2004JOE, maalouf2013pd,
+  zhao2005experimental}, to the best of our knowledge experimental
+evaluations of \ac{AMBC} during simultaneous motion in all \ac{DOF}
+has not previously been reported.
+%
+The comparative experimental evaluation of \ac{AMBC} and \ac{PDC}
+during simultaneous 6-\ac{DOF} maneuvers reported herein shows that
+\ac{AMBC} can provide better position tracking performance than
+\ac{PDC}.
+
+
+This Section is organized as follows:
+%
+%Section \ref{chUV_AMBC.sec.twoStepMethod} reports a two-step \ac{AMBC}
+%algorithm shown experimentally to be robust to actuator modeling
+%errors observed in our experimental vehicle.
+%
+Section \ref{chUV_AMBC.sec.fullAnalysisFailure} shows how direct
+implementation of the \ac{AMBC} from Theorem
+\ref{chUV_AMBC.theo.UV_AMBC} exhibits unstable parameter adaptation
+in the presence of unmodeled thrust reversal dynamics.
+%
+Section \ref{chUV_AMBC.sec.singleDOFAnalysisFailure} presents two
+experiments where \ac{AMBC} is used to follow a pitch-only reference
+trajectory.
+%
+The range of motion is changed such that one pitch-only reference
+trajectory requires thrust reversals and the other pitch-only
+reference trajectory does not.
+%
+A comparative analysis of these parameter adaption processes details
+how unmodeled dynamics arising from thrust reversals can cause
+unstable parameter adaptation.
+%
+Finally, Section \ref{chUV_AMBC.sec.twoStepExp} reports an
+experimental evaluation of the two-step \ac{AMBC} algorithm reported
+in Section \ref{chUV_AMBC.sec.twoStepMethod}, and an experimental
+comparison of two-step \ac{AMBC} and \ac{PDC}.
+
+
+\input{chUV_AMBC/expSetup}
+\input{chUV_AMBC/multiDOF_AMBCexp}
+\input{chUV_AMBC/unmodeledActDynBackground}
+\input{chUV_AMBC/singleDOF_AMBCexp}
+\input{chUV_AMBC/twoStepAMBCexp}
+\input{chUV_AMBC/allExpAnalysis}

@@ -1,0 +1,7 @@
+pdfcrop --margins '-40 -60 -50 -80' nextFull2.pdf  nextFull3.pdf
+pdfcrop --margins '-100 -30 -80 -20' nextExErr.pdf nextExErr2.pdf
+pdfcrop --margins '-150 -30 -120 -20' nextAvgErr.pdf nextAvgErr2.pdf
+pdfcrop --margins '-30 -60 -50 -70' simpleFigGoodLength.pdf simpleFigGoodLength2.pdf
+pdfcrop --margins '-20 -20 -50 -15' gainFig.pdf  gainFig2.pdf
+pdfcrop --margins '-20 -20 -50 -15' perExcitFig.pdf  perExcitFig2.pdf
+pdfcrop --margins '-15 0 -35 0' smallRangeFig.pdf  smallRangeFig2.pdf

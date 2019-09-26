@@ -1,0 +1,143 @@
+
+This Chapter addresses the problem of estimation of plant parameters
+for 6-\ac{DOF} rigid-body \acp{UV}.
+%
+We report two novel \ac{AID} algorithms.  
+% 
+Each algorithm estimates the parameters for a rigid-body plant such
+as vehicle mass with added hydrodynamic mass; quadratic drag; and 
+gravitational and buoyancy parameters that arise in the
+dynamic models of rigid-body \acp{UV}.
+%
+The first \ac{AID} algorithm identifies parameters to model 3-\ac{DOF}
+\ac{UV} rotational plant dynamics; its development is a precursor to
+the second \ac{AID} algorithm.
+%
+The second algorithm, 6-\ac{DOF} \acf{UV} \acf{AID}, identifies parameters to model
+general 6-\ac{DOF} \ac{UV} motion.
+% 
+For both \ac{AID} algorithms a local stability proof is reported
+showing velocity signal estimates converge asymptotically to the plant
+velocity signals; parameter estimates are stable;
+and parameter estimates converge asymptotically to values that provide
+input-output model behavior identical to that of the actual plant.
+%
+The \ac{JHUROV} was used for comparative experimental evaluations of
+both \ac{AID} algorithms.
+%
+Sections \ref{chUV_AID.sec.UVSO3exp} and \ref{chUV_AID.sec.UVSE3exp}
+report comparisons of an \ac{AIDPM} and a \ac{LSPM} in cross-validation
+experiments.
+%TM_ARE_PARAM_ID_ACRO_AMBIGUIUOUS_HERE
+Both models are shown to match closely the \ac{JHUROV}'s
+experimentally observed input-output behavior.
+
+
+As discussed in Section \ref{chSMS_ID.sec.litReview}, a rich
+literature exists on the problem of model-based adaptive
+trajectory-tracking control.
+%
+These approaches are not applicable when the plant is either
+uncontrolled, under open-loop control, or under the control of a
+control law other than a specific adaptive tracking controller.
+%
+In contrast, the \ac{AID} algorithms reported herein provide an
+approach to plant parameter estimation applicable to the commonly
+occurring cases of uncontrolled plants, plants under open-loop
+control, and plants using control methods prescribed to meet
+considerations for an application.
+% TM_FIX llw says "Huh, unclear" conserning the third "commonly
+% occuring case" above.  One way to make this to have GOOD EXAMPLES
+% for each of the three commonly occuring cases.
+
+
+Unlike \ac{LS} approaches, which requires actuator thrust, position, velocity,
+and acceleration signals, \ac{AID} requires only actuator thrust,
+position, and velocity signals.
+%
+Several parameter identification methods have been reported which do not
+require direction instrumentation of acceleration.
+% 
+\cite{hsu&bodson&sastry&paden.icra87} reports an \ac{AID} algorithm
+for \acp{OKC} that employs a low pass filter approach to the parameter
+update law that does not require joint acceleration signals, and
+reports a numerical simulation.
+%
+\ac{UV} parameter identification algorithms not requiring acceleration
+signals have been reported which use adaptive methods
+\cite{smallwood2003TCST} or numerical differentiation
+\cite{ridao2004identification,avila2012modeling}.
+% 
+These reported \ac{UV} algorithms, as presented, are for decoupled
+plants and have not been shown to generalize to the fully-coupled
+\ac{UV} models, such as (\ref{chModels.eq.UVSO3plant}) or
+(\ref{chModels.eq.UVSE3plant}).
+%
+To the best of our knowledge, Theorem \ref{chUV_AID.theo.UV_SE3_AID} is
+the first reported adaptive method for parameter estimation of a
+fully coupled 6-\ac{DOF} \ac{UV} model {\it without} the additional need to
+simultaneously perform reference trajectory-tracking.
+
+
+The need to dynamically estimate  the rigid-body model parameters from
+input-output signals arises in a variety of vehicle dynamics and
+control problems including space and air missions, where the vehicle's
+mass distribution may vary as fuel or payload are expended over the
+duration of a mission.
+%
+The issues of parameter identification are also important for
+\acp{UV}; in comparison to rigid-body 6-\ac{DOF} spacecraft models
+(where characterizing vehicle inertia can require 10 scalar values),
+the effects of added mass, gravity, buoyancy, and drag require
+additional parameter and model complexity to characterize \ac{UV}
+dynamics (full characterization of these effects during dynamic \ac{UV}
+operation can require hundreds of scalar parameter values).
+%
+In addition, for most \acp{UV} the drag parameters and mass parameters
+(which include both the characteristics of the vehicle's mass and
+those of the ambient fluid surrounding the vehicle) cannot be computed
+analytically, and thus must be identified experimentally. 
+
+
+The solution to the identification problem reported herein may prove
+useful in applications with controlled or uncontrolled plants in which
+reference trajectory-tracking is impractical or infeasible.
+%
+Of particular interest to the authors are two use case applications
+common in our \ac{UV} field deployments.
+%
+The first is the case of vehicles for which the user does not have the
+ability to specify an adaptive tracking control algorithm.
+% 
+This can be the case with commercially available vehicles because
+often the user can not replace the controller provided by the
+vehicle's manufacturer.
+%
+The second is the case of under-actuated vehicles.  
+%
+Adaptive tracking controllers require actuation in all \ac{DOF}.
+%
+Frequently vehicle designers utilize \ac{UV} passive stability of pitch
+and roll in the design of under-actuated vehicles,
+making adaptive tracking control not applicable for either control
+or model identification.
+%
+In these examples, the ability to estimate continuously the plant
+model parameters from available input-output signals may enable
+improved model-based control.  % of these dynamic plants.
+%  
+Continuous parameter monitoring may also enable the detection of
+unexpected changes that indicate system failures.
+
+
+
+The \ac{UV} rotational dynamics \ac{AID} algorithm and its
+experimental evaluation were originally reported in
+2012\cite{mcfarland2012}.
+%
+The \ac{UV} \ac{AID} algorithm and its experimental evaluation were
+originally reported in 2013\cite{mcfarland.icra2013}.
+% \textit{ACM Transactions on Applied Perception} in 2010 with
+% co-authors A.\ M.\ Okamura and K.\ J.\ Kuchenbecker
+% \cite{Blank_TAP2010}.  Some additional material has been added here
+% for clarity.

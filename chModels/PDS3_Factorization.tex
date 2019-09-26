@@ -1,0 +1,109 @@
+\subsection{\acl{SPD} Matrix Factorization Through the Skew 
+  Symmetric Operator}
+% factorization is the decomposistion of an object (e.g. a number, a
+% polynomial or a matrix) into the product of other objects, or
+% factors, which when multiplied together give the original.
+%
+% Jon B. like the title for this lemma of "Positive Definite Symmetric
+% Skew Symmetric Factorization" which should be abbreviated "PDS3
+% Factorization" according to him
+
+\newtheorem{PDS3_Factorization}{Lemma}[section]
+
+\begin{PDS3_Factorization}
+\label{chModels.theo.PDS3_Factorization}
+For all $a,b,c,d\in\mathbb{R}$, $x\in\mathbb{R}^3$, and $I$ such that
+$I\in\realSpace{3\times 3}$ and $I$ is \ac{SPD}, the following
+equality holds
+
+\begin{equation}
+\label{chModels.eq.PDS3_Factorization}
+I^a\mathcal{J}\left(I^b x\right)I^c=\det(I)^d I^{a-d}\mathcal{J}
+\left(I^{b-d} x\right)I^{c-d}.
+\end{equation}
+
+\end{PDS3_Factorization}
+
+\noindent Proof:
+
+First lets develop a factorization of $\soThreeMap{Dx}$, where
+$D\in\realSpace{3\times 3}$ is a \ac{SPD} diagonal matrix with
+diagonal terms $\lambda_1,\lambda_2,\lambda_3>0$ and
+$x\in\mathbb{R}^3$ is a vector with terms
+$x_1,x_2,x_3\in\realSpace{}$.  Note that For all $d\in\mathbb{R}$ we
+have the equaltity
+$\det\left(D\right)^d=\det\left(D^d\right)=\lambda_1^d\lambda_2^d\lambda_3^d$,
+thus
+
+
+\begin{align}
+\det(D)^d& D^{-d}\mathcal{J}(x) D^{-d}
+\nonumber \\
+   =&\det(D^d)
+    \left[ \begin{array}{ccc}
+      \lambda_1^{-d}  &      0           &      0               \\
+          0          &   \lambda_2^{-d}  &      0               \\
+          0          &      0           & \lambda_3^{-d}        \\
+    \end{array} \right]
+    \left[ \begin{array}{ccc}
+         0    & -x_3 &  x_2                               \\
+         x_3  &   0  & -x_1                               \\
+        -x_2  &  x_1 &    0                               \\
+    \end{array} \right]
+    \left[ \begin{array}{ccc}
+      \lambda_1^{-d}  &      0           &      0               \\
+          0          &   \lambda_2^{-d}  &      0               \\
+          0          &      0           & \lambda_3^{-d}        \\
+    \end{array} \right]
+   \nonumber \\
+   =&\lambda_1^d\lambda_2^d\lambda_3^d
+    \left[ \begin{array}{ccc}
+         0  &  -\lambda_1^{-d}\lambda_2^{-d}x_3  &  \lambda_1^{-d}\lambda_3^{-d}x_2     \\
+          \lambda_1^{-d}\lambda_2^{-d}x_3  &  0  &  -\lambda_2^{-d}\lambda_3^{-d}x_1    \\
+         -\lambda_1^{-d}\lambda_3^{-d}x_2  &  \lambda_2^{-d}\lambda_3^{-d}x_1 &    0    \\
+    \end{array} \right]
+   \nonumber \\
+   =&
+    \left[ \begin{array}{ccc}
+         0  &  -\lambda_3^d x_3  &  \lambda_2^d x_2     \\
+          \lambda_3^d x_3  &  0  &  -\lambda_1^d x_1    \\
+         -\lambda_2^d x_2  &  \lambda_1^d x_1 &    0    \\
+    \end{array} \right]
+   \nonumber \\
+   =&\mathcal{J}\left(D^d x \right)
+\end{align}
+
+\noindent Next, consider (\ref{chModels.eq.PDS3_Factorization}). Let $\lambda_1$,
+$\lambda_2$ and $\lambda_3$ be the eigenvalues of $I$, where the
+$\lambda_i$ are labeled without regard to ordering for the largest or
+smallest eigenvalues. Since $I$ is \ac{SPD}, these eigenvalues are
+positive and there exists a $R\in\SO3$ and \ac{SPD} diagonal matrix
+$D\in\mathbb{R}^{3 \times 3}$ such that $\lambda_1$, $\lambda_2$ and
+$\lambda_3$ are the diagonal terms of $D$ and $I=RDR^T$. Note that for
+$d\in\mathbb{R}$ we have the equality
+$\det(I)^d=\det(D)^d=\lambda_1^d\lambda_2^d\lambda_3^d$ and for all
+$R\in\SO3$ we have the equality
+$R\mathcal{J}\left(x\right)R^T=\mathcal{J}\left(Rx\right)$, thus
+
+\begin{align}
+I^a\mathcal{J}\left(I^b x\right)I^c
+  =& RD^aR^T\mathcal{J}\left(RD^bR^T x\right)RD^cR^T
+\nonumber \\
+  =& RD^a\mathcal{J}\left(D^bR^T x\right)D^cR^T
+\nonumber \\
+  =& RD^a\mathcal{J}\left(D^dD^{b-d}R^T x\right)D^cR^T
+\nonumber \\
+  =& RD^a\left(\det\left(D^d\right)D^{-d}\mathcal{J}\left(D^{b-d}R^T x\right)D^{-d}\right)D^cR^T
+\nonumber \\
+  =&\det\left(I^d\right) RD^{a-d}\mathcal{J}\left(D^{b-d}R^T x\right)D^{c-d}R^T
+\nonumber \\
+  =&\det\left(I^d\right) RD^{a-d}R^T\mathcal{J}\left(R D^{b-d}R^T x\right)RD^{c-d}R^T
+\nonumber \\
+  =&\det\left(I^d\right) I^{a-d}\mathcal{J}\left(I^{b-d} x\right)I^{c-d}.
+\nonumber \\
+\end{align}
+
+This completes the proof. In the following chapters Lemma
+\ref{chModels.theo.PDS3_Factorization} is not explicitly used, but its
+existence has been beneficial in developing Lyapunov functions for
+second-order rotational plants.

@@ -1,0 +1,115 @@
+% 2012-10-08 toph This document stared as a copy paste from
+%                 /usr/share/doc/latex-beamer/solutions/conference-talks/conference-ornate-20min.en.tex
+%                 which is a template created by Till Tantau 
+%                 in 2004.
+% -----------------------------------------------------------
+
+\documentclass[9pt,xcolor={dvipsnames}]{beamer}
+%\documentclass[9pt,xcolor={dvipsnames},handout]{beamer}
+%
+%2013-11-18 toph   'xcolor={dvipsnames}' gives me access to WAY
+%                   more colors
+
+\mode<presentation>
+{
+  \usetheme{Warsaw}
+  % or ...
+
+  \setbeamercovered{transparent}
+  % or whatever (possibly just delete it)
+}
+
+
+\usepackage[english]{babel}
+% or whatever
+
+\usepackage[latin1]{inputenc}
+% or whatever
+%\usepackage[usenames,dvipsnames]{color}
+\usepackage{multimedia}
+\usepackage{times}
+\usepackage[T1]{fontenc}
+% Or whatever. Note that the encoding and the font should match. If T1
+% does not look nice, try deleting the line with the fontenc.
+
+\expandafter\def\expandafter\insertshorttitle\expandafter{%
+\insertshorttitle\hfill%
+\insertframenumber\,/\,\inserttotalframenumber}
+
+\input{tophCustomCommands}
+
+\title[UV Adaptive Identification and Control] % (optional, use only with long paper titles)
+{Adaptive Identification and Control of Underwater Vehicles:\\ Theory and Comparative Experimential Evaluation}
+
+%\subtitle
+%{Include Only If Paper Has a Subtitle}
+
+\author[McFarland] % (optional, use only with lots of authors)
+{C. J. ~McFarland}
+% - Give the names in the same order as the appear in the paper.
+% - Use the \inst{?} command only if the authors have different
+%   affiliation.
+
+\institute[Johns Hopkins University] % (optional, but mostly needed)
+{
+  %\inst{1}%
+  Mechanical Engineering Department \\
+  Johns Hopkins University
+  %\and
+  %\inst{2}%
+  %Department of Theoretical Philosophy\\
+  %University of Elsewhere
+}
+% - Use the \inst command only if there are several affiliations.
+% - Keep it simple, no one is interested in your street address.
+
+\date%[ICRA 2013] % (optional, should be abbreviation of conference name)
+{Dissertation Defense}
+% - Either use conference name or its abbreviation.
+% - Not really informative to the audience, more for people (including
+%   yourself) who are reading the slides online
+
+%\subject{Theoretical Computer Science}
+% This is only inserted into the PDF information catalog. Can be left
+% out. 
+
+
+
+% If you have a file called "university-logo-filename.xxx", where xxx
+% is a graphic format that can be processed by latex or pdflatex,
+% resp., then you can add a logo as follows:
+
+% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
+% \logo{\pgfuseimage{university-logo}}
+
+
+
+% Delete this, if you do not want the table of contents to pop up at
+% the beginning of each subsection:
+%\AtBeginSubsection[]
+%{
+%  \begin{frame}<beamer>{Outline}
+%    \tableofcontents[currentsection,currentsubsection]
+%  \end{frame}
+%}
+
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+
+%\beamerdefaultoverlayspecification{<+->}
+
+
+\begin{document}
+
+
+\input{pres/introduction}
+\input{pres/dynModelsAndAID}
+\input{pres/AMBC}
+\input{pres/AMBCexp}
+\input{pres/conclusion}
+\input{pres/additionalSlides}
+
+\end{document}
+
+

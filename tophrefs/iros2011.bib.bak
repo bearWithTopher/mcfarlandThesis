@@ -1,0 +1,528 @@
+% This file was created with JabRef 2.7.2.
+% Encoding: UTF-8
+
+@ARTICLE{Aghannan2003,
+  author = {Aghannan, N. and Rouchon, P. },
+  title = {An intrinsic observer for a class of Lagrangian systems},
+  journal = IEEE_J_AC,
+  year = {2003},
+  volume = {48},
+  pages = {936--945},
+  number = {6},
+  __markedentry = {[topher]},
+  doi = {10.1109/TAC.2003.812778},
+  owner = {topher},
+  timestamp = {2011.03.25}
+}
+
+@ARTICLE{Atkeson1986,
+  author = {Atkeson, Christopher G. and An, Chae H. and Hollerbach, John M.},
+  title = {Estimation of Inertial Parameters of Manipulator Loads and Links},
+  journal = {The International Journal of Robotics Research},
+  year = {1986},
+  volume = {5},
+  pages = {101-119},
+  number = {3},
+  abstract = { The inertial parameters of manipulator rigid-body loads and links
+	have been automatically estimated as a result of gen eral movement.
+	The Newton-Euler equations have been recast to relate linearly the
+	measured joint forces or torques via acceleration-dependent coefficients
+	to the inertial parame ters, which have then been estimated by least
+	squares. Load estimation was implemented on a PUMA 600 robot equipped
+	with an R TI FS-B wrist force-torque sensor and on the MIT Serial
+	Link Direct Drive Arm equipped with a Barry Wright Company Astek
+	wrist force-torque sensor. Good estimates were obtained for load
+	mass and center of mass, and the forces and torques due to movement
+	of the load could be pre dicted accurately. The load moments of inertia
+	were more difficult to estimate. Link estimation was implemented
+	on the MIT Serial Link Direct Drive Arm. A good match was ob tained
+	between joint torques predicted from the estimated parameters and
+	the joint torques estimated from motor cur rents. The match actually
+	proved superior to predicted torques based on link inertial parameters
+	derived by CAD modeling. Restrictions on the identifiability of link
+	inertial parameters due to restricted sensing and movement near the
+	base have been addressed. Implications of estimation accu racy for
+	manipulator dynamics and control have been consid ered. },
+  doi = {10.1177/027836498600500306},
+  eprint = {http://ijr.sagepub.com/content/5/3/101.full.pdf+html},
+  url = {http://ijr.sagepub.com/content/5/3/101.abstract}
+}
+
+@INPROCEEDINGS{Ayusawa2010,
+  author = {Ayusawa, K.  and Nakamura, Y. },
+  title = {Identification of standard inertial parameters for large-DOF robots
+	considering physical consistency},
+  booktitle = {Proc. IEEE/RSJ Int Intelligent Robots and Systems (IROS) Conf},
+  year = {2010},
+  pages = {6194--6201},
+  __markedentry = {[topher:6]},
+  doi = {10.1109/IROS.2010.5649628},
+  owner = {topher},
+  timestamp = {2011.12.02}
+}
+
+@INPROCEEDINGS{Baldwin2009,
+  author = {Baldwin, G. and Mahony, R. and Trumpf, J. },
+  title = {A nonlinear observer for 6 {DOF} pose estimation from inertial and
+	bearing measurements},
+  booktitle = {Proc. IEEE Int. Conf. Robotics and Automation ICRA '09},
+  year = {2009},
+  pages = {2237--2242},
+  doi = {10.1109/ROBOT.2009.5152242},
+  owner = {topher},
+  timestamp = {2011.03.25}
+}
+
+@BOOK{Bullo2004,
+  title = {Geometric Control of Mechanical Systems},
+  publisher = {New York, NY: Springer},
+  year = {2004},
+  author = {Bullo, F. and Lewis, A. D.},
+  owner = {topher},
+  timestamp = {2011.03.25}
+}
+
+@ARTICLE{Chaturvedi2006,
+  author = {Chaturvedi, N.A. and Bernstein, D.S. and Ahmed, J. and Bacconi, F.
+	and McClamroch, N.H.},
+  title = {Globally convergent adaptive tracking of angular velocity and inertia
+	identification for a {3-DOF} rigid body},
+  journal = {Control Systems Technology, IEEE Transactions on},
+  year = {2006},
+  volume = {14},
+  pages = {841 -853},
+  number = {5},
+  month = {Sept. },
+  doi = {10.1109/TCST.2006.876908},
+  issn = {1063-6536},
+  keywords = {3-DOF rigid body;Lyapunov methods;adaptive feedback control;angular
+	velocity;globally convergent adaptive tracking;inertia identification;sixth-order
+	dynamic compensator;space vehicle control;Lyapunov methods;adaptive
+	control;feedback;space vehicles;stability;}
+}
+
+@BOOK{Chirikjian2000,
+  title = {Engineering Applications of Noncommutative Harmonic Analysis},
+  publisher = {Boca Raton, FL: CRC Press},
+  year = {2000},
+  author = {Chirikjian and Kyatkin},
+  owner = {topher},
+  timestamp = {2011.03.25}
+}
+
+@INPROCEEDINGS{Gautier1988,
+  author = {Gautier, M.  and Khalil, W. },
+  title = {On the identification of the inertial parameters of robots},
+  booktitle = {Proc. 27th IEEE Conf. Decision and Control},
+  year = {1988},
+  pages = {2264--2269},
+  __markedentry = {[topher:]},
+  doi = {10.1109/CDC.1988.194738},
+  owner = {topher},
+  timestamp = {2011.12.02}
+}
+
+@INPROCEEDINGS{Jordan2006,
+  author = {Jordan, M.A. and Bustamante, J.L.},
+  title = {A Speed-Gradient Adaptive Control with State/Disturbance Observer
+	for Autonomous Subaquatic Vehicles},
+  booktitle = {Decision and Control, 2006 45th IEEE Conference on},
+  year = {2006},
+  pages = {2008 -2013},
+  month = {Dec.},
+  doi = {10.1109/CDC.2006.377169},
+  keywords = {6 degrees of freedom;autonomous subaquatic vehicles;autonomous underwater
+	vehicles;disturbance observer;hydrodynamics;inverse dynamics;kinematic
+	tracking;nonlinear adaptive control system;path tracking;positioning
+	tracking;speed-gradient adaptive control;state observer;vehicle dynamics;adaptive
+	control;control system synthesis;convergence;mobile robots;nonlinear
+	control systems;observers;remotely operated vehicles;robot dynamics;robot
+	kinematics;underwater vehicles;}
+}
+
+@INPROCEEDINGS{Keim2006,
+  author = {Keim, J.A. and Behcet Acikmese, A. and Shields, J.F.},
+  title = {Spacecraft inertia estimation via constrained least squares},
+  booktitle = {Aerospace Conference, 2006 IEEE},
+  year = {2006},
+  pages = {6 pp.},
+  month = {0-0 },
+  doi = {10.1109/AERO.2006.1655995},
+  keywords = {constrained least squares estimation;flight data;free rotating body;linear
+	matrix inequalities;robotic testbed;semidefinite optimization problem;spacecraft
+	inertia estimation;aerospace testing;least squares approximations;linear
+	matrix inequalities;parameter estimation;}
+}
+
+@BOOK{Khalil2002,
+  title = {Modeling, Identification \& Control of Robots},
+  publisher = {New York, NY: Taylor \& Francis},
+  year = {2002},
+  author = {Khalil, W., and Dombre, E.},
+  owner = {topher},
+  timestamp = {2011.12.02}
+}
+
+@INPROCEEDINGS{Khalil2007,
+  author = {Khalil, W.  and Gautier, M.  and Lemoine, P. },
+  title = {Identification of the payload inertial parameters of industrial manipulators},
+  booktitle = {Proc. IEEE Int Robotics and Automation Conf},
+  year = {2007},
+  pages = {4943--4948},
+  doi = {10.1109/ROBOT.2007.364241},
+  owner = {topher},
+  timestamp = {2011.12.02}
+}
+
+@INPROCEEDINGS{Koditschek1988,
+  author = {Koditschek, D. E.},
+  title = {Application of a new {Lyapunov} function to global adaptive attitude
+	tracking},
+  booktitle = {Proc. 27th IEEE Conf. Decision and Control},
+  year = {1988},
+  pages = {63--68},
+  doi = {10.1109/CDC.1988.194270},
+  owner = {topher},
+  timestamp = {2011.03.25}
+}
+
+@ARTICLE{Landau89,
+  author = {Landau, I. D. and Horowitz, R.},
+  title = {Applications of the passive systems approach to the stability analysis
+	of adaptive controllers for robot manipulators},
+  journal = {International Journal of Adaptive Control and Signal Processing},
+  year = {1989},
+  volume = {3},
+  pages = {23--38},
+  number = {1},
+  doi = {10.1002/acs.4480030104},
+  issn = {1099-1115},
+  keywords = {Interconnected passive systems, Robot manipulators, Lyapunov functions,
+	Hyperstability, Adaptive control},
+  publisher = {Wiley Subscription Services, Inc., A Wiley Company},
+  url = {http://dx.doi.org/10.1002/acs.4480030104}
+}
+
+@ARTICLE{Lain1997,
+  author = {Lian, K.-Y. and Wang, L.-S. and Fu, L.-C.},
+  title = {Globally valid adaptive controllers of mechanical systems},
+  journal = {Automatic Control, IEEE Transactions on},
+  year = {1997},
+  volume = {42},
+  pages = {1149 -1154},
+  number = {8},
+  month = {aug},
+  doi = {10.1109/9.618245},
+  issn = {0018-9286},
+  keywords = {adaptive control;asymptotic tracking;attitude control;configuration
+	space;mechanical systems;modeling;quaternions;rigid body;rotation
+	matrix group;singularity free controller;system dynamics;adaptive
+	control;attitude control;control system synthesis;dynamics;matrix
+	algebra;}
+}
+
+@ARTICLE{Lizarralde1996,
+  author = {Lizarralde, F. and Wen, J. T.},
+  title = {Attitude control without angular velocity measurement: a passivity
+	approach},
+  journal = IEEE_J_AC,
+  year = {1996},
+  volume = {41},
+  pages = {468--472},
+  number = {3},
+  doi = {10.1109/9.486654},
+  owner = {topher},
+  timestamp = {2011.03.25}
+}
+
+@ARTICLE{Mahony2008,
+  author = {Mahony, R. and Hamel, T. and Pflimlin, J.-M.},
+  title = {Nonlinear Complementary Filters on the Special Orthogonal Group},
+  journal = IEEE_J_AC,
+  year = {2008},
+  volume = {53},
+  pages = {1203--1218},
+  number = {5},
+  doi = {10.1109/TAC.2008.923738},
+  owner = {topher},
+  timestamp = {2011.03.25}
+}
+
+@INPROCEEDINGS{Mahony2005,
+  author = {Mahony, R. and Hamel, T. and Pflimlin, J.-M. },
+  title = {Complementary filter design on the special orthogonal group {SO(3)}},
+  booktitle = {Proc. and 2005 European Control Conf. Decision and Control CDC-ECC
+	'05. 44th IEEE Conf},
+  year = {2005},
+  pages = {1477--1484},
+  doi = {10.1109/CDC.2005.1582367},
+  owner = {topher},
+  timestamp = {2011.03.25}
+}
+
+@INPROCEEDINGS{Maithripala2004,
+  author = {Maithripala, D. H. S. and Berg, J. M. and Dayawansa, W. P.},
+  title = {An intrinsic observer for a class of simple mechanical systems on
+	a Lie group},
+  booktitle = {Proc. American Control Conf the 2004},
+  year = {2004},
+  volume = {2},
+  pages = {1546--1551},
+  owner = {topher},
+  timestamp = {2011.03.25}
+}
+
+@PHDTHESIS{martin.thesis,
+  author = {Stephen C. Martin},
+  title = {Advances in Six-Degree-Of-Freedom Dynamics and Control of Underwater
+	Vehicles},
+  school = {The Johns Hopkins University},
+  year = {2008},
+  address = {Baltimore, MD USA},
+  month = {September},
+  owner = {topher},
+  timestamp = {2011.09.16}
+}
+
+@ARTICLE{Mata2005,
+  author = {Vicente Mata and Francesc Benimeli and Nidal Farhat and Angel Valera},
+  title = {Dynamic parameter identification in industrial robots considering
+	physical feasibility},
+  journal = {Advanced Robotics},
+  year = {2005},
+  volume = {19},
+  pages = {101-119},
+  number = {1},
+  abstract = {The issue of identification of dynamic parameters in open-chain industrial
+	manipulators is addressed with emphasis on the physical feasibility
+	of the identified set of parameters. The dynamic model on which the
+	identification procedure is based considers rigid-link robots including
+	a complete actuator dynamics modeling and is obtained starting from
+	the Gibbs&#150;Appell equations. Friction at the joints is also considered.
+	The dynamic equations of the model are written linearly with respect
+	to the dynamic parameters to be identified. The matrix form linear
+	system is solved through a quadratic optimization procedure with
+	non-linear constraints in order to ensure the physical feasibility
+	of the identified parameters. The procedure is tested using a PUMA
+	560 industrial robot. A comparison between control actions and torques
+	obtained from the Inverse Dynamic Problem considering identified
+	parameters is performed in order to establish the validity of the
+	proposed procedure. The set of physically feasible dynamic parameters
+	is used in an integration of the equations of motion of the robot
+	and the results of the simulation are compared with the robot actual
+	movement.},
+  doi = {doi:10.1163/1568553053020269},
+  url = {http://www.ingentaconnect.com/content/vsp/arb/2005/00000019/00000001/art00006}
+}
+
+@ARTICLE{Mayeda1990,
+  author = {Mayeda, H.  and Yoshida, K.  and Osuka, K. },
+  title = {Base parameters of manipulator dynamic models},
+  journal = IEEE_J_RA,
+  year = {1990},
+  volume = {6},
+  pages = {312--321},
+  number = {3},
+  doi = {10.1109/70.56663},
+  owner = {topher},
+  timestamp = {2011.12.02}
+}
+
+@INPROCEEDINGS{Norman2011,
+  author = {Norman, M. C. and Peck, M. A. and O'Shaughnessy, D. J.},
+  title = {In-Orbit Estimation of Inertia and Momentum-Actuator Alignment Parameters},
+  booktitle = {AAS 11-164, AAS/AIAA Space Flight Mechanics Meeting},
+  year = {2011},
+  month = {Feb},
+  owner = {topher},
+  timestamp = {2011.09.16}
+}
+
+@INPROCEEDINGS{Olsen1986,
+  author = {Olsen, H.  and Bekey, G. },
+  title = {Identification of robot dynamics},
+  booktitle = {Proc. IEEE Int. Conf. Robotics and Automation},
+  year = {1986},
+  volume = {3},
+  pages = {1004--1010},
+  doi = {.1986.1087532},
+  owner = {topher},
+  timestamp = {2011.12.02}
+}
+
+@ARTICLE{Olsen2001,
+  author = {Olsen, M. M.  and Petersen, H. G. },
+  title = {A new method for estimating parameters of a dynamic robot model},
+  journal = IEEE_J_RA,
+  year = {2001},
+  volume = {17},
+  pages = {95--100},
+  number = {1},
+  doi = {10.1109/70.917088},
+  owner = {topher},
+  timestamp = {2011.12.02}
+}
+
+@ARTICLE{Ortega1989,
+  author = {Romeo Ortega and Mark W. Spong},
+  title = {Adaptive motion control of rigid robots: A tutorial},
+  journal = {Automatica},
+  year = {1989},
+  volume = {25},
+  pages = {877 - 888},
+  number = {6},
+  doi = {10.1016/0005-1098(89)90054-X},
+  issn = {0005-1098},
+  keywords = {Adaptive control},
+  url = {http://www.sciencedirect.com/science/article/pii/000510988990054X}
+}
+
+@PHDTHESIS{Park1991,
+  author = {Park, F},
+  title = {The optimal kinematic design of mechanisms},
+  school = {Harvard University},
+  year = {1991},
+  address = {Cambridge, MA},
+  owner = {topher},
+  timestamp = {2011.03.25}
+}
+
+@INPROCEEDINGS{Reyes1997,
+  author = {Reyes, F.  and Kelly, R. },
+  title = {On parameter identification of robot manipulators},
+  booktitle = {Proc. Conf. IEEE Int Robotics and Automation},
+  year = {1997},
+  volume = {3},
+  pages = {1910--1915},
+  doi = {10.1109/ROBOT.1997.619067},
+  owner = {topher},
+  timestamp = {2011.12.02}
+}
+
+@ARTICLE{Salcudean1991,
+  author = {Salcudean, S. },
+  title = {A globally convergent angular velocity observer for rigid body motion},
+  journal = IEEE_J_AC,
+  year = {1991},
+  volume = {36},
+  pages = {1493--1497},
+  number = {12},
+  doi = {10.1109/9.106169},
+  owner = {topher},
+  timestamp = {2011.03.25}
+}
+
+@INPROCEEDINGS{Sanyal2009,
+  author = {Sanyal, A. K. and Chyba, M.},
+  title = {Robust feedback tracking of autonomous underwater vehicles with disturbance
+	rejection},
+  booktitle = {Proc. ACC '09. American Control Conf},
+  year = {2009},
+  pages = {3585--3590},
+  doi = {10.1109/ACC.2009.5160673},
+  owner = {topher},
+  timestamp = {2011.03.25}
+}
+
+@ARTICLE{slotine1990,
+  author = {Slotine, J.-E. and Di Benedetto, M.D.},
+  title = {Hamiltonian adaptive control of spacecraft},
+  journal = {Automatic Control, IEEE Transactions on},
+  year = {1990},
+  volume = {35},
+  pages = {848 -852},
+  number = {7},
+  month = {jul},
+  doi = {10.1109/9.57028},
+  issn = {0018-9286},
+  keywords = { Hamiltonian adaptive control; attitude tracking control; inverse
+	dynamics; robustness; spacecraft; adaptive control; aerospace control;
+	attitude control; space vehicles; stability;}
+}
+
+@ARTICLE{Smirnov2001,
+  author = {Smirnov, G. V.},
+  title = {Attitude determination and stabilization of a spherically symmetric
+	rigid body in a magnetic field},
+  journal = {International Journal of Control},
+  year = {2001},
+  volume = {74},
+  pages = {341--347},
+  number = {7},
+  owner = {topher},
+  timestamp = {2011.03.25}
+}
+
+@ARTICLE{Swevers1997,
+  author = {Swevers, J.  and Ganseman, C.  and Tukel, D. B.  and de Schutter,
+	J.  and Van Brussel, H. },
+  title = {Optimal robot excitation and identification},
+  journal = IEEE_J_RA,
+  year = {1997},
+  volume = {13},
+  pages = {730--740},
+  number = {5},
+  doi = {10.1109/70.631234},
+  owner = {topher},
+  timestamp = {2011.12.02}
+}
+
+@BOOK{Taylor2005,
+  title = {{Classical mechanics}},
+  publisher = {Univ Science Books},
+  year = {2005},
+  author = {Taylor, J.R.},
+  isbn = {189138922X}
+}
+
+@ARTICLE{Wen1991,
+  author = {Wen, J. T.-Y. and Kreutz-Delgado, K. },
+  title = {The attitude control problem},
+  journal = IEEE_J_AC,
+  year = {1991},
+  volume = {36},
+  pages = {1148--1162},
+  number = {10},
+  doi = {10.1109/9.90228},
+  owner = {topher},
+  timestamp = {2011.03.25}
+}
+
+@ARTICLE{Yoshida2000,
+  author = {Yoshida, Koji and Khalil, Wisama},
+  title = {Verification of the Positive Definiteness of the Inertial Matrix
+	of Manipulators Using Base Inertial Parameters},
+  journal = {The International Journal of Robotics Research},
+  year = {2000},
+  volume = {19},
+  pages = {498-510},
+  number = {5},
+  abstract = {The computation of the inertial matrix of dynamic model for manipulator
+	using some sets of base-parameter values may be not positive definite
+	for some configurations. Such sets of base-parameter values are physically
+	impossible. The result of the study on physical impossibility of
+	the set of base-parameter values could be used to judge if a set
+	of base-parameter values, which are obtained through parameter identification
+	or other methods, is physically impossible or not and to modify the
+	set of base-parameter values that was judged to be physically impossible.
+	Hence, the result would directly contribute to model-based control
+	of manipulators or motion simulation for manipulators. In this paper,
+	a sufficient condition for the inertial matrix to be positive definite
+	for each configuration of the manipulator is given by use of physical
+	inertial parameters of the links composing the manipulator. By use
+	of this condition and a set of “virtual parameters,” a scheme is
+	given to judge if a set of base-parameter values determine the inertial
+	matrix to be always positive definite or not.},
+  doi = {10.1177/02783640022066996},
+  eprint = {http://ijr.sagepub.com/content/19/5/498.full.pdf+html},
+  url = {http://ijr.sagepub.com/content/19/5/498.abstract}
+}
+
+@comment{jabref-meta: selector_publisher:}
+
+@comment{jabref-meta: selector_author:}
+
+@comment{jabref-meta: selector_journal:}
+
+@comment{jabref-meta: selector_keywords:}
+

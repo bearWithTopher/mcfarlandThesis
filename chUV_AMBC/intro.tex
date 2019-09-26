@@ -1,0 +1,94 @@
+%\section{INTRODUCTION} \label{sec.intro} 
+
+
+This Chapter addresses the problem of adaptive model-based trajectory
+tracking control of \acp{UV} for dynamic 6-\ac{DOF} motion.
+%
+The approach employed herein, \ac{AMBC}, estimates plant parameters
+during the trajectory-tracking control process.
+%
+The adaptive controller estimates parameters for a rigid-body plant
+such as vehicle mass and added hydrodynamic mass parameters; quadratic
+drag parameters; and gravitational force and buoyancy parameters that
+arise in the dynamic models of rigid-body \acp{UV}.
+%
+We report a non-adaptive model-based control algorithm for
+trajectory-tracking control of fully-actuated rigid-body underwater
+vehicles, its adaptive extension, and mathematical analysis of the
+stability of the resulting closed-loop systems.
+%
+We report a comparative experimental evaluation of \ac{AMBC} and
+\ac{PDC} in full scale vehicle trials utilizing the Johns Hopkins
+University Hydrodynamic Test Facility and \ac{JHUROV} (Appendix
+\ref{appenJHUHTF.sec.hydrolab}).
+%
+The experimental evaluation shows that \ac{AMBC} provides better
+position tracking performance (30\%) and marginally worse velocity
+tracking performance (8\%) over \ac{PDC}.
+%
+To the best of the authors' knowledge, this is the first experimental
+comparison of \ac{AMBC} and \ac{PDC} \acp{UV} during simultaneous
+motion in all six \ac{DOF}.
+
+
+This Chapter is in two parts. 
+%
+Section \ref{chUV_AMBC.sec.theory} reports a non-adaptive \ac{MBC} algorithm and
+an \ac{AMBC} algorithm for \acp{UV}.
+%
+Section \ref{chUV_AMBC.sec.unmodeledActDyn} reports results indicating 
+that unmodeled thruster dynamics can destabilize parameter
+adaptation and a two-step \ac{AMBC} algorithm which is robust to 
+unmodeled thruster dynamics. 
+
+
+The results from Sections \ref{chUV_AMBC.sec.twoStepMethod} and
+\ref{chUV_AMBC.sec.unmodeledActDyn} are reported in a paper submitted
+to the 2014 International Conference on Robotics and Automation
+\cite{mcfarland.icra2014}.
+
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+
+% However 
+% %
+% %DON'T USE SUCH A COMPLEX SENTENCE STRUCTURE
+% Although this paper reports a novel MBAC for \ac{UV}, the
+% main objective of this text is presenting practial {\color{red}
+%   difficulties} to \ac{UV} \ac{AMBC} and solutions to those {\color{red}
+%   difficulties}.
+% %
+% As such, ...
+
+
+% %----- somewhere in here---------------
+% In this paper we propose using Adaptive Tracking Control algorithm
+
+% from \ref{theo.UV_AMBC} assuming the gravitational parameters ($g$
+% and $b$) are known.  In Section \ref{sec.fullAnalysisFailure} we show
+% \ac{UV} Full-Parameter \ac{AMBC} fails due to thruster stiction during pitch
+% and/or roll actuation.  In Section \ref{sec.twoStepExp} we demonstrate
+% experimentially that \ac{UV} Dynamic-Only-Parameter \ac{AMBC} provides
+% asmtotically improving trajectory-tracking, a good model of vehicle
+% performance.  It is therefore robust to the thruster stiction failure
+% mode seen in the Full-Parameter 
+
+
+% Section ____ presents two experiments where \ac{AMBC} is used to follow a pitch only referece trajectory.  
+% %
+% The range of motion is changed such that one pitch only reference
+% trajectroy requires thrust reversals and the other pitch only
+% reference trajectory does not.
+% %
+% A comparative analysis of the parameter adaption process of these
+% single \ac{DOF} experiments shows how a small amount of unmodeled dynamics
+% near thrust reversals can cause unstable parameter adaptation.
+% %
+% Section _____ shows how a straightforward implmentation of the \ac{AMBC}
+% presented exhibits unstable parameter adaptation in the presence of
+% unmodeled thruster dynamics during thrust reversals.
+% %
+% Section _____ shows the two-step alogithm provides an \ac{AMBC} which,
+% while still in the presence of unmodeled dynamics near thrust
+% reversals, still provides improved trajectory-tracking and parameters
+% estimats which are physically realistic.

@@ -1,0 +1,107 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\DeclareMathOperator{\SE3}{SE(3)}
+\DeclareMathOperator{\SO3}{SO(3)}
+\DeclareMathOperator{\se3}{se(3)}
+\DeclareMathOperator{\so3}{so(3)}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\Ad}{Ad}
+\DeclareMathOperator{\ad}{ad}
+%\DeclareMathOperator{\exp}{exp}
+\usepackage[pdftex]{color,graphicx}
+
+\newcommand{\gbreg}{\mathbb{W}_{gb}}
+
+\begin{document} 
+
+
+\title{ Adaptive Identification and Control for Unmanned Underwater Vehicles:\\
+Theory and Comparative Experimental Evaluations}
+
+\author{Christopher J. McFarland}
+
+\maketitle
+
+This Thesis reports several novel algorithms for state observation,
+parameter identification, and control of second-order plants.  The
+primary applications considered are underwater vehicle adaptive
+identification and adaptive tracking control. Previous adaptive model
+identification methods have focused on model-based adaptive tracking
+controllers; however, these approaches are not applicable when the
+plant is either uncontrolled, under open-loop control, or using any
+control law other than a specific adaptive tracking controller.  The
+underwater vehicle adaptive identifier reported herein does not
+require reference trajectory-tracking, linear acceleration, or angular
+acceleration.  Thus, these results are applicable in the commonly
+occurring cases of uncontrolled vehicles, vehicles under open-loop
+control, vehicles using control methods prescribed to meet other
+application-specific considerations, and vehicles not instrumented to
+measure angular acceleration. The final contribution of this Thesis is
+the development of a novel fully-coupled underwater vehicle adaptive
+model-based controller and a comparative experimental evaluation of
+adaptive model-based control and proportional derivative control for
+simultaneous underwater vehicle motion in 6 degrees-of-freedom. A
+stability proof for each new result is included.
+
+The standard models for underwater vehicle dynamic operation evolve on the set of
+rigid-body transformations, SE(3).  Thus, the first third of this
+Thesis is focused on utilizing the group structure of SO(3) and SE(3)
+in the development of one state observer and two adaptive identifiers
+for simple mechanical systems. These results are the theoretical
+antecedents of the underwater vehicle results presented later in the text.  The plant
+of the angular velocity observer is a three degree-of-freedom
+second-order rigid-body rotating under the influence of an externally
+applied torque.  Numerical simulations of the novel angular velocity
+observer and two previously reported observers are included.  The
+simulation results show similar performance of all three observers for
+most angular position trajectories and inertia tensors.  A novel
+adaptive identification algorithm is reported for a three
+degree-of-freedom second-order rigid-body rotating under the influence
+of an externally applied torque, along with a simulation study. An
+open kinematic-chain adaptive identifier is also reported.
+
+The underwater vehicle adaptive identifiers presented herein estimate the
+hydrodynamic mass, quadratic drag, gravitational force, and buoyancy
+parameters of a second-order rigid-body plant under the influence of
+actuator forces and torques.  An experimental comparison of adaptive
+identification and conventional least squares parameter identification
+is reported. The experimental results corroborate the analytic
+stability analysis, showing that the adaptively estimated plant
+parameters converge to values that provide plant-model input-output
+behavior closely approximating the input-output behavior of the actual
+experimental underwater vehicle. The adaptively identified model was
+shown to be similar to the least squares identified model in its
+ability to match the actual vehicle's input-output characteristics.
+
+The underwater vehicle model-based adaptive tracking controller presented herein
+estimates the hydrodynamic mass, quadratic drag, gravitational force,
+and buoyancy parameters of a fully-coupled second-order rigid-body
+plant while providing asymptotically exact trajectory-tracking.
+
+A comparative experimental evaluation of proportional derivative and
+adaptive model-based control for underwater vehicles is also reported.
+%
+To the best of the authors' knowledge, this is the first such
+evaluation of model-based adaptive tracking control for underwater
+vehicles during simultaneous dynamic motion in all 6 degrees-of-freedom.
+%
+This experimental evaluation revealed the presence of unmodeled
+thruster dynamics arising during reversals of the vehicle's thrusters,
+and that the unmodeled thruster dynamics
+%these short duration, small magnitude unmodeled deviations from the
+%  commanded input 
+can destabilize parameter adaptation.
+%
+The three major contributions of this experimental evaluation are: an
+experimental analysis of how unmodeled thruster dynamics can
+destabilize parameter adaptation, a two-step adaptive model-based
+control algorithm which is robust to the thruster modeling errors
+present, and a comparative experimental evaluation of adaptive
+model-based control and proportional derivative control for
+fully-actuated underwater vehicles preforming simultaneous 6
+degree-of-freedom trajectory-tracking.
+
+
+\end{document}

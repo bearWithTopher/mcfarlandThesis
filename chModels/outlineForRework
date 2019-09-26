@@ -1,0 +1,48 @@
+Section: Lit Review (FOCUS ON WHERE READERS CAN GET MORE INFO)
+
+
+
+Section: State Representations
+  subsection:SO(3) w/ inverse jacobian introduction
+  subsection:SE(3) w/ inverse jacobian introduction
+     "To the best of the authors knowlege, a closed form version
+     of the the SE(3) jacobian has yet to be found, but Bullo in 
+     ____ found a closed form of its inverse."
+
+
+
+Section: Conventions
+  subsection: fuction definions
+  subsection :norm definitions and conventions
+      -->those needed for angVelObs proof
+      -->those needed for OKC proof
+  subsection: eigenvalue conventions
+
+
+
+
+Section:  2nd Order Rotational Plant
+      ->short intro
+  subsection: 2nd Order Rotational Plant in the Presence of 
+              a known external torque
+  subsection: UV model in the presence of a known external torque
+                  ->Refer to 6-DOF UV Model section to justify       
+
+
+
+Section:  6-DOF UV Model 
+  subsection: the model
+  subsection: the meaning of the terms
+  subsection: justify the model's aplicability
+
+
+
+Section: OKC Model
+      -> short intro 
+
+
+
+
+
+
+

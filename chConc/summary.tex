@@ -1,0 +1,53 @@
+\section{Thesis Summary}
+
+
+This Thesis reports algorithms for state estimation, adaptive
+parameter identification, and model-based control  principally for
+\ac{UV} applications.
+%
+An analytical proof of stability is included for every reported algorithm.
+%
+Chapter \ref{chSMS_ID} reports an angular velocity observer for
+rotating rigid-bodies, an \ac{AID} algorithm for rotating rigid-bodies,
+and an \ac{AID} algorithm for \acp{OKC}.
+%
+Numerical simulations of the \ac{AID} algorithm for rotating
+rigid-bodies corroborate the analytical stability analysis and
+investigate parameter convergence with varying initial conditions,
+adaptation gains, and input torques.
+%
+Chapter \ref{chSMS_ID} also reports a comparative analysis of three
+nonlinear angular velocity observer for rotating rigid-bodies; in
+numeric simulations the novel angular velocity observer (Theorem
+\ref{chSMS_ID.theo.AVO_Theorem}) is shown to provide performance
+similar to that of the two previously reported observers.
+
+
+Chapter \ref{chUV_AID} reports two \ac{AID} algorithms for the dynamic
+estimation of \ac{UV} plant parameters.
+%
+Chapter \ref{chUV_AID} also reports two comparative experimental
+evaluations of \acl{AID} and \acl{LS}.
+%
+Both the \acp{AIDPM} and the \acp{LSPM} are shown to match closely the
+experimentally observed \ac{UV} input-output behavior.
+%
+Adaptive identification algorithms do not require simultaneous
+reference trajectory-tracking control, nor do they require
+instrumentation of linear acceleration or angular acceleration.
+%
+Together, these facts make adaptive identification applicable to a
+wider class of \acp{UV} than previously reported methods.
+%
+Chapter \ref{chUV_AMBC} reports an \ac{UV} \ac{MBC} algorithm and
+\ac{UV} \ac{AMBC} algorithm.  
+%
+Chapter \ref{chUV_AMBC} also reports an experimental evaluation of the
+destabilizing effects of unmodeled thruster dynamics on \ac{AMBC} and a
+two-step \ac{AMBC} algorithm which is shown experimentally to be
+robust in the presence of unmodeled thruster dynamics.
+%
+A comparative experimental analysis of the two-step \ac{AMBC} and
+\ac{PDC} is reported; it showed that \ac{AMBC} provides 30\% better
+position tracking performance and marginally worse (8\%) velocity
+tracking performance over \ac{PDC}.

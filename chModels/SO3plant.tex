@@ -1,0 +1,99 @@
+\subsection{3-\acs{DOF} Rotational Dynamics Model}
+\label{chModels.sec.SO3plant}
+
+
+%Using the functions defined in Section \ref{chModels.sec.functionDefn} and
+%state definitions from Section \ref{chModels.sec.SO3}, 
+The commonly accepted model of a rigid-body rotating under the
+influence of an external torque $\tau \in \mathbb{R}^{3}$ is given by
+
+\begin{align} \label{chModels.eq.SO3plant}
+\dot{R} &=R\widehat{\omega}                         \nonumber \\
+\dot{\omega} &=I^{-1}\left(\mathcal{J}\left(I\omega\right)\omega+\tau\right) 
+\end{align}
+
+\noindent where $\omega \in \mathbb{R}^{3}$ is the plant's angular
+velocity, $R\in\SO3$ is the plant's rotational position, and
+$I\in\mathbb{R}^{3\times 3}$ is the plant's \ac{SPD} inertia
+tensor\cite{Taylor2005}. 
+
+
+An alternate form of plant dynamics can be developed using a regressor
+matrix since the second equality in (\ref{chModels.eq.SO3plant}) is
+linear $I$, the plant's inertia tensor.
+%
+Let
+$\lambda_1,\;\cdots,\;\lambda_6\in\rSp{}$
+be the six unique scalars in $I$ such that 
+%
+{\ssp
+$I=\left[\begin{array}{ccc}
+\lambda_1 & \lambda_2 & \lambda_3 \\
+\lambda_2 & \lambda_4 & \lambda_5 \\
+\lambda_3 & \lambda_5 & \lambda_6 
+\end{array}\right]$.} 
+%
+%A least squares estimate of $I$ can be
+%obtained using the signals $\dot{\omega}(t)$, $\omega(t)$, and
+%$\tau(t)$.  
+Defining the matrix $P_I$ as
+%
+\begin{equation}
+\ssp
+  P_I=\left[ \begin{array}{cccccc}
+      {\color{red}1} & 0 & 0 & 0 & 0 & 0 \\
+      0 & {\color{red}1} & 0 & 0 & 0 & 0 \\
+      0 & 0 & {\color{red}1} & 0 & 0 & 0 \\
+      0 & {\color{red}1} & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & {\color{red}1} & 0 & 0 \\
+      0 & 0 & 0 & 0 & {\color{red}1} & 0 \\
+      0 & 0 & {\color{red}1} & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & {\color{red}1} & 0 \\
+      0 & 0 & 0 & 0 & 0 & {\color{red}1} \\
+    \end{array}\right],
+\end{equation}
+%
+and $\theta_I$ as
+\begin{equation}
+\theta_I=\left[\begin{array}{cccccc}
+\lambda_1 &
+\lambda_2 &
+\lambda_3 &
+\lambda_4 &
+\lambda_5 &
+\lambda_6 
+\end{array}\right]^T
+\end{equation}   
+%
+%\begin{equation}
+%\theta_I=\left[\begin{array}{c}
+%\lambda_1 \\
+%\lambda_2 \\
+%\lambda_3 \\
+%\lambda_4 \\
+%\lambda_5 \\
+%\lambda_6 \\
+%\end{array}\right]
+%\end{equation}   
+%
+we have the relation 
+%
+\begin{equation}\label{chModels.eq.IstackToTheta}
+I^S=P_I\theta_I.
+\end{equation}
+%
+The second equality in (\ref{chModels.eq.SO3plant}) can be factored as 
+%
+\begin{align}
+  \tau(t)&= \left(\dot{\omega}(t)^T \otimes \mathbb{I}+\omega(t)^T
+    \otimes \mathcal{J}(\omega(t))\right)P_I \theta_I        \nonumber \\
+  &=\Ireg(\omega,\dot{\omega}) \theta_I, \label{chModels.eq.SO3_LS}
+\end{align}
+%
+\noindent where $\mathbb{I}\in\mathbb{R}^{3\times 3}$ is the identity
+matrix and  
+%
+\begin{equation}
+\Ireg(\omega,\dot{\omega})=\dot{\omega}(t)^T \otimes
+\mathbb{I}+\omega(t)^T \otimes \mathcal{J}(\omega(t))P_I.
+\end{equation}

@@ -1,0 +1,198 @@
+%2012-09-20   toph   Started this document today
+%                    Using as starting point root.tex from
+%                    2010_Webster_Thesis
+%                    and   
+
+\documentclass[12pt,twoside,final]{sty/thesis}
+% \raggedbottom %needed for twoside class option
+
+
+\usepackage{cleveref}
+\usepackage{sty/cite}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+%\usepackage[dvips]{graphicx}
+%\graphicspath{{./figs/}}
+%\DeclareGraphicsExtensions{.eps}
+\usepackage{fixltx2e}
+\usepackage{array}
+% wrapfig is fragile: use sparingly
+\usepackage{wrapfig}
+\usepackage{times}  % Use this for ugly fonts
+
+\usepackage{sty/fancyhdr} % Use nice looking headers along with the required footer page numbers   
+%\usepackage[hypertex]{hyperref}
+
+%Define the header/footer style
+\pagestyle{fancy}
+\fancyhf{}
+\setlength{\headheight}{15pt}
+\lhead{\leftmark}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\fancypagestyle{plain}{% Redefine ``plain'' style for chapter boundaries
+\fancyhf{} % clear all header and footer fields
+\fancyfoot[C]{\thepage} % except the center
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}}
+% set the max depth of the TOC
+\setcounter{tocdepth}{2}
+
+%-------------------------------------------------------------------------
+%------------------topher's typical custom packages-----------------------
+%-------------------------------------------------------------------------
+%\usepackage[pdftex]{color,graphicx}
+\usepackage[pdftex]{color}
+%\usepackage{xcolor}
+%\usepackage{cite}
+\usepackage{sty/widetext}
+\usepackage{amsfonts} % for \mathbb command
+%\usepackage{mathtools} % for \coloneqq command
+\usepackage{enumerate} % for \begin{enumerate} command
+\usepackage{subfigure}
+\usepackage{sty/my_SIunits}
+%\usepackage{sty/my_acronyms}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{rotating} %for sidewaystable enviorment
+
+\input{tophCustomCommands}
+
+%-------------------------------------------------------------------------
+%------------------           THEOREMS             -----------------------
+%-------------------------------------------------------------------------
+
+\newtheorem{realOrth_Factorization}{Lemma}[section]
+\newtheorem{diagMat_Factorization}[realOrth_Factorization]{Lemma}
+\newtheorem{genMat_Factorization}[realOrth_Factorization]{Theorem}
+\newtheorem{PDS3_Factorization}[realOrth_Factorization]{Corollary}
+\newtheorem{SO3_AVO}{Theorem}[section]
+\newtheorem{SO3_AID}{Theorem}[section]
+\newtheorem{OKC_AID}{Theorem}[section]
+\newtheorem{UV_SO3_AID}{Theorem}[section]
+\newtheorem{UV_SE3_AID}{Theorem}[section]
+\newtheorem{UV_MBC}{Theorem}[section]
+\newtheorem{UV_AMBC}[UV_MBC]{Theorem}
+%-------------------------------------------------------------------------
+%------------------Sarah's chosen custom packages-------------------------
+%-------------------------------------------------------------------------
+\usepackage{acronym}
+% \usepackage{cancel}
+% \usepackage{sty/algorithmic}
+%\usepackage{sty/algorithm}
+% \usepackage{sty/subfig}
+% \usepackage[countmax]{sty/subfloat}
+\usepackage{sty/tocvsec2} % allows different TOC depths in document 
+% \usepackage[usenames]{color}
+% \definecolor{MyBlue}{rgb}{0,0.5,1.0}
+% %\usepackage{setspace}     % use to set linspacing
+% % \usepackage{rotating}   % for single beacon App
+% \usepackage{tabularx}     % for single beacon App
+% \usepackage{epigraph}     % for pithy quote at the beginning of the chapter
+% \setlength{\epigraphwidth}{.94\textwidth} % increase width of epigraph
+% \usepackage{setspace}     % use to set linspacing
+
+% Sarah's custom def'n
+% \newcommand{\vect}[1]{\boldsymbol{#1}}
+% \newcommand{\mtrx}[1]{\boldsymbol{#1}}
+% % define my own TOL and TOA subscript
+% \def\tol{{\scriptscriptstyle TOL}}
+% \def\toa{{\scriptscriptstyle TOA}}
+% \def\sub#1{\mbox{\scriptsize $#1$}}
+% % define new lower case font in math
+% \newcommand{\altfont}[1]{\text{\fontfamily{cmr}\selectfont#1}}
+% % define some layout parameters that might get me 
+% % in trouble with the thesis layout and binding 
+% % guards at the library
+% \renewcommand{\topfraction}{0.85}
+% \renewcommand{\textfraction}{0.1}
+% \renewcommand{\floatpagefraction}{0.75}
+% % trying to get math equations under control
+% \setlength{\jot}{.1ex}
+% \renewcommand*\arraystretch{.6}
+
+%\tolerance=10000
+
+\pdfpagewidth 8.5in
+\pdfpageheight 11in 
+
+%\def\subsubsub#1{{\paragraph{\underline{#1}}}}
+%\def\subsubsubsub#1{{\subparagraph{#1}}}
+%\def\subfive#1{{\noindent\textbf{#1}}}
+%\def\subsubsub#1{{\noindent\bfseries\scshape\underline{#1}}}
+%\def\subsubsubsub#1{{\noindent\bfseries\itshape #1}}
+
+%\makeglossary % enable the glossary
+
+\begin{document}
+
+
+\title{ Adaptive Identification and Control for Underwater Vehicles:\\
+%for Underwater Vehicles:\\
+Theory and Comparative Experimental Evaluations}
+
+\author{Christopher J. McFarland}
+\degreemonth{November}
+\degreeyear{2013} 
+\dissertation
+\doctorphilosophy
+\copyrightnotice
+
+
+% add your chapters, best way is to have separate TeX files for each chapter
+\input{chap0/chap0}
+\input{chIntro/chIntro}
+\input{chModels/chModels}
+\input{chSMS_ID/chSMS_ID}
+\input{chUV_AID/chUV_AID}
+\input{chUV_AMBC/chUV_AMBC}
+\input{chConc/chConc}
+
+%2012-09-20  toph  Until I need appendices, lets just comment this out
+% %% APPENDICES
+\appendix
+% % only show chapter headings for appendices (Note: must reset counter
+% % before listoftables and listoffigures, see Chapter0.tex)
+\settocdepth{chapter}
+\input{appenJHUHTF/appenJHUHTF.tex}
+\input{appenJacSE3/appenJacSE3.tex}
+% \input{appKF.tex}
+% \input{appIF.tex}
+% \input{appIFex.tex}
+
+
+%% REFERENCES
+\bibliographystyle{sty/IEEEtranS}
+\bibliography{tophrefs/new,tophrefs/sweb,tophrefs/iros2011,tophrefs/robot,tophrefs/rov,tophrefs/books,tophrefs/kod,tophrefs/llw} %tophrefs/bibs,tophrefs/jck,tophrefs/rme,
+
+\begin{vita}
+
+ \dssp
+ \begin{wrapfigure}{l}{0pt}
+   \includegraphics[width=1.5in]{toph_bwCrop}
+ \end{wrapfigure}
+
+ Christopher J. McFarland was born in Tulsa, Oklahoma in 1983.  From
+ 2002 to 2007 he participated in the Dual-Degree program between the
+ University of Puget Sound in Tacoma, Washington and Washington
+ University in St.\ Louis, Missouri.  Christopher attended both
+ institutions, receiving both a \mbox{B.\ A.\ } in Physics with a minor in Math
+ from the University of Puget Sound and a \mbox{B.\ S.\ } in Mechanical
+ Engineering from Washington University in May 2007.  In August 2007
+ he enrolled in the Mechanical Engineering Ph.D.\ program at Johns
+ Hopkins University.
+
+ Christopher has been recognized with several distinctions including
+ Eagle Scout by the Boy Scouts of America in 2000; a Brown Fellowship
+ for Dual-Degree Engineering Students from 2005-2007; NSF Graduate
+ Research Fellowship honorable mention in 2007 and 2008; Johns Hopkins
+ University Mechanical Engineering Department Fellowship 2007-2008;
+ National Defense Science and Engineering Graduate Fellowship
+ 2008-2011; Link Foundation Doctoral Research Fellowship in Ocean
+ Engineering and Instrumentation 2012-2013; and Achievement Rewards
+ for College Scientists Fellowship 2012-2013.
+
+\end{vita}
+
+\end{document}

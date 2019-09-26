@@ -1,0 +1,88 @@
+\section{Problem Statements}
+\label{chUV_AID.sec.probStatement}
+
+In this Chapter we report two parameter \ac{AID} algorithms, one for
+3-\ac{DOF} \ac{UV} rotational dynamics, and the other for 6-\ac{DOF}
+\ac{UV} dynamics.  In both cases the \ac{AID} algorithm estimates the
+plant parameters using the \ac{UV} state and control input signals.
+In these problem statements, the torque and force signals are the
+plant inputs and the velocity signals are the plant outputs.  The
+\ac{AID} convergence proofs imply the input-output behavior of the
+estimator converges asymptotically to the input-output behavior of the
+plant. Below are the precise problem statements for the two \ac{AID}
+algorithms.
+
+%-----------------------------------------------------------------------
+
+%\subsection{\ac{AID} Problem Statement for 3-\ac{DOF} \ac{UV}
+% rotational dynamics}
+\vspace*{5mm} { \it  3-\ac{DOF} \ac{UV}
+ Rotational Dynamics \ac{AID} Problem Statement:} 
+%
+Using the notation defined in Section
+\ref{chModels.sec.UVSO3plant} to model a \ac{UV} subjected to external
+torques with (\ref{chModels.eq.UVSO3plant}), the \ac{AID} algorithm
+reported in Section \ref{chUV_AID.sec.UV_SO3_AID} addresses plants
+where $R(t)$, $\omega(t)$, and $\tau(t)$ are accessible signals and
+the parameters $\{I,\; C_1,\; C_2,\; C_3,\; b\}$ are constant but
+unknown.  This \ac{AID} algorithm addresses the class of inputs
+$\tau(t)$ such that the input torque and output velocity signals of
+the uncontrolled plant ($\tau(t)$ and $\omega(t)$) are bounded. The
+algorithm uses an angular velocity estimate $\hat{\omega}(t)\in
+\mathbb{R}^{3}$, inertia tensor estimate
+$\hat{I}(t)\in\mathbb{R}^{3\times 3}$, quadratic drag estimates
+$\hat{C}_i(t)\in\mathbb{R}^{3\times 3}$, and buoyancy torque
+estimate $\hat{b}(t)\in \mathbb{R}^{3}$ as state variables. Defining
+the error coordinates
+\begin{align}
+\Delta\omega(t)&=\hat{\omega}(t)-\omega(t)  \label{chUV_AID.eq.deltaw} \\
+\Delta I(t)&=\hat{I}(t) - I                 \label{chUV_AID.eq.deltaI} \\
+\Delta C_i(t)&=\hat{C}_i(t) - C_i             \label{chUV_AID.eq.deltaC} \\
+\Delta b(t)&=\hat{b}(t) - b                \label{chUV_AID.eq.deltabSO3} 
+\end{align}
+\noindent the goal is to develop update laws for $\hat{\omega}(t)$,
+$\hat{I}(t)$, $\hat{C}_i(t)$, and $\hat{b}(t)$ which, for initial
+parameter values in the neighborhood of their respective true values,
+guarantee that $\lim_{t\to \infty}\Delta \omega(t)=\vec{0}$,
+$\lim_{t\to \infty}\dot{\hat{I}}(t)=0_{3\times 3}$, $\lim_{t\to
+  \infty}\dot{\hat{C}}_i(t)=0_{3\times 3}$, and $\lim_{t\to
+  \infty}\dot{\hat{b}}(t)=\vec{0}$. 
+
+%----------------------------------------------------------------
+
+%\subsection{6-\ac{DOF} \ac{UV} \ac{AID} Problem Statement}
+\vspace*{5mm} { \it 6-\ac{DOF} \ac{UV} \ac{AID} Problem Statement:}
+Using the notation defined in Section \ref{chModels.sec.UVSE3plant} to
+model a \ac{UV} subjected to external forces and torques with
+(\ref{chModels.eq.UVSE3plant}), the \ac{AID} algorithm reported in
+Section \ref{chUV_AID.sec.UV_SE3_AID} addresses plants where $R(t)$,
+$v(t)$, and $u(t)$ are accessible signals and the parameters \{$M$,
+$D_i$ for $i=1\cdots6$, $g$, $b$\} are constant but unknown.  This
+\ac{AID} algorithm addresses the class of inputs $u(t)$ such that the
+input and output signals of the uncontrolled plant are bounded
+(i.e. $u(t)$ and $v(t)$, or equivalently $f(t)$, $\tau(t)$ and
+$\nu(t)$, $\omega(t)$, are bounded). The algorithm uses a vehicle
+velocity estimate $\hat{v}(t)\in \realSpace{3}$, hydrodynamic mass
+matrix estimate $\hat{M}(t)\in\realSpace{6\times 6}$, quadratic drag
+estimates $\hat{D_i}(t)\in\realSpace{6\times 6}$, gravitational
+constant estimate $\hat{g}(t)\in\realSpace{} $, and buoyancy
+torque estimate $\hat{b}(t)\in\realSpace{3}$ as state variables. Defining
+the error coordinates
+\begin{align}
+\Delta v(t)&=\hat{v}(t)-v(t)                \label{chUV_AID.eq.deltav} \\
+\Delta M(t)&=\hat{M}(t) - M                 \label{chUV_AID.eq.deltaM} \\
+\Delta D_i(t)&=\hat{D}_i(t) - D_i            \label{chUV_AID.eq.deltaD} \\
+\Delta g(t)&=\hat{g}(t) - g                 \label{chUV_AID.eq.deltag} \\
+\Delta b(t)&=\hat{b}(t) - b                \label{chUV_AID.eq.deltabSE3} 
+\end{align}
+\noindent the goal is to develop update laws for $\hat{v}(t)$,
+$\hat{M}(t)$, $\hat{D}_i(t)$, $\hat{g}(t)$, and $\hat{b}(t)$ which, for
+initial parameter values in the neighborhood of their respective true
+values, guarantee that $\lim_{t\to \infty}\Delta
+v(t)=\vec{0}$, $\lim_{t\to \infty}\dot{\hat{M}}(t)=0_{6\times
+  6}$, $\lim_{t\to \infty}\dot{\hat{D}}_i(t)=0_{6\times 6}$, $\lim_{t\to \infty}\dot{\hat{g}}(t)=\vec{0}$, and
+$\lim_{t\to \infty}\dot{\hat{b}}(t)=\vec{0}$.
+
+In the remainder of this Chapter we omit explicit notation of variable
+dependence on time except where such dependence is required to discuss
+the initial condition of the \ac{AID} algorithms.

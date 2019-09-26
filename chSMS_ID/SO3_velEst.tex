@@ -1,0 +1,24 @@
+\section{Angular Velocity Observation for 3-\acs{DOF} Rotational Plants}
+\label{chSMS_ID.sec.SO3_velObs}
+  
+This Section addresses the velocity observer problem for
+three-dimensional second-order rotational plants of the form
+(\ref{chModels.eq.SO3plant}) when the signals of torque input and
+angular position are available, but the signal of plant angular
+velocity is unavailable.  Using the input torque signal, angular
+position signal, and plant's known inertia tensor the goal of the
+velocity observer is to asymptotically exactly estimate the plant's
+unknown angular velocity.
+
+This Section presents a novel angular velocity observer, along with an
+analysis of its stability. A comparative analysis of the novel and two
+previously reported nonlinear angular velocity observers is
+presented. Numerical simulations of all three show convergence of the
+observer state to the plant state and similar performance for most
+angular position trajectories and inertia tensors.
+
+\input{chSMS_ID/SO3_velObsDer}
+\input{chSMS_ID/SO3_velObsSal}
+\input{chSMS_ID/SO3_velObsTT}
+\input{chSMS_ID/SO3_velObsSim}
+\input{chSMS_ID/SO3_velObsConc}

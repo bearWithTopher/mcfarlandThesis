@@ -1,0 +1,416 @@
+\section{6-\acs{DOF} \acs{UV} \acs{AID}}
+\label{chUV_AID.sec.UV_SE3_AID}
+
+This Section reports a novel nonlinear \ac{AID} algorithm for
+6-\ac{DOF} \ac{UV} plant models of the form
+(\ref{chModels.eq.UVSE3plant}).
+%
+A local stability analysis is also included. 
+%
+This proof of Theorem \ref{chUV_AID.theo.UV_SE3_AID} is provided in
+two parts.
+%
+First, in Section \ref{chUV_AID.sec.UVSO3_AID_errSys}, the error system
+is developed.
+%
+Then, in Section \ref{chUV_AID.sec.UVSO3_AID_convProof}, we prove the result.  
+%\subsection{Adaptive Identification of a UV subject to Drag, Gravity, 
+%  Buoyancy, External Forces, and Torques}\label{sec.ROVAID}
+
+
+
+\begin{UV_SE3_AID}
+\label{chUV_AID.theo.UV_SE3_AID}
+
+
+Consider the following \ac{AID} algorithm for plants of the form
+(\ref{chModels.eq.UVSE3plant}):
+%
+\begin{align}
+  \dot{\hat{v}}=&\hat{M}^{-1}\left(\ad_v^T(\hat{M}v)
+  +\left(\sum_{i=1}^6 |v_i|\hat{D}_i\right) v + 
+  \hat{\mathcal{G}}(R)+u\right) - a \Delta v   \label{chUV_AID.eq.UV_SE3_Estimator}\\
+  \dot{\hat{M}}=&\frac{\gamma_1}{2}\left(-\psi_1 v^T 
+    -v \psi_1^T+\Delta v \psi_2^T
+  +\psi_2 \Delta v^T\right)\label{chUV_AID.eq.UV_SE3_MassId}\\
+  \dot{\hat{D_i}}=&-\gamma_2|v_i|\Delta v v^T
+  \label{chUV_AID.eq.UV_SE3_DragId}\\
+   \dot{\hat{g}}=&-\gamma_3 \Delta \nu^T R^T e_3
+  \label{chUV_AID.eq.UV_SE3_GravId} \\
+   \dot{\hat{b}}=&\gamma_4\mathcal{J}(\Delta \omega) R^T e_3
+  \label{chUV_AID.eq.UV_SE3_BuoyId} 
+\end{align}
+%
+\noindent with the following definitions:
+%
+\begin{itemize}
+\item $a,\gamma_1,\gamma_2,\gamma_3,\gamma_4\in\mathbb{R}_+$
+\item $\hat{\mathcal{G}}(R)= \left[ \begin{array}{c}\hat{g} R^T e_3   
+    \\ \mathcal{J}(\hat{b})R^T e_3 \\ \end{array}\right]$
+\item $\psi_1=\ad_v(\Delta v)$
+%\item $\psi_2=\dot{\hat{v}}+a \Delta v$
+\item $\psi_2$ such that
+\begin{align}
+\psi_2=&\dot{\hat{v}}+a \Delta v \nonumber \\
+       = &\hat{M}^{-1}\left(\ad_v^T(\hat{M}v)
+  +\left(\sum_{i=1}^6 |v_i|\hat{D}_i\right) v + 
+  \hat{\mathcal{G}}(R)+u\right)
+%\nonumber
+\end{align}
+\end{itemize}
+%
+\noindent and the following assumptions:
+%
+\begin{itemize}
+\item $u(t)$ is bounded by assumption
+\item $\hat{M}(t_0)$ is \ac{SPD}
+\item $\hat{v}(t_0)=v(t_0)$
+\item $\exists \epsilon \in \mathbb{R}_+$ such that 
+$\mathcal{T}(t_0)^{1/2}+\epsilon\leq \lambda_6$ where
+\begin{equation} 
+  \mathcal{T}(t_0)=\|\Delta M(t_0)\|_F^2 +
+                    \frac{\gamma_1}{\gamma_2}\sum_{i=1}^6 \|\Delta D_i(t_0)\|_F^2 + 
+                    \frac{\gamma_1}{\gamma_3}\Delta g(t_0)^2
+                     + \frac{\gamma_1}{\gamma_4}\|\Delta b(t_0)\|^2.
+\end{equation}
+\end{itemize}
+%
+\noindent Under these conditions the estimated angular and linear
+velocities will be asymptotically stable in the sense of Lyapunov,
+i.e., $\lim_{t\to \infty}\Delta v=\vec{0}$, and the parameter
+estimates will converge to constant values, i.e., $\lim_{t\to
+  \infty}\dot{\hat{M}}(t)=0_{6\times 6}$, $\lim_{t\to
+  \infty}\dot{\hat{D}}_i(t)=0_{6\times 6}$, $\lim_{t\to
+  \infty}\dot{\hat{g}}(t)=0$, and $\lim_{t\to
+  \infty}\dot{\hat{b}}(t)=\vec{0}$. 
+\end{UV_SE3_AID}
+
+This local stability result implies that the plant parameter estimates
+converge to values that provide plant model input-output behavior
+identical to that of the actual experimental plant for the given input
+force and torque signals.  Note that since the initial mass matrix
+estimate is \ac{SPD} and the parameter estimate law is symmetric, both
+$\hat{M}(t)$ and $\Delta M(t)$ will be symmetric, and thus they will
+have strictly real eigenvalues.
+
+\subsection{\ac{UV} \ac{AID} Error System}\label{chUV_AID.sec.UV_SE3_error}
+\label{chUV_AID.sec.UVSE3_AID_errSys}
+
+
+%From the update laws (\ref{eq.rovMassId})-(\ref{eq.rovRightMomId}), the time
+%derivatives of (\ref{eq.deltaM})-(\ref{eq.deltabSE3}) are
+%
+%\begin{align}
+%\dot{\Delta M}&=\dot{\hat{M}} \nonumber \\
+%              &=\frac{\gamma_1}{2}\left(\psi_1 v^T +v \psi_1^T 
+%               +\Delta v \psi_2^T+\psi_2 \Delta v^T\right)
+%\label{eq.deltaMdot} \\
+%\dot{\Delta D_i}&=\dot{\hat{D}}_i \nonumber \\
+%                &=-\gamma_2|v_i|\Delta v v^T
+%\label{eq.deltaDdot} \\
+%\dot{\Delta g}&=\dot{\hat{g}}  \nonumber \\
+%              &=-\gamma_3 \Delta \nu^T R^T e_3
+%\label{eq.deltagdot} \\
+%\dot{\Delta b}&=\dot{\hat{b}}  \nonumber \\
+%           &=\gamma_4\mathcal{J}(\Delta \omega) R^T e_3.
+%\label{eq.deltabSE3dot} 
+%\end{align}
+%TM_RUNNING_OUT_OF_SPACE you could get rid of this and refer directly to 
+% the ID laws at the final step to get \dot{V}(t) and cut this out...
+
+Note the actual plant parameters are constant, thus
+$\Delta \dot{M}=\dot{\hat{M}}$, $\Delta \dot{D}_i=\dot{\hat{D}}_i$,
+$\Delta \dot{g}=\dot{\hat{g}}$, and $\Delta \dot{b}=\dot{\hat{b}}$.  
+%\noindent 
+Using $ M \hat{M}^{-1}= \mathbb{I} -\Delta M \hat{M}^{-1}$ (where
+$\mathbb{I}$ is the identity matrix) and $\Delta\mathcal{G}(R)=
+\left[ \begin{array}{c}\Delta g R^T e_3 \\ \mathcal{J}(\Delta b)R^T
+    e_3 \\ \end{array}\right]$ the expression for velocity error
+dynamics becomes
+%We make use of $\mathcal{H}(v_1)v_2=-\ad(v_2)v_1$,
+%$\psi_2=\hat{M}^{-1}\left( \mathcal{H}(\hat{M}v)v +\left(\sum_{i=1}^6
+%    |v_i|\hat{D}_i\right) v + \hat{\mathcal{G}}(R)+u\right)$, and
+% in developing the following
+%velocity error dynamics expression:
+
+\begin{align}\label{chUV_AID.eq.UV_SE3_Mdeltavdot}
+M\Delta \dot{v}
+ =&M\left(\dot{\hat{v}} - \dot{v}\right)
+\nonumber \\
+ =&-a M \Delta v
+%\nonumber \\
+  +M \hat{M}^{-1}\left( \ad_v^T(\hat{M}v)
+  +\left(\sum_{i=1}^6 |v_i|\hat{D}_i\right) v + 
+  \hat{\mathcal{G}}(R)+u\right)  
+\nonumber \\
+  &-\left(\ad_v^T(M v)+\left(\sum_{i=1}^6 |v_i|D_i
+    \right)v+\mathcal{G}(R)+u\right)
+\nonumber \\
+=&-a M \Delta v   
+%\nonumber \\
+ +\left( \ad_v^T(\hat{M}v)
+  +\left(\sum_{i=1}^6 |v_i|\hat{D}_i\right) v + 
+  \hat{\mathcal{G}}(R)+u\right)
+  -\Delta M \psi_2  
+\nonumber \\
+  &-\left(\ad_v^T(M v)+\left(\sum_{i=1}^6 |v_i|D_i
+    \right)v+\mathcal{G}(R)+u\right)
+\nonumber \\ 
+=&-a M \Delta v-\Delta M \psi_2+\ad_v^T(\Delta M v)
+%\nonumber \\
+ +\left(\sum_{i=1}^6 |v_i|\Delta D_i\right) v + 
+  \Delta \mathcal{G} (R)
+\end{align}
+
+
+\subsection{\ac{UV} \ac{AID} Convergence Proof}\label{chUV_AID.sec.UV_SE3_proof}
+\label{chUV_AID.sec.UVSE3_AID_convProof}
+
+Consider the following Lyapunov function candidate
+\begin{equation}
+\label{chUV_AID.eq.UV_SE3_lyap}
+V(t)=\frac{1}{2}\Delta v^{T} M \Delta v  
+      +\frac{1}{2\gamma_1}\tr\left(\Delta M \Delta M^{T}\right) %\label{eq.lyap} \\
+     +\frac{1}{2\gamma_2}\sum_{i=1}^6\tr\left(\Delta D_i \Delta D_i^{T}\right)
+     +\frac{1}{2\gamma_3}\Delta g^2    
+     +\frac{1}{2\gamma_4}\Delta b^T \Delta b 
+%\nonumber
+\end{equation}
+%
+\noindent $V(t)$ is
+%
+\begin{itemize}
+\item positive definite
+%\item radially unbounded
+\item equal to zero if and only if $\Delta v=\vec{0}$, $\Delta
+  M=0_{6\times 6}$,$\forall i$ $\Delta D_i=0_{6\times 6}$, $\Delta
+  g=0$, and $\Delta b=\vec{0}$.
+\end{itemize}
+%
+\noindent From (\ref{chUV_AID.eq.UV_SE3_Mdeltavdot}) and the facts
+that for any matrices $A$ and $B$ of appropriate dimension
+$\tr(AB)=\tr(BA)$ and for any $x_1,x_2,x_3\in\mathbb{R}^3 \quad
+x_1^T\mathcal{J}(x_2)x_3=-x_2^T\mathcal{J}(x_1)x_3$, the time
+derivative of (\ref{chUV_AID.eq.UV_SE3_lyap}) is
+
+\begin{align}
+\dot{V}(t)
+ =&\frac{1}{2}\left(\Delta \dot{v}^T M \Delta v
+   +\Delta v^T M \Delta\dot{ v}\right)  
+   +\frac{1}{\gamma_1}\tr\left(\Delta M \Delta\dot{ M}^{T}\right)
+  \nonumber \\
+  &+\frac{1}{\gamma_2}\sum_{i=1}^6\tr\left(\Delta D_i \Delta\dot{ D}_i^{T}\right)
+   +\frac{1}{\gamma_3}\Delta g \Delta\dot{ g}
+   +\frac{1}{\gamma_4}\Delta b^T \Delta\dot{ b}
+  \nonumber  \\
+ =&-a\Delta v^T M \Delta v
+   +\frac{1}{2}\left(\ad_v^T(\Delta M v) -\Delta M \psi_2\right)^T \Delta v
+  %\nonumber  \\
+  +\frac{1}{2}\Delta v^T \left(\ad_v^T(\Delta M v) -\Delta M \psi_2\right)
+  \nonumber  \\
+  &+\frac{1}{\gamma_1}\tr\left(\Delta M \Delta\dot{ M}^{T}\right) 
+  %\nonumber  \\
+  +\Delta v^T \left(\sum_{i=1}^6 |v_i|\Delta D_i\right) v 
+   +\frac{1}{\gamma_2}\sum_{i=1}^6\tr\left(\Delta D_i \Delta\dot{ D}_i^{T}\right)
+  \nonumber  \\
+  &+\Delta v^T\Delta \mathcal{G} (R) +\frac{1}{\gamma_3}\Delta g \Delta\dot{ g}
+   +\frac{1}{\gamma_4}\Delta b^T \Delta\dot{ b}
+  \nonumber  \\
+ =&-a\Delta v^T M \Delta v
+   +\frac{1}{2}\left(\psi_1^T \Delta M v -\Delta v^T \Delta M \psi_2\right)
+  %\nonumber  \\
+  +\frac{1}{2}\left(v^T \Delta M \psi_1 -\psi_2^T \Delta M \Delta v\right) 
+  \nonumber  \\
+  &+\frac{1}{\gamma_1}\tr\left(\Delta M \Delta\dot{ M}^{T}\right)
+   +\frac{1}{\gamma_2}\sum_{i=1}^6\tr\left(\Delta D_i \Delta\dot{ D}_i^{T}\right)
+  +\sum_{i=1}^6\left(|v_i|\Delta v^T \Delta D_i v\right)
+  \nonumber \\
+  & +\frac{1}{\gamma_3}\Delta g \Delta\dot{ g}
+   +\frac{1}{\gamma_4}\Delta b^T \Delta\dot{ b}
+  %\nonumber  \\
+  +\left[ \begin{array}{cc}\Delta \nu^T \Delta \omega^T \\ \end{array}\right]
+    \left[ \begin{array}{c}\Delta g R^T e_3   
+    \\ \mathcal{J}(\Delta b)R^T e_3 \\ \end{array}\right]
+  \nonumber \\
+ =&-a\Delta v^T M \Delta v
+    +\frac{1}{\gamma_1}\tr\left(\Delta M \Delta\dot{ M}^{T}\right)   
+ % \nonumber  \\
+  +\frac{1}{2}\tr\left(\Delta M \left(\psi_1v^T  -\Delta v\psi_2^T 
+     +v\psi_1^T -\psi_2\Delta v^T \right)\right) 
+  \nonumber  \\
+  &+\frac{1}{\gamma_2}\sum_{i=1}^6\tr\left(\Delta D_i \Delta\dot{ D}_i^{T}\right)
+   +\sum_{i=1}^6 \tr\left(|v_i|\Delta D_i v\Delta v^T \right) 
+  %\nonumber  \\
+  +\frac{1}{\gamma_3}\Delta g \Delta\dot{ g}
+   +\Delta \nu^T \Delta g R^T e_3
+  \nonumber \\
+  &+\frac{1}{\gamma_4}\Delta b^T \Delta\dot{ b}
+   +\Delta \omega^T\mathcal{J}(\Delta b)R^T e_3
+  \nonumber \\
+ =&-a\Delta v^T M \Delta v
+    +\frac{1}{\gamma_1}\tr\left(\Delta M \Delta\dot{ M}^{T}\right)   
+  %\nonumber  \\
+  +\frac{1}{2}\tr\left(\Delta M \left(\psi_1v^T  -\Delta v\psi_2^T 
+     +v\psi_1^T -\psi_2\Delta v^T \right)^T\right) 
+  \nonumber  \\
+  &+\frac{1}{\gamma_2}\sum_{i=1}^6\tr\left(\Delta D_i \Delta\dot{ D}_i^{T}\right) 
+  %\nonumber  \\
+  +\sum_{i=1}^6 \tr\left(\Delta D_i \left(|v_i|\Delta v v^T\right)^T\right)
+   +\frac{1}{\gamma_3}\Delta g \Delta\dot{ g}
+  \nonumber \\
+  &+\Delta \nu^T \Delta g R^T e_3
+   +\frac{1}{\gamma_4}\Delta b^T \Delta\dot{ b}
+   -\Delta b^T\mathcal{J}(\Delta \omega)R^T e_3
+\label{chUV_AID.eq.UV_SE3_lyapDotLong}
+\end{align}
+%TM_IF_RUNNING_OUT_OF_SPACE  You could comment out the second-to-last step above
+
+%Using (\ref{eq.deltaMdot})-(\ref{eq.deltabSE3dot}) results in
+The actual parameters are constant; thus substituting 
+(\ref{chUV_AID.eq.UV_SE3_MassId})-(\ref{chUV_AID.eq.UV_SE3_BuoyId}) into
+(\ref{chUV_AID.eq.UV_SE3_lyapDotLong}) yields
+%
+\begin{equation}\label{chUV_AID.eq.UV_SE3_lyapDot}
+\dot{V}(t)=-a\Delta v^T M \Delta v,
+\end{equation}
+%
+\noindent which is negative definite in $\Delta v$ and negative
+semi-definite in the error coordinates $\Delta v$, $\Delta M$, $\Delta
+D_i$, $\Delta g$, and $\Delta b$.  By Lyapunov's direct method,
+(\ref{chUV_AID.eq.UV_SE3_lyap}) and (\ref{chUV_AID.eq.UV_SE3_lyapDot})
+imply that all error coordinates are bounded and stable.  The
+structure of $\dot{V}(t)$ implies that $\Delta v \in \mathcal{L}_2$
+or, equivalently, $\lim_{t\to\infty}\left( \int_{t_0}^t\Delta v^T
+  \Delta v\right)^{1/2}<\infty$.  We must ensure every signal in
+(\ref{chUV_AID.eq.UV_SE3_Estimator})-(\ref{chUV_AID.eq.UV_SE3_BuoyId})
+is bounded.  With $v$, $u$, $\Delta v$, $\Delta M$, $\Delta D_i$,
+$\Delta g$, and $\Delta b$ bounded and $M$, $D_i$, $g$, and $b$
+constant, and given
+(\ref{chUV_AID.eq.deltav})-(\ref{chUV_AID.eq.deltabSE3}) we can
+conclude that $\hat{v}$, $\hat{M}$, $\hat{D}_i$, $\hat{g}$, and
+$\hat{b}$ are bounded. All that remains is showing that $\hat{M}^{-1}$
+is bounded.
+%
+Note for $\forall t>t_0$ the following hold:
+\begin{itemize}
+\item 
+$\frac{1}{\gamma_2}\sum_{i=1}^6\tr\left(\Delta D_i(t) \Delta
+  D_i^T(t)\right)\geq 0$
+\item 
+$\frac{1}{\gamma_3}\Delta g(t)^2\geq 0$
+\item 
+$\frac{1}{\gamma_4}\Delta b^T(t) \Delta b(t) \geq 0$
+\item 
+$0 \leq V(t) \leq V(t_0)$
+\item 
+$\Delta v(t_0)=\vec{0}$ 
+\item
+$ \Delta v^T(t) M \Delta v (t)\geq 0$
+\item 
+$\frac{1}{\gamma_1}\tr\left(\Delta M(t) \Delta M^T(t)\right)=
+\frac{1}{\gamma_1}\sum_{i=1}^6|\Delta\lambda_i(t)|^2=\frac{1}{\gamma_1}\|\Delta
+M(t)\|_F^2$
+\end{itemize}
+%
+These facts can be used to show
+%
+\begin{align}
+\frac{1}{\gamma_1}\|\Delta M(t)\|_F^2
+  \leq&\frac{1}{\gamma_1}\tr\left(\Delta M(t) \Delta M^T(t)\right)
+\nonumber \\
+  \leq&\frac{1}{\gamma_1}\tr\left(\Delta M(t) \Delta M^T(t)\right) + \Delta v^T(t) M \Delta v (t)
+%\nonumber \\
+       +\frac{1}{\gamma_2}\sum_{i=1}^6\tr\left(\Delta D_i(t) \Delta D_i^{T}(t)\right)
+\nonumber \\
+      & +\frac{1}{\gamma_3}\Delta g(t)^2    
+       +\frac{1}{\gamma_4}\Delta b^T(t) \Delta b(t) 
+\nonumber \\
+   \leq&2 V(t)
+\nonumber \\
+   \leq&2 V(t_0)
+\nonumber \\
+   \leq&\frac{1}{\gamma_1}\|\Delta M(t_0)\|_F^2 +
+        \frac{1}{\gamma_2}\sum_{i=1}^6 \|\Delta D_i(t_0)\|_F^2 + 
+%\nonumber \\
+       \frac{1}{\gamma_3}\Delta g(t_0)^2+ \frac{1}{\gamma_4}\|\Delta b(t_0)\|^2,
+%\nonumber
+\end{align}
+%
+or equivalently, 
+%
+\begin{equation}
+\|\Delta M(t)\|_F\leq\mathcal{T}(t_0)^{1/2}.
+\end{equation}
+%
+By the Rayleigh-Ritz Theorem, $\min_{\|x\|=1}
+x^T \hat{M}(t) x=\hat{\lambda}_6(t)$.  Additionally since
+$\hat{M}(t)=M+\Delta M(t)$ and by assumption
+$\mathcal{T}(t_0)^{1/2}+\epsilon\leq \lambda_6$, the following
+inequalities hold:
+%
+\begin{align}
+\hat{\lambda}_6(t)
+ &= \min_{\|x\|=1}\left(x^T M x + x^T \Delta M(t) x\right)
+\nonumber \\
+ &\geq\min_{\|x\|=1}\left(x^T M x\right)-\max_{\|x\|=1}|x^T\Delta M(t)x|
+\nonumber \\
+ &\geq\lambda_6-\|\Delta M(t)\|_2
+\nonumber \\
+ &\geq\lambda_6-\left(\sum_{i=1}^6|\Delta\lambda_i(t)|^2\right)^{1/2}
+\nonumber \\
+ &\geq\lambda_6-\|\Delta M(t)\|_F
+\nonumber \\
+ &\geq\lambda_6-\mathcal{T}(t_0)^{1/2}
+\nonumber \\
+ &\geq\lambda_6-\left(\lambda_6-\epsilon\right)
+\nonumber \\
+ &\geq\epsilon
+\end{align}
+%
+where $\epsilon$ is a finite positive scalar and we use the fact that
+$\|\Delta M(t)\|_2^2=\max(|\Delta \lambda_1(t)|^2,|\Delta
+\lambda_6(t)|^2)$ because the singular values of a symmetric matrix
+are equal to the absolute values of its eigenvalues.
+%
+The above inequality guarantees that all eigenvalues of $\hat{M}(t)$
+are positive and bounded away from zero for all time. 
+%
+The fact that all signals in (\ref{chModels.eq.UVSE3plant}) and
+(\ref{chUV_AID.eq.UV_SE3_Estimator}) are bounded implies that $\dot{v}$
+and $\dot{\hat{v}}$ are bounded.  
+%
+These bounded signals imply that $\Delta \dot{v}$ is bounded.  
+%
+Note that bounded $\Delta \dot{v}$ and $\Delta v \in \mathcal{L}_2$
+implies% $\lim_{t\to \infty}\Delta v=\vec{0}$.
+%
+\begin{equation}
+\lim_{t\to \infty}\Delta v=\vec{0}.
+\end{equation}
+%
+%\noindent 
+Since every signal in the parameter update equations
+(\ref{chUV_AID.eq.UV_SE3_MassId})-(\ref{chUV_AID.eq.UV_SE3_BuoyId})
+are bounded and $\lim_{t\to \infty}\Delta v=\vec{0}$ this implies
+%$\lim_{t\to \infty}\dot{\hat{M}}=0_{6 \times 6}$, $\lim_{t\to
+%  \infty}\dot{\hat{D}}_i=0_{6 \times 6}$, $\lim_{t\to
+%  \infty}\dot{\hat{g}}=0$, $\lim_{t\to \infty}\dot{\hat{g}}=0$, and
+%  $\lim_{t\to \infty}\dot{\hat{b}}=\vec{0}$.
+%
+\begin{align}
+\lim_{t\to \infty}&\dot{\hat{M}}=0_{6 \times 6},
+\nonumber \\
+\lim_{t\to \infty}&\dot{\hat{D}}_i=0_{6 \times 6}\; \; \forall i\in\left\{1,\cdots,6\right\},
+\nonumber \\
+\lim_{t\to \infty}&\dot{\hat{g}}=0,\text{ and}
+\nonumber \\
+\lim_{t\to \infty}&\dot{\hat{b}}=\vec{0}.
+%\nonumber
+\end{align}
+%\noindent 
+The estimator's angular and linear velocities
+asymptotically converge to the velocities of the actual plant, and
+the estimated parameters converge to constant values.
+%
+Thus, the local stability of the reported \ac{AID} algorithm for
+6-\ac{DOF} \ac{UV} dynamics is proven.

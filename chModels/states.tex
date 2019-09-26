@@ -1,0 +1,169 @@
+\section{State Representations}
+
+\subsection{Rotating Rigid-Body Kinematics}
+%\subsection{Special Orthogonal Group}
+\label{chModels.sec.SO3}
+
+\noindent We use three state representations of rigid-body angular
+position and velocity:
+\begin{itemize}
+\item $q\in\mathbb{R}^3$, the angular position in so(3)
+exponential coordinates,
+\item $\omega\in\mathbb{R}^3$, the body-frame angular velocity, and
+\item $R\in\SO3$, the rotation matrix from the body-frame to the
+  world-frame.
+\end{itemize}
+%
+The relations between these state representations are given by
+%
+\begin{align}
+R=&e^{\mathcal{J}(q)}  \\
+\dot{R}=&R\mathcal{J}(\omega).
+\end{align}
+
+%------------------old version------------------------------
+% We represent the angular position of the rigid body in so(3)
+% exponential coordinates as $q\in\mathbb{R}^3$ and it's angular
+% velocity as $\omega\in\mathbb{R}^3$.
+% %
+% Angular position can also be represented as a rotation matrix
+% from a body-frame to a world-frame, $R\in\SO3$.
+% %
+% The relations between these state representations are
+
+% \begin{align}
+% R=&e^{\mathcal{J}(q)}  \\
+% \dot{R}=&R\mathcal{J}(\omega).
+% \end{align}
+
+
+
+\noindent Throughout this study we make use of the relation between
+the body-frame angular velocity, $\omega$, and the time derivative of
+the exponential coordinate position, $\dot{q}$, which takes the form
+%
+\begin{equation}
+\omega=\mathcal{A}(q) \dot{q}.
+\end{equation}
+%
+The closed form for the Jacobian \funDefn{A}{\rSp{3}}{\rSp{3\times 3}}
+given by
+%
+\begin{equation}\label{chModels.eq.A}
+A(q)=I+\left(\frac{1-\cos{\|q\|}}{\|q\|}\right)\frac{\mathcal{J}(q)}{\|q\|}+
+\left(1-\frac{\sin{\|q\|}}{\|q\|}\right)\frac{\mathcal{J}(q)^2}{\|q\|^2}.
+\end{equation}
+%
+was first reported by Park in \cite{Park1991}. The inverse of this mapping,
+%
+\begin{equation}
+\dot{q}=\mathcal{A}^{-1}(q)\omega,
+\end{equation}
+%
+\funDefn{A^{-1}}{\rSp{3}}{\rSp{3\times 3}} also has a closed functional
+  form given by
+%
+\begin{equation}\label{chModels.eq.Ainv}
+  \mathcal{A}^{-1}(q)=I_{3\times 3}-\frac{1}{2}\mathcal{J}(q)+\left(1-\frac{\|q\|}{2}\cot{\frac{\|q\|}{2}}\right)\frac{\mathcal{J}(q)^2}{\|q\|^2}.
+\end{equation}
+%
+This inverse exists for $\|q\|<\pi$ \cite{Park1991}.  See
+\cite{Bullo2004,Chirikjian2000} for additional properties.
+
+
+\subsection{Rotating and Translating Rigid-Body Kinematics}
+%\subsection{Special Euclidean Group}
+\label{chModels.sec.SE3}
+
+\noindent We use seven state representations of rigid-body pose and velocity:
+\begin{itemize}
+\item $\psi\in\mathbb{R}^6$, the pose in se(3) exponential
+coordinates,
+\item $v\in\mathbb{R}^6$, the body-frame velocity,   
+\item $H\in\SE3$, the homogenious transform from the body-frame to the world-frame,
+\item $R\in\SO3$, the rotation matrix from the body-frame to the
+  world-frame,
+\item $p\in\mathbb{R}^3$, the vector representing the body-frame's
+  origin in the world-frame,
+\item $\nu\in\mathbb{R}^3$, the vehicle's body-frame translational
+  velocity, and
+\item $\omega\in\mathbb{R}^6$, the vehicle's body-frame angular
+  velocity.
+\end{itemize} 
+%
+%Many of our analytic results rely on representing the vehicle's state
+%in exponential coordinates, $\psi$, and body-frame velocity, $v$.
+%
+The relations between these state representations are given by
+%
+\begin{align}
+H=&e^{\widehat{\psi}}, \\
+\dot{H}=&H\widehat{v}, \\
+H=&\left[ \begin{array}{cc}
+         R      & p  \\
+    0_{1 \times 3}  & 1  \\
+  \end{array} \right],~\text{and} \\
+v=&\left[ \begin{array}{c} \nu \\  \omega \\ \end{array} \right].
+\end{align}
+% %----------------Old Version of-------------------------------- 
+% We represent the pose of the rigid body in se(3) exponential
+% coordinates as $\psi\in\mathbb{R}^6$ and its body-frame velocity using
+% $v\in\mathbb{R}^6$. 
+% %
+% Rigid body pose can also be represented as a homogenious transform 
+% from the body-frame to the world-frame, $H\in\SE3$.
+% %
+% The relations between these state representations are
+% %
+% \begin{align}
+% H=&e^{\widehat{\psi}} \\
+% \dot{H}=&H\widehat{v}.
+% \end{align}
+% %
+% Further, note that for $R\in\SO3$, the rotation matrix from
+% the body-frame to the world-frame, and $p\in\mathbb{R}^3$, the vector
+% representing the location of body-frame's origin in the world-frame,
+% we have the equality
+% %
+% $H=\left[ \begin{array}{cc}
+%          R      & p  \\
+%     0_{1 \times 3}  & 1  \\
+%   \end{array} \right]$.
+% %
+% Finally, note that for $\nu\in\mathbb{R}^3$, the vehicle's
+% body-frame translational velocity, and $\omega\in\mathbb{R}^6$, the
+% vehicle's body-frame angular velocity, we have the equality
+% %
+% $v=\left[ \begin{array}{c} \nu \\  \omega \\ \end{array} \right]$.
+
+
+We employ the inverse SE(3) velocity Jacobian,
+\funDefn{\hat{\mathcal{A}}^{-1}}{\rSp{6}}{\rSp{6\times 6}}, as a
+relation between the body-frame velocity and time derivative of
+exponential coordinate pose
+%
+\begin{equation}\label{chModels.eq.hatAInv}
+\dot{\psi}=\hat{\mathcal{A}}^{-1}(\psi) v.
+\end{equation}
+%
+In \cite{bullo1995_SE3_PD} the authors derive a closed form expression
+for this matrix valued function, reprinted in Appendix
+\ref{appenJacSE3} as (\ref{appenJacSE3.eq.hatAinv}).
+%
+To the best of the author's knowledge a closed form expression for the
+SE(3) angular velocity Jacobian, $\hat{\mathcal{A}}\left(\psi\right)$,
+has not been reported.
+%
+Appendix \ref{appenJacSE3} provides further information on this
+Jacobian, including the derivation of a simpler closed form
+(\ref{appenJacSE3.eq.hatAinv2}), proof that
+$\psi^T\left(\hat{\mathcal{A}}^{-T}(\psi)+\hat{\mathcal{A}}^{-1}(\psi)\right)\psi=\psi^T\psi$
+(Appendix \ref{appenJacSE3.sec.PsiHatAinvPsiEquality}), and an
+upper bound for $\|\hat{\mathcal{A}}^{-1}(\psi)x\|$ (Appendix
+\ref{appenJacSE3.sec.normBound}).
+
+
+
+
+
+

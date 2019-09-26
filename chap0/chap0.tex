@@ -1,0 +1,160 @@
+%% FRONTMATTER
+\begin{frontmatter}
+
+% generate title
+\maketitle
+
+% %Produce totally blank page for towsided printing
+% \newpage
+% \thispagestyle{empty}
+% \hbox{}
+
+\begin{abstract}
+
+%\ssp
+
+\input{chap0/abstract.tex}
+
+\vspace{1.7cm}
+\noindent {\bf Thesis Adviser:}  Dr. Louis L. Whitcomb, Professor, Johns Hopkins University\\
+
+
+\vspace{0.7cm}
+\noindent {\bf Thesis Committee:}\\
+Dr. Noah J. Cowan, Associate Professor, Johns Hopkins University\\
+Dr. Dana Yoerger, Senior Scientist, Woods Hole Oceanographic Institution\\
+Dr. Marin Kobilarov, Assistant Professor, Johns Hopkins University\\
+Dr. Louis L. Whitcomb, Professor, Johns Hopkins University
+\end{abstract}
+
+\begin{acknowledgement}
+%\ssp
+%acknowledgments coming...
+\input{chap0/acknowlegement}
+\end{acknowledgement}
+
+\begin{dedication}
+ 
+\centering
+  to my teachers\\
+%  Name \\ \vspace{-0.15in}
+%  Other cool info\\ \vspace{-0.15in}
+%  stuff
+
+\end{dedication}
+
+% %Produce totally blank page for towsided printing
+% \newpage
+% \thispagestyle{empty}
+% \hbox{}
+
+% generate table of contents
+\def\baselinestretch{2.0}\large\normalsize
+\tableofcontents
+
+% %Produce totally blank page for towsided printing
+% \newpage
+% \thispagestyle{empty}
+% \hbox{}
+
+% reset toc counter so that list of tables and figures appear
+\setcounter{tocdepth}{2}
+
+% generate list of tables
+\listoftables
+
+% %Produce totally blank page for towsided printing
+% \newpage
+% \thispagestyle{empty}
+% \hbox{}
+
+% generate list of figures
+\listoffigures
+
+% %Produce totally blank page for towsided printing
+% \newpage
+% \thispagestyle{empty}
+% \hbox{}
+
+
+\chapter*{List of Acronyms}
+\addcontentsline{toc}{chapter}{List of Acronyms}
+\markboth{List of Acronyms}{}
+
+\ssp
+\begin{acronym}[ACROS]
+%2013-10-14 toph I would prefer if these acronyms were not
+%                all capitalized, but it is the easiest way
+%                to resolve capitalization problems
+% \acro{JHUROV}[JHU ROV]{Johns Hopkins University Remotely Controlled Vehicle}
+% \acro{DOF}{degree-of-freedom}
+% \acro{DVL}{doppler velocity log}
+% \acro{INS}{inertial navigation system}
+% \acro{GPS}{global positioning system}
+% \acro{LBL}{long baseline}
+% \acro{SPD}{symmetric positive definite}
+% \acro{COG}{center-of-gravity}
+% \acro{COB}{center-of-bouyancy}
+% \acro{UV}{underwater vehicle}
+% \acro{ROV}{remotely operated vehicle}
+% \acro{AUV}{autonomus underwater vehicle}
+% \acro{OKC}{open kinimatic chain}
+% \acro{AID}{adaptive identification}
+% \acro{AIDP}{adaptively identified parameter set}
+% \acro{LS}{least squares identification}
+% \acro{LSP}{least squares identified parameter set}
+% \acro{INITP}{initialization parameter set}
+% \acro{IDDAT}{experiment for parameter identification}
+% \acro{CROSS}{experiment for cross-validation}
+% \acro{MAE}{mean absolute error}
+% \acro{AMTC}{adaptive model-based tracking contoller}
+\acro{AID}{adaptive identification}
+\acro{AIDP}{adaptively identified parameter set}
+\acro{AIDPM}{adaptively identified plant model}
+\acro{AMBC}{adaptive model-based control}
+\acro{AUV}{autonomus underwater vehicle}
+\acro{COG}{center-of-gravity}
+\acro{COB}{center-of-buoyancy}
+\acro{CROSS}{experiment for cross-validation}
+\acro{DOF}{degree-of-freedom}
+\acro{DVL}{Doppler velocity log}
+%\acro{GPS}{Global Positioning System}
+\acro{IDDAT}{experiment for parameter identification}
+\acro{INITP}{initialization parameter set}
+\acro{INITPM}{initialization parameter set plant model}
+\acro{INS}{inertial navigation system}
+\acro{JHUROV}[JHU ROV]{Johns Hopkins University Remotely Controlled Vehicle}
+%\acro{LBL}{Long Baseline}
+\acro{LS}{least squares identification}
+\acro{LSP}{least squares identified parameter set}
+\acro{LSPM}{least squares identified plant model}  
+\acro{MAE}{mean absolute error}
+\acro{MBC}{model-based control}
+\acro{MNE}{mean normal of error vectors}
+\acro{OKC}{open kinematic chain}
+\acro{PDC}{proportional derivative control}  %2013-11-05 switched at LLW request
+\acro{SPD}[PDS]{positive definite symmetric}
+\acro{PROV}{Polar Remotely Operated Vehicle}
+\acro{ROV}{remotely operated vehicle}
+\acro{SMS}[SMS]{simple mechanical system}
+\acro{UV}{underwater vehicle}
+\end{acronym}
+
+% %Produce totally blank page for towsided printing
+% \newpage
+% \thispagestyle{empty}
+% \hbox{}
+
+% \chapter*{List of Mathematical Conventions}
+% \addcontentsline{toc}{chapter}{List of Mathematical Conventions}
+
+% \begin{itemize}
+% \item  $^\top$ is used for the matrix transpose operator
+% \item boldface math symbols, e.g. $\vect{x}$ and $\mtrx{Q}$, represent
+%   vectors and matrices
+% \item standard weight math symbols, e.g. $x$ and $Q$, represent
+%   scalars
+% %\item i.i.d. refers to independent and identically distributed [CITE]
+% \end{itemize}
+
+\end{frontmatter}

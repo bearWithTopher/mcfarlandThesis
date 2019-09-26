@@ -1,0 +1,53 @@
+\section{ Adaptive Identification for 3-\acs{DOF} Rotational Plants 
+  }\label{chSMS_ID.sec.SO3_AID}
+
+This Section addresses the problem of estimation the inertia tensor
+of 3-\ac{DOF} rotational plants of the form
+(\ref{chModels.eq.SO3plant}).
+%
+We report a novel \ac{AID} algorithm which estimates the inertia
+tensor for a rotating rigid-body using the signals of external torque
+and angular velocity.
+%
+A local stability proof of the new \ac{AID} algorithm is reported.
+% 
+A numerical simulation study investigates the effect of richness of
+the torque input signal on parameter estimation, the effect of
+feedback gains, the effect of initial condition, and the domain of
+stability.
+%
+The simulation studies corroborate the analytic stability analysis,
+showing that the angular velocity estimate converges asymptotically to
+the actual angular velocity of the plant and the adaptive estimate of
+the inertia tensor converges to a constant value.
+%
+Additionally, the simulation studies show that the inertia tensor
+estimate converges to the true plant inertia tensor value in the
+presence of a sufficiently rich input torque signal.
+%
+The simulation studies reveal the actual domain of attraction to
+exceed the conservative bounds arising in the stability proof, and
+identify practically useful ranges of feedback gains.
+
+
+\input{chSMS_ID/SO3_AID_Der}
+\input{chSMS_ID/SO3_AID_Sim}
+
+\subsection{ 3-\acs{DOF} Rotational Plant \acs{AID} Conclusion}
+
+This Section reports an \ac{AID} algorithm for the dynamic estimation
+of the inertia tensor of rotating plants.
+%
+The proof of Theorem \ref{chSMS_ID.theo.SO3_AID} shows the local
+asymptotic stability of the estimated angular velocity to the plant's
+angular velocity and the local stability of the estimated inertia
+tensor. 
+%
+Numerical simulations show that for a sufficiently rich external
+torque signal the inertia tensor estimate value converges to the true
+inertia tensor value, and the domain of attraction of Theorem
+\ref{chSMS_ID.theo.SO3_AID} is conservative.
+%
+In Chapter \ref{chUV_AID}, Theorems \ref{chUV_AID.theo.UV_SO3_AID} and
+\ref{chUV_AID.theo.UV_SE3_AID} extend this result to plant models of
+\ac{UV} dynamics.

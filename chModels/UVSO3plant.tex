@@ -1,0 +1,94 @@
+\subsection{3-\acs{DOF} \acs{UV} Rotational Dynamics Model}
+\label{chModels.sec.UVSO3plant}
+
+Modeling a submerged rotating rigid-body requires accounting for the
+surrounding fluid.
+%
+The most commonly employed plant models for \ac{UV} are
+finite dimensional lumped-parameter approximate models with
+vehicle-specific plant parameter terms including mass and added mass
+parameters; quadratic drag parameters; and gravity and buoyancy
+parameters.  
+%
+Previous studies have shown that including explicit terms
+for the quadratic drag and buoyancy torque within
+(\ref{chModels.eq.SO3plant}) results in a model which approximates
+the dynamics of a rotating \ac{UV}\cite{martinID_ICRA13}.
+%Using the functions defined in Section \ref{chModels.sec.functionDefn} and state
+%definitions from Section \ref{chModels.sec.SO3}, 
+Therefore, we model the rotational dynamics of an \ac{UV} as
+%
+\begin{align} \label{chModels.eq.UVSO3plant}
+\dot{R}&=R\mathcal{J}(\omega)
+\nonumber \\
+  \dot{\omega}&=I^{-1}\left(\mathcal{J}(I\omega)\omega+\left(\sum_{i=1}^3 |\omega_i|C_i
+    \right)\omega+\mathcal{J}(b)R^T e_3+\tau\right) 
+\end{align}
+%
+\noindent where $I$ is the \ac{UV}'s inertia tensor,
+$e_3=\left[ \begin{array}{ccc} 0& 0& 1\\ \end{array}\right]^T$,
+$C_1,C_2,C_3\in \mathbb{R}^{3\times 3}$ make up a general three \ac{DOF}
+coupled quadratic drag matrix, and $b\in\mathbb{R}^3$ represents the
+torque applied to the vehicle due to the relative positions of the
+\ac{UV}'s \ac{COG} and \ac{COB}.
+%The
+%length of $b$ characterizes the torque experienced by the vehicle when
+%the center of buoyancy is not directly on top of the center of
+%gravity.  
+Quadratic drag is assumed to be dissipative
+thus, $\omega^T \left(\sum_{i=1}^3
+  |\omega_i|C_i\right)\omega\leq 0$ for all $\omega\in\mathbb{R}^3$
+--- i.e. the symmetric part of $\sum_{i=1}^3 |\omega_i|C_i$ is negative
+definite.
+
+
+The second equality in (\ref{chModels.eq.UVSO3plant}) is linear in the
+plant parameters. Thus, an alternate form of \ac{UV} rotational
+dynamics can be developed using a regressor matrix.  Let the $UVR$
+subscript denote {\it\ac{UV} rotational dynamics}
+%
+%a least squares estimate of thes
+%parameters in  can be obtained using the
+%signals $\dot{\omega}(t)$, $\omega(t)$, $R(t)$ and $u(t)$.  Note that
+%(\ref{chModels.eq.UVSO3plant}) can be rewritten as
+%
+and define $\theta_{UVR}\in\rSp{36}$ as 
+%
+%\begin{equation}
+%\theta_{UVR}=\left[\begin{array}{c}
+%\theta_I \\
+%C_1^S \\
+%C_2^S \\
+%C_3^S \\
+%b
+%\end{array}\right]
+%\end{equation}
+%
+\begin{equation}\label{chModels.eq.paramVecUVR}
+\theta_{UVR}=\left[\theta_I^T\; (C_1^S)^T\; (C_2)^T \; (C_3^S)^T \; b^T\right]^T.
+\end{equation}
+%
+Then the second equality in (\ref{chModels.eq.UVSO3plant}) can be factored as
+%
+\begin{widetext}
+\begin{align}
+  \tau(t)&= \left[ \begin{array}{ccccc} 
+ \Ireg(\omega,\dot{\omega})              &
+-|\omega_1|\omega^T \otimes \mathbb{I} &
+-|\omega_2|\omega^T \otimes \mathbb{I} &
+-|\omega_3|\omega^T \otimes \mathbb{I} &
+\mathcal{J}(R^T e_3)\\ \end{array} \right] \theta_{UVR}        \nonumber \\
+      &=\UVRreg(\omega,\dot{\omega},R) \theta_{UVR}               \label{chModels.eq.UVSO3_LS} 
+\end{align}
+%
+where
+%
+\begin{equation}
+\UVRreg=\left[ \begin{array}{ccccc} 
+ \Ireg(\omega,\dot{\omega})              &
+-|\omega_1|\omega^T \otimes \mathbb{I} &
+-|\omega_2|\omega^T \otimes \mathbb{I} &
+-|\omega_3|\omega^T \otimes \mathbb{I} &
+\mathcal{J}(R^T e_3)\\ \end{array} \right].
+\end{equation}
+\end{widetext}

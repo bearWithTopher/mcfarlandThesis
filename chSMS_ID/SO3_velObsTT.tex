@@ -1,0 +1,44 @@
+\subsection{Velocity Observer from Coordinate Free Perspective}
+\label{chSMS_ID.sec.AVO_TT}
+
+In \cite{Maithripala2004} Maithripala, Berg, and Dayawansa use a
+methodology similar to techniques from geometric control to develop an
+intrinsic observer on $\SO3\times \mathbb{R}^3$ as well as on similar
+invariant Lie groups.  This study employs contraction analysis to show
+convergence of the observer state to plant state.  This result relies
+on a more general intrinsic observer for simple mechanical systems on
+a general Riemannian manifold \cite{Aghannan2003}. This study reports an
+intrinsic observer for a second-order rotational plant using
+exponential coordinates:
+%, with the , as follows
+%
+\begin{align}\label{chSMS_ID.eq.AVO_TT}
+\dot{\hat{R}}=&\hat{R} \mathcal{J}\left(\hat{\omega}-2\alpha \Delta \tilde{q}\right)
+                                                          \nonumber \\
+\dot{\hat{\omega}} 
+  =&I^{-1}\left(\mathcal{J}\left(I \hat{\omega}\right)\hat{\omega}+
+    \alpha \left(\mathcal{J}\left(I\hat{\omega}\right)\Delta \tilde{q} +\mathcal{J}\left(I \Delta \tilde{q}\right)\hat{\omega}\right)\right) 
+                                                          \nonumber \\
+    &-\alpha \mathcal{J}\left(\Delta \tilde{q}\right)\hat{\omega}-\Gamma(I^{-1}\tau,\Delta \tilde{q})
+     -J(\hat{\omega},\Delta \tilde{q})\hat{\omega}-\beta \Delta \tilde{q},
+\end{align}
+%TM: log_\SO3 is not defined yet
+%
+\noindent 
+where $\alpha$ and $\beta$ are positive scalar observer gains and the
+error term is $\Delta \tilde{q}=\log_{\SO3}(R^T \hat{R})$. Note that
+\cite{Maithripala2004} uses the rotational error matrix
+$R^T\hat{R}$; this is the transpose of the definition used in this
+Section (\ref{chSMS_ID.eq.AVO_deltaR}). Using index summation notation for
+the following definitions $\Gamma(Y,\xi)=\left(Y^k-\nu_{ij}^k Y^i
+  \xi^j\right)b_k$ and $J(\zeta,\xi)\eta=b_k\left(\mathcal{R}_{jab}^k
+  \eta^j(\zeta^a \xi^b-\zeta^b \xi^a)-\nu_{ij}^k
+  C_{ab}^i\zeta^a\eta^j\right)$ where $b_k$ are a basis of the Lie
+algebra so(3), $\nu_{ij}^k$ are the Levi-Civita connection
+coefficients, $C_{ji}^k$ are the structure constants, and
+$\mathcal{R}_{jab}^k$ are the curvature coefficients.  Note that
+$C_{ji}^k$, $\nu_{ij}^k$, and $\mathcal{R}_{jab}^k$ are constant for a
+selected basis {$b_k$} of so(3). The $\Gamma(Y,\xi)$ uses the concept
+of parallel transport to have the input torque $\tau$ act on this
+observer system in an equivalent fashion to the effect of $\tau$ on
+(\ref{chModels.eq.SO3plant}).

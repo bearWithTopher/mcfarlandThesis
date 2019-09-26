@@ -1,0 +1,180 @@
+
+\section{UV Model-Based Control}
+In this section we report a novel model-based linearizing tracking
+controller for plants of the form (\ref{eq.plantROV}).
+
+\subsection{Tracking Control of a UV subject to Drag, Gravity, 
+  Buoyancy, External Forces, and Torques}\label{sec.ROVAID}
+
+\noindent Given $\theta$ (the unique scalar parameters from $M$, $D$,
+$g$ and $b$ stacked as a vector as defined in
+\ref{chModels.eq.plantParamVec}), a desired reference trajectory
+(${^w_d}H$, ${^d}v_d$ and ${^d}\dot{v}_d$), and a regressor matrix
+$\mathbb{W}:\mathbb{R}^6\times\mathbb{R}^6\times\mathbb{R}^6\times\SE3\to
+\mathbb{R}^{6 \times 241}$ defined as
+
+\begin{equation}
+\mathbb{W}({^a}\dot{v}_d,\Delta v, {^a}v_d , {^w_a}H)\theta =
+    M{^a}\dot{v}_d - M\ad_{\Delta v}{^a}v_d -\ad_{{^a}v_a}^T M{^a}v_a
+    -\mathcal{D}({^a}v_a)-\mathcal{G}({^w_a}H),
+\end{equation}
+
+\noindent the control law 
+
+\begin{equation}
+u=-(k_p\hat{\mathcal{A}}^{-T}(\Delta \psi)+k_d\Delta v)
++\mathbb{W}({^a}\dot{v}_d,\Delta v, {^a}v_d , {^w_a}H)\theta,
+\end{equation}
+
+provides asymptotically exact trajectory-tracking for plants of the
+form (\ref{eq.plantROV}) as long as {\color{red} $\|\Delta \psi\|_2 <\pi$ }.
+
+
+\subsection{Controlled System}
+
+The controlled plant will be of the form
+
+\begin{align}
+  M{^a}\dot{v}_a=
+     &\ad_{{^a}v_a}^T M{^a}v_a+\mathcal{D}({^a}v_a)+\mathcal{G}({^w_a}H)
+\nonumber \\ 
+      &-(k_p\hat{\mathcal{A}}^{-T}(\Delta \psi)+k_d\Delta v)
++\mathbb{W}({^a}\dot{v}_d,\Delta v, {^a}v_d , {^w_a}H)\theta
+\nonumber \\
+     =&M{^a}\dot{v}_d - M\ad_{\Delta v}{^a}v_d
+      -(k_p\hat{\mathcal{A}}^{-T}(\Delta \psi)+k_d\Delta v)
+\nonumber 
+\end{align}
+
+\noindent From equation (\ref{chUV_ATMC.eq.delta_v_dot}) we get
+
+\begin{equation}\label{chUV_AMTC.eq.Mdelta_v_dot}
+M \dot{\Delta v} =       -(k_p\hat{\mathcal{A}}^{-T}(\Delta \psi)+k_d\Delta v).
+\end{equation}
+
+\noindent If we define the system error vector $x\in\mathbb{R}^{12}$
+
+\begin{equation}\label{chVU_AMTC.eq.error_x}
+x=\left[ \begin{array}{c}
+     \Delta \psi           \\
+     \Delta v              \\
+\end{array} \right]
+\end{equation}
+
+\noindent and the matrix valued function
+$\hat{\mathbb{A}}:\mathbb{R}^6\to\mathbb{R}^{12}\times\mathbb{R}^{12}$ as
+
+\begin{equation}\label{chUV_AMTC.eq.error_A}
+\hat{\mathbb{A}}(\Delta \psi)=
+\left[ \begin{array}{cc}
+     0_{6\times 6}   & \hat{\mathcal{A}}^{-1}(\Delta \psi)             \\
+     -k_p M^{-1}\hat{\mathcal{A}}^{-T}(\Delta \psi)   &  -k_d M^{-1}   \\
+\end{array} \right]
+\end{equation}
+
+\noindent then from (\ref{chUV_AMTC.eq.delta_psi_dot}),
+(\ref{chUV_AMTC.eq.Mdelta_v_dot}), (\ref{chVU_AMTC.eq.error_x}) and
+(\ref{chUV_AMTC.eq.error_A}) we see that the equation for the error
+dynamics of the system  is
+
+\begin{equation} \label{chUV_AMTC.eq.err_sys}
+\dot{x}=\hat{\mathbb{A}}(\Delta \psi) x.
+\end{equation}
+
+
+\subsection{Convergence Proof}\label{chUV_AMTC.sec.proof_MBC}
+
+Consider the following Lyapunov function candidate
+
+\begin{equation} \label{chUV_AMTC.eq.lyap}
+V(t)=\frac{1}{2} x^T\mathcal{M}_\epsilon x
+\end{equation}
+
+\noindent where 
+
+\begin{equation}\label{chUV_AMTC.eq.lyapM}
+\mathcal{M}_\epsilon=\left[ 
+\begin{array}{cc}
+  k_p\mathbb{I}_{6\times 6}  & \epsilon M         \\
+  \epsilon M               &    M               \\
+\end{array} \right].
+\end{equation}
+
+\noindent Note that $\forall k_p\in\mathbb{R}_+$ there exists an
+$\epsilon_0\in\mathbb{R_+}$ such that $\forall
+\epsilon\in\mathbb{R}_+$ for which $\epsilon < \epsilon_0$ the
+following hold for $V(t)$:
+
+\begin{itemize}
+\item $V(t)$ is positive definite
+\item $V(t)$ is radially unbounded
+\item $V(t)$ is equal to zero if and only if $x=\vec{0}$,
+\end{itemize}
+
+\noindent The time derivative of (\ref{chUV_AMTC.eq.lyap}) is 
+
+\begin{equation} \label{chUV_AMTC.eq.lyap_dot}
+\dot{V}(t)=\frac{1}{2}
+x^T\left(\hat{\mathbb{A}}^{T}(\Delta\psi)\mathcal{M}_\epsilon 
+        +\mathcal{M}_\epsilon\hat{\mathbb{A}}(\Delta\psi)\right) x
+\end{equation}
+
+\noindent From the facts
+$\Delta\psi^T\left(\hat{\mathcal{A}}^{-T}+\hat{\mathcal{A}}^{-1}\right)\Delta
+\psi=\Delta\psi^T\Delta\psi$ (shown in Section \ref{sec.show_A_to_I})
+and $\Delta v^T \left(\hat{\mathcal{A}}^{-T} M +\hat{\mathcal{A}}^{-1}
+  M\right)\Delta v \leq 2 \lambda_1 c \|\Delta v\|_2^2$ (where
+$\lambda_1$ is the max eigenvalue of $M$ and $c\in\mathbb{R}_+$ is
+such that $\|\hat{\mathcal{A}}^{-1}x\| \leq c\|x\|_2$ $\forall \psi$
+for which $\|\psi\|<\pi$ as shown in Section \ref{sec.bound_SE3_A})
+the expressions below follow
+
+\begin{align}
+\dot{V}(t) =&\frac{1}{2} x^T \left[\begin{array}{cc}
+  -\epsilon k_p \left(\hat{\mathcal{A}}^{-T}+\hat{\mathcal{A}}^{-1}\right) &
+ -\epsilon k_d \mathbb{I}_{6 \times 6}        \\
+  -\epsilon k_d \mathbb{I}_{6 \times 6}              &  
+\left(\hat{\mathcal{A}}^{-T} M +\hat{\mathcal{A}}^{-1}
+M\right)- 2k_d\mathbb{I}_{6 \times 6}                \\
+\end{array} \right] x
+\nonumber \\
+ =&\frac{1}{2} x^T \left[\begin{array}{cc}
+  -\epsilon2k_p\mathbb{I}_{6 \times 6}  &
+ -\epsilon k_d \mathbb{I}_{6 \times 6}        \\
+  -\epsilon k_d \mathbb{I}_{6 \times 6}              &  
+\left(\hat{\mathcal{A}}^{-T} M +\hat{\mathcal{A}}^{-1}
+M\right)- 2k_d\mathbb{I}_{6 \times 6}                \\
+\end{array} \right] x
+\nonumber \\
+\leq& -\epsilon  k_p \|\Delta\psi\|_2^2+\epsilon k_d\|\Delta
+\psi\|_2\|\Delta v\|_2 +\frac{\epsilon}{2}\lambda_1 c \|\Delta v\|^2_2
+-  k_d \|\Delta v\|^2_2
+\nonumber \\
+ \leq&\frac{1}{2}\left[\begin{array}{cc}
+   \|\Delta \psi\| & \|\Delta v\|
+   \end{array} \right] 
+  \left[\begin{array}{cc}
+  -\epsilon 2 k_p  & \epsilon k_d    \\
+ \epsilon k_d      &   \epsilon \lambda_1 c- 2k_d\\
+  \end{array} \right] 
+\left[\begin{array}{c}
+   \|\Delta \psi\| \\ \|\Delta v\|
+   \end{array} \right]. 
+\label{chUV_AMTC.eq.lyap_dot_bound}
+\end{align}
+
+\noindent Consider that as $\epsilon \to 0$ the 2-by-2 symmetric
+matrix in (\ref{chUV_AMTC.eq.lyap_dot_bound}) has at least one
+negative eigenvalue. Since the determinate of this matrix is equal to
+the product of its eigenvalues, if the determinate is positive for
+$\epsilon$ small enough, then both eigenvalues must be negative,
+making the matrix negative definite.  Since the determinate equals
+$\epsilon\left(-2\epsilon\lambda_1 c k_p +4k_pk_d- \epsilon k_d^2
+\right)$, $\forall\epsilon$ such that
+
+\begin{equation}
+\epsilon \leq \frac{4 k_p k_d}{2 \lambda_1 k_p c +k_d^2}
+\end{equation}
+
+\noindent then the determinate is positive and, therefore, there
+exists an $\epsilon$ such that $\dot{V}(t)$ is negative definite.

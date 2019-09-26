@@ -1,0 +1,430 @@
+\subsection{Velocity Observer from Body Frame}
+\label{chSMS_ID.sec.AVO}
+
+\newcommand{\omegaInBody}{\psi}
+
+Consider the model of a rotating rigid-body under the influence of an
+external torque, $\tau$, of the form (\ref{chModels.eq.SO3plant}) with
+angular position, $R$, and angular velocity, $\omega$, repeated here
+for the reader as
+%
+\begin{align} \label{chSMS_ID.eq.SO3plant}
+\dot{R} &=R\widehat{\omega}                         \nonumber \\
+\dot{\omega} &=I^{-1}\left(\mathcal{J}\left(I\omega\right)\omega+\tau\right).
+\end{align}
+%
+Assume the plant's \ac{SPD} inertia
+tensor, $I$, input torque signal, and angular position signal are known
+but the angular velocity signal is unknown.  Without loss of
+generality we can assume $I$ is diagonal with eigenvalues
+$0<\lambda_3\leq \lambda_2\leq \lambda_1<\infty$ in some arbitrary
+order along the diagonal.  
+%Before we can formally state the conditions
+%required to provide an asymptotically exact estimate of the plant's
+%angular velocity, we must first develop a convenient form for the
+%error dynamics of the observer.  
+We define the observer states as $\hat{R}$ and $\hat{\omega}$,
+estimates of the plant's angular position $R$ and angular velocity
+$\omega$ respectively.  We define the error signals as
+%
+\begin{align}
+\Delta R&=\hat{R}^T R                  \label{chSMS_ID.eq.AVO_deltaR} \\
+\Delta q&=\log_{\SO3}(\Delta R)        \label{chSMS_ID.eq.AVO_deltaq} \\
+\omegaInBody&=\Delta R^T \hat{\omega}          \label{chSMS_ID.eq.AVO_omegaInBody}    \\
+\Delta\omega&=\omega-\omegaInBody.            \label{chSMS_ID.eq.AVO_deltaw} 
+\end{align}
+%
+The remainder of this Section analyzes the stability of
+%With these, we will spend the rest of this section considering
+the previously unreported nonlinear angular velocity observer
+%  
+\begin{align}\label{chSMS_ID.eq.AVO}
+\dot{\hat{R}} =&\hat{R} \mathcal{J}\left(\hat{\omega}-\Delta R\mathcal{A}(\Delta q) L \Delta q\right)
+                                                          \nonumber \\
+\dot{\hat{\omega}} 
+  =&\Delta R \left( I^{-1}\left(\mathcal{J}\left(I \omegaInBody\right)\omegaInBody + \tau + 
+    \Delta q\right)-\mathcal{J}(\omegaInBody)\mathcal{A}(\Delta q)L\Delta q\right)
+\end{align}
+%
+where $L\in\rSp{3\times 3}$ is a observer gain matrix (possibly a
+function of $\psi$) yet to be determined.
+
+
+\subsubsection{Error System}
+
+The time derivative of (\ref{chSMS_ID.eq.AVO_deltaR}) is
+%
+\begin{align}\label{chSMS_ID.eq.AVO_deltaRdot}
+\Delta \dot{R}&=\dot{\hat{R}}^T R + \hat{R}^T \dot{R} \nonumber \\
+&= \Delta R \mathcal{J}\left(\Delta \omega +
+   \mathcal{A}(\Delta q) L \Delta q\right)
+\end{align}
+%
+thus
+%
+\begin{align}\label{chSMS_ID.eq.AVO_deltaqdot}
+\Delta \dot{q}
+ &=\mathcal{A}^{-1}(\Delta q)\left(\Delta \omega +
+   \mathcal{A}(\Delta q) L \Delta q\right)          \nonumber \\
+ &=L\Delta q+\mathcal{A}^{-1}(\Delta q)\Delta\omega.
+\end{align}
+%
+The time derivative of (\ref{chSMS_ID.eq.AVO_deltaw}) is
+%
+\begin{align}\label{chSMS_ID.eq.AVO_deltawdot}
+\Delta\dot{\omega}
+  =&\dot{\omega}-\Delta\dot{R}^T\hat{\omega}-\Delta
+    R^T\dot{\hat{\omega}}
+                                                        \nonumber  \\
+  =&I^{-1}\left(\mathcal{J}\left(I\omega\right)\omega + \tau\right)+\mathcal{J}\left(\Delta \omega 
+    +\mathcal{A}(\Delta q)L\Delta q\right)\omegaInBody
+                                                        \nonumber  \\
+   &-I^{-1}\left(\mathcal{J}\left(I \omegaInBody\right)\omegaInBody+\tau+\Delta q\right)+
+    \mathcal{J}(\omegaInBody)\mathcal{A}(\Delta q) L\Delta q
+                                                        \nonumber  \\
+  =&I^{-1}\left(\mathcal{J}\left(I \omega\right) \omega + 
+    I \mathcal{J}\left(\Delta \omega\right)\omegaInBody -\mathcal{J}\left(I\omegaInBody\right)
+    \omegaInBody \right)-I^{-1} \Delta q                         \nonumber  \\
+  =&-I^{-1} \Delta q + I^{-1}\left(-I\mathcal{J}(\omegaInBody)
+    +\mathcal{J}\left(I \omega\right)-\mathcal{J}(\omegaInBody)I
+    \right)\Delta\omega,
+\end{align} 
+%
+where this final equality makes use of the fact that
+%
+\begin{align*}
+\mathcal{J}\left(I\omega\right)\omega +I\mathcal{J}\left(\Delta \omega\right)\omegaInBody
+-\mathcal{J}\left(I\omegaInBody\right)\omegaInBody&=\mathcal{J}\left(I\omega\right)\left(\Delta \omega +\omegaInBody\right)
+-I\mathcal{J}(\omegaInBody)\Delta \omega -\mathcal{J}\left(I \omegaInBody\right)\omegaInBody    \nonumber   \\
+   &= \left(\mathcal{J}\left(I\omega\right)-I\mathcal{J}(\omegaInBody)
+      - \mathcal{J}(\omegaInBody)I\right)\Delta \omega.
+\end{align*}
+%
+%
+Define  
+%
+\begin{equation} \label{chSMS_ID.eq.skewSymB}
+\mathcal{B}\left(\omega,\omegaInBody\right)=
+-I\mathcal{J}(\omegaInBody)+ \mathcal{J}\left(I \omega\right)-\mathcal{J}(\omegaInBody)I,
+\end{equation}  
+%
+clearly $\mathcal{B}^T\left(\omega,\omegaInBody\right)=-
+\mathcal{B}\left(\omega,\omegaInBody\right)$ and thus
+$\mathcal{B}\left(\omega,\omegaInBody\right)$ is
+skew-symmetric. Defining 
+%
+\begin{equation}
+x=\left[\begin{array}{c}\Delta q \\ \Delta\omega\end{array}\right]
+\end{equation}
+%
+and
+%
+\begin{equation}
+\mathbb{A}(x,\omega,\omegaInBody)=
+\left[ \begin{array}{cc}
+     L   & \mathcal{A}^{-1}(\Delta q)                           \\
+     -I^{-1}   & I^{-1}\mathcal{B}(\omega,\omegaInBody)                       \\
+\end{array} \right],
+\end{equation}
+%
+from (\ref{chSMS_ID.eq.AVO_deltaqdot}) and
+(\ref{chSMS_ID.eq.AVO_deltawdot}), the full error system takes the
+form
+%
+\begin{equation}\label{chSMS_ID.eq.AVO_error}
+\dot{x} =\mathbb{A}(x,\omega,\omegaInBody)x.
+\end{equation}
+%
+\subsubsection{Stability Analysis}%\label{sec.obs.JHU}
+
+\begin{SO3_AVO}
+\label{chSMS_ID.theo.AVO_Theorem}
+Consider the error system of the form of
+  (\ref{chSMS_ID.eq.AVO_error}) with the following assumptions:
+%
+\begin{itemize}
+\item The plant satisfies the condition $4\lambda_3>\lambda_1$, and
+\item  $L(\omegaInBody)$ in the observer is set such that
+$L(\omegaInBody)=-E+F(\omegaInBody)$ where $E$ is a constant positive
+definite matrix, $F(\omegaInBody)=-I^{1/2}\mathcal{J}(\omegaInBody)I^{-1/2} +
+I^{-1/2}\mathcal{J}(I\omegaInBody)I^{-1/2} - I^{-1/2}\mathcal{J}(\omegaInBody)I^{1/2}$
+and $\omegaInBody=\Delta R^T\hat{\omega}$. %DEFINE \omegaInBody here?
+\end{itemize}
+%
+This error system is locally asymptotically stable in the sense of
+Lyapunov for a neighborhood of $x=\vec{0}$. %in the neighborhood of $\|x\|<\pi$.TM_DISAGREE
+\end{SO3_AVO}
+%
+%The condition on the eigenvalues of $I$ is required to guarantee
+%$\forall t\geq t_0 \quad \|x\|<\pi$.
+
+\noindent Proof: 
+%
+Note that for $\epsilon$ small enough the Lyapunov function
+%
+\begin{equation}\label{chSMS_ID.eq.AVO_Lyap}
+\mathfrak{L}_\epsilon =\frac{1}{2}x^T P_\epsilon x 
+\end{equation}
+%
+is
+%
+\begin{itemize}
+\item  positive definite
+%\item radially unbounded
+\item equal to zero if and only if $x =\vec{0}$
+\end{itemize}
+%
+where 
+%
+\begin{equation}
+P_\epsilon=
+\left[ \begin{array}{cc}
+     \mathbb{I}         & -\epsilon I^{1/2}  \\
+     -\epsilon I^{1/2}  & I                  \\
+\end{array} \right],
+\end{equation}
+%
+$\mathbb{I}$ is the identity matrix, and $I$ is the plant's
+inertia tensor.
+%  Although the first %two 
+%property is true $\forall x$ our local Lyapunov result will only
+%require these properties for
+%$\|x\|<\pi$.
+%TM_DISAGREE we have not proven that $P_\epsilon$ is positive definite
+% 
+%Since we can assume, without loss of generality, that
+%$I$ is diagonal it is easy to see that if $\epsilon$ is small enough
+%$P_\epsilon$ is diagonally dominant.  Therefore for all $\epsilon$ under
+%some threshold the function $\mathfrak{L}_\epsilon$ is
+
+In the sequel the explicit functional dependencies of $\mathcal{A}$,
+$\mathcal{B}$, and $L$ are no longer specified. This compact notation
+improves the clarity of the equations.  However, in this and all
+future equations: $\mathcal{A}$ denotes $\mathcal{A}(\Delta
+q)$, $\mathcal{B}$ denotes $\mathcal{B}(\omegaInBody,\omega)$, and $L$
+denotes $L(\omegaInBody)$.  Consider $\dot{\mathfrak{L}}_\epsilon$
+given by
+%
+%\begin{widetext}
+\begin{align}\label{chSMS_ID.eq.AVO_Lyapdot}
+\dot{\mathfrak{L}}_\epsilon
+  =&\frac{1}{2}\dot{x}^T P_\epsilon x +\frac{1}{2} x^T P_\epsilon \dot{x}         \nonumber \\
+  =&\frac{1}{2}x^T\left(\mathbb{A}^T P_\epsilon+P_\epsilon \mathbb{A}\right)x      \nonumber \\
+  =&\frac{1}{2}x^T\left[ \begin{array}{cc}
+    L^T+L+2\epsilon I^{-1/2}   
+    &-\epsilon L^{T} I^{1/2}-\mathbb{I}+\mathcal{A}^{-1}-\epsilon I^{-1/2}\mathcal{B} \\
+      \mathcal{A}^{-T}+\epsilon\mathcal{B}I^{-1/2} -\epsilon I^{1/2}L -\mathbb{I}  
+   & -\epsilon \mathcal{A}^{-T}I^{1/2}+\mathcal{B}^T -\epsilon I^{1/2}\mathcal{A}^{-1}+\mathcal{B} \\
+    \end{array} \right]x                                                       \nonumber \\
+  =&\frac{1}{2}x^T\left[ \begin{array}{cc}
+      -2E+2\epsilon I^{-1/2}   
+      &-\epsilon\left(-E I^{1/2}+I^{-1/2}\mathcal{J}\left(I\Delta\omega\right)\right) \\
+      -\epsilon\left(-I^{1/2}E-\mathcal{J}\left(I\Delta\omega\right)I^{-1/2}\right)
+      & -\epsilon\left(\mathcal{A}^{-T}I^{1/2}+I^{1/2}\mathcal{A}^{-1}\right) \\
+    \end{array} \right]x.
+\end{align}
+%\end{widetext}
+%
+The equality $L^T+L+2\epsilon I^{-1/2}=-2E+2\epsilon I^{-1/2}$ is a
+consequence of $F(\omegaInBody)$ being skew symmetric.  The equality
+$-\epsilon \mathcal{A}^{-T}I^{1/2}+\mathcal{B}^T -\epsilon
+I^{1/2}\mathcal{A}^{-1}+\mathcal{B}=
+-\epsilon\left(\mathcal{A}^{-T}I^{1/2}+I^{1/2}\mathcal{A}^{-1}\right)$
+is a consequence of $\mathcal{B}(\omega,\omegaInBody)$ being skew
+symmetric. The derivation of (\ref{chSMS_ID.eq.AVO_Lyapdot}) also uses
+the facts that $\mathcal{A}^{-1}(\Delta q)\Delta
+q=\mathcal{A}^{-T}\Delta q=\Delta q$ implies
+%
+\begin{equation}
+\Delta
+q^T\left(-\mathbb{I}+\mathcal{A}^{-1}\right)\Delta \omega=0;
+\end{equation} 
+%
+$-F(\omegaInBody)
+I^{1/2}+I^{-1/2}\mathcal{B}(\omegaInBody)=I^{-1/2}\mathcal{J}\left(I\Delta
+  \omega\right)$ implies
+%
+\begin{equation}
+ \epsilon\left(L^{T} I^{1/2}+
+  I^{-1/2}\mathcal{B}\right) = -\epsilon\left(-E
+  I^{1/2}+I^{-1/2}\mathcal{J}\left(I\Delta\omega\right)\right);
+\end{equation}
+%
+and
+%
+\begin{equation}
+L^T(\omegaInBody)=-E-F(\omegaInBody).
+\end{equation}
+
+
+Since $\dot{\mathfrak{L}}_\epsilon$ depends only on $\Delta q$ and
+$\Delta \omega$, $\dot{\mathfrak{L}}_\epsilon$ is bounded for all $x$
+such that $\|x\|<\pi$.  First consider the term $-\epsilon\Delta
+\omega^T\left(\mathcal{A}^{-T}I^{1/2}+
+  I^{1/2}\mathcal{A}^{-1}\right)\Delta \omega$.  Noting the
+closed-form structure of $\mathcal{A}^{-1}(\Delta q)$ from
+(\ref{chModels.eq.Ainv}), the lower diagonal term of
+(\ref{chSMS_ID.eq.AVO_Lyapdot}) obeys the following equality
+%
+\begin{align*}
+  \mathcal{A}^{-T}I^{1/2}  +I^{1/2}\mathcal{A}^{-1}=&
+2I^{1/2}+\frac{1}{2}(-\mathcal{J}(\Delta
+  q)I^{1/2}+I^{1/2}\mathcal{J}(\Delta q))+        \nonumber \\
+&\frac{1}{\|\Delta
+    q\|^2}\left(1-\frac{\|\Delta q\|}{2}\cot\left(\frac{\|\Delta
+        q\|}{2}\right)\right) 
+ \left( \mathcal{J}(\Delta q)^2 I^{1/2}+I^{1/2}\mathcal{J}(\Delta
+    q)^2 \right).
+\end{align*}
+%
+The inequalities (\ref{chModels.eq.AVO_ineq}) from Section
+\ref{chModels.sec.normConventions} and the fact
+$\left(1-\frac{\|\Delta q\|}{2}\cot\left(\frac{\|\Delta
+      q\|}{2}\right)\right)<1\quad\forall \|\Delta q\|\leq\|x\|<\pi$
+imply
+%
+\begin{align}
+-\epsilon \Delta \omega^T \left(\mathcal{A}^{-T}I^{1/2}+ I^{1/2}
+\mathcal{A}^{-1} \right)\Delta\omega& \leq 
+ \epsilon (\lambda_1^{1/2}\|\Delta
+q\|+\lambda_1^{1/2}-2\lambda_3^{1/2})\|\Delta \omega\|^2 
+\nonumber \\
+\Delta q^T \left(-2E+2\epsilon I^{-1/2}\right)\Delta q 
+&\leq-\left(2e_3-\epsilon\lambda_1\right)\|\Delta q\|^2
+\nonumber \\
+-\epsilon\Delta q^T\left(\left(-E_1I^{1/2}+I^{-1/2}\mathcal{J}
+(I\Delta\omega)\right)\right)\Delta
+\omega&\leq
+\epsilon(e_{11}\lambda_1\|\Delta q\|\|\Delta \omega\|
++\lambda_3^{1/2}\lambda_1\|\Delta q\|\|\Delta \omega\|^2).
+\nonumber 
+\end{align}
+%
+In consequence
+%
+%***********BELOW SHOWS HOW TO SPLIT PARAETHESIS***********
+% \begin{align}\label{chSMS_ID.eq.AVO_Lyapdot2}
+% 2 \dot{\mathfrak{L}}_\epsilon
+%    \leq&-\left(2e_{13}-\epsilon\lambda_1\right)\|\Delta q\|^2+
+%         \epsilon \left(\lambda_1^{1/2}\|\Delta q\|+\lambda_1^{1/2}-\right.
+%                                                        \nonumber \\
+%        &\left. 2\lambda_3^{1/2}\right)\|\Delta \omega\|^2 +
+%         2\epsilon(e_{11}\lambda_1\|\Delta q\|\|\Delta\omega\|+
+%                                                        \nonumber \\
+%        & \lambda_3^{1/2}\lambda_1\|\Delta q\|\|\Delta\omega\|^2)
+%                                                        \nonumber \\
+%    \leq&-\left(2e_{13}-\epsilon\lambda_1\right)\|\Delta q\|^2+
+%         \epsilon (\lambda_1^{1/2}-2\lambda_3^{1/2})\|\Delta \omega\|^2+ 
+%                                                        \nonumber \\
+%        &\epsilon(2e_{11}\lambda_1+2\lambda_3^{1/2}\lambda_1\pi+
+%         \lambda_1^{1/2}\pi)\|\Delta q\|\|\Delta\omega\| 
+% \end{align}
+%**********************************************************
+%
+\begin{align}\label{chSMS_ID.eq.AVO_Lyapdot2}
+2 \dot{\mathfrak{L}}_\epsilon
+   \leq&-\left(2e_{13}-\epsilon\lambda_1\right)\|\Delta q\|^2+
+        \epsilon \left(\lambda_1^{1/2}\|\Delta q\|+\lambda_1^{1/2}-
+        2\lambda_3^{1/2}\right)\|\Delta \omega\|^2 +
+                                                       \nonumber \\
+       &2\epsilon(e_{11}\lambda_1\|\Delta q\|\|\Delta\omega\|+
+        \lambda_3^{1/2}\lambda_1\|\Delta q\|\|\Delta\omega\|^2)
+                                                       \nonumber \\
+   \leq&-\left(2e_{13}-\epsilon\lambda_1\right)\|\Delta q\|^2+
+        \epsilon (\lambda_1^{1/2}-2\lambda_3^{1/2})\|\Delta \omega\|^2+ 
+                                                       \nonumber \\
+       &\epsilon(2e_{11}\lambda_1+2\lambda_3^{1/2}\lambda_1\pi+
+        \lambda_1^{1/2}\pi)\|\Delta q\|\|\Delta\omega\| 
+\end{align}
+%
+$\forall \|\Delta\omega\|\leq\|x\|<\pi$.   
+%TM_DISAGREE where the final inequality relies on $\|\Delta\omega\|\leq\|x\|<\pi$.  
+Define
+$a_1=2e_{11}\lambda_1+2\lambda_3^{1/2}\lambda_1\pi+\lambda_1^{1/2}\pi$,
+$a_2=2e_{13}$, $a_3=\lambda_1$,
+$a_4=-\lambda_1^{1/2}+2\lambda_3^{1/2}$, and observe that 
+%
+\begin{equation}
+2 \dot{\mathfrak{L}}_\epsilon\leq -z^T Q z
+\end{equation}
+%
+where
+%
+\begin{equation}
+ Q=\left[ \begin{array}{cc}
+a_2-\epsilon a_3  &  -\frac{\epsilon}{2}a_1  \\
+-\frac{\epsilon}{2}a_1 & \epsilon a_4\\
+\end{array} \right] 
+\end{equation}
+%
+and $z=\left[ \begin{array}{c}
+    \|\Delta q\| \\    \|\Delta \omega \| \\
+  \end{array} \right]$.
+$Q$ is negative definite if $\lambda_1<4\lambda_3$  and 
+$\epsilon<\frac{4 a_4 a_2}{\| 4 a_4 a_3 -a_1^2\|}$.
+
+The local asymptotic stability of the angular velocity observer is
+proven.  Note that accounting for the presence of the matrix valued
+function (\ref{chSMS_ID.eq.skewSymB}) in the error dynamics
+(\ref{chSMS_ID.eq.AVO_error}) as part of the stability analysis
+required careful selection of the Lyapunov function
+(\ref{chSMS_ID.eq.AVO_Lyap}) and matrix valued function
+$F(\omegaInBody)$ from Theorem
+\ref{chSMS_ID.theo.AVO_Theorem}. Although Corollary
+\ref{chModels.theo.PDS3_Factorization} was not explicitly required for
+the stability analysis reported, the selections of $\mathfrak{L}(t)$
+and $F(\omegaInBody)$ were enabled by this Corollary.
+
+
+% define
+
+% \begin{equation}
+% Q=\left[ \begin{array}{cc}
+%       a_2-\epsilon a_3  &  -\frac{\epsilon}{2}a_1  \\
+%       -\frac{\epsilon}{2}a_1 & \epsilon a_4\\
+%     \end{array} \right]
+% \end{equation}
+
+% \noindent  then note
+
+% \begin{equation}
+% 2 \dot{\mathfrak{L}}_\epsilon\leq-\left[\|\Delta q\| \|\Delta\omega\|\right]
+% Q
+% \left[\begin{array}{c} \|\Delta q\| \\ \|\Delta\omega\|\end{array}\right].
+% \end{equation}
+
+% \noindent Lets look at the eigenvalues 
+
+% \begin{align*}
+% 0=&det\left(Q-\mu \mathbb{I}\right)        \nonumber     \\
+%  =&\mu^2-(a_2-\epsilon a_3+\epsilon a_4)\mu + \epsilon(a_2-\epsilon a_3)a_4-\frac{\epsilon^2}{4}a_1^2 
+% \end{align*}
+
+% \noindent which leads to the eigenvalue function
+
+% \begin{align*}
+% \mu=&\frac{1}{2}(a_2-\epsilon a_3+\epsilon a_4) \pm  \nonumber  \\ 
+%     &\frac{1}{2}\sqrt{(a_2-\epsilon a_3+\epsilon a_4)^2
+%     -4\left(\epsilon(a_2-\epsilon a_3)a_4
+%   -\frac{\epsilon^2}{4}a_1^2\right)}.
+% \end{align*}
+
+% \nonumber As long as $\epsilon$ is small enough this 
+% implies  $(a_2-\epsilon a_3+\epsilon a_4)>0$.  Therefore the
+% eigenvalues of $Q$ will always be positive as long as 
+
+% \begin{align*}
+%   &\frac{1}{2}(a_2-\epsilon a_3+\epsilon a_4) >  \nonumber  \\
+%   &\frac{1}{2}\sqrt{(a_2-\epsilon a_3+\epsilon a_4)^2
+%     -4\left(\epsilon(a_2-\epsilon a_3)a_4
+%       -\frac{\epsilon^2}{4}a_1^2\right)}
+% \end{align*}
+
+% \noindent which is equivalent to 
+
+% \begin{equation}
+% -4 a_4 a_2 +\epsilon \left(4 a_4 a_3 -a_1^2\right)<0.
+% \end{equation}
+
+% \noindent Note that if $\lambda_1<4\lambda_3$  and $\epsilon$ is small
+% enough then the inequality holds.  This completes the proof.

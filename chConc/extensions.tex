@@ -1,0 +1,92 @@
+%extensions.tex
+\section{Future Work}
+
+
+In addition to the straightforward applications of \ac{UV} \ac{AID}
+and \ac{UV} \ac{AMBC} discussed in Chapter \ref{chIntro}, these
+algorithms could also enable complex, multifaceted \ac{UV} missions
+%currently being considered by oceangraphic scientists and engineers 
+by using \ac{AID} for fault detection and \ac{AMBC} for fault
+compensation.
+
+
+As shown in Chapter \ref{chUV_AID}, \ac{UV} \ac{AID} dynamically
+estimates parameters assumed to be constant.  
+%
+%uses the difference
+%between anticipated and measured \ac{UV} performance to identify plant
+%parameters.
+%
+When applying \ac{UV} \ac{AID} for fault detection, 
+%the disparity between the \ac{UV}'s anticipated and measured dynamic response still
+%drives 
+parameter adaptation is
+% however, for fault detection those parameter estimates are 
+monitored for changes indicative of \ac{UV} component failures.
+%
+Different parameters can be monitored for different types of failures.
+%
+For example, drag parameters could be used to detect entanglement,
+mass parameters could be used to detect flooded housings or detached
+components, and a general force/torque vector could be used to detect
+unanticipated \ac{UV} collisions. 
+
+ 
+As shown in Chapter \ref{chUV_AMBC}, \ac{AMBC} uses plant parameter
+estimates for model-based trajectory-tracking and these plant
+parameter estimates are iteratively improved in a process similar to
+\ac{AID}.
+%
+Since \ac{AMBC} algorithms evolve parameter estimates in a process
+similar to \ac{AID}, they are naturally robust to \ac{UV} component
+failures.
+% 
+Designing a suite of \ac{AMBC} algorithms which compensate for
+particular component failures and using a collection of \ac{AID}
+algorithms to switch between these \ac{AMBC} algorithms could allow
+fast, effective fault compensation.
+
+
+Current \ac{UV} control systems rely on engineers to detect remotely and
+compensate for vehicle component failures.
+%
+As \ac{UV} mission complexity has increased, this component failure
+detection and compensation method has become a barrier limiting future
+deployments.
+%
+Using \ac{AID} and \ac{AMBC} to automate failure detection and failure
+compensation has the potential to {\it i}) lower the amount of time
+lost due to mission aborts, {\it ii}) limit the possibility of losing
+a vehicle, and {\it iii}) enable new missions which are currently
+impossible due to vehicle safety concerns.  Missions benefiting could
+include:
+% 
+\begin{itemize}
+\item{\it Long Duration Unsupervised Deployments:} Some \ac{UV}s
+are capable of deployments lasting from days to
+weeks\cite{bellinghamTethys,kaminskiAUV2010}. The capacity to detect
+and compensate for \ac{UV} component failures increases the likelihood
+of successful unsupervised deployments.
+%
+\item{\it Semi-Autonomous \ac{UV} Operations:} Semi-autonomous
+  missions use human direction and data interpretation to accomplish
+  actions too complex to automate.  Automated failure detection will
+  allow engineers to understand the vehicle's current state and
+  predict its future capabilities.
+% 
+\item{\it Under Ice Operations:} The \ac{PROV} 
+is currently being developed for under ice
+operation\cite{PROV1,PROV2}, where surfacing in the event of a failure
+is not an option.  \ac{PROV}'s thruster redundancy will allow continued
+operation with multiple thruster failures.  However, utilizing this
+redundancy requires detecting the failures. 
+\end{itemize}
+
+
+In short, this Thesis reports adaptive algorithms which enable better
+utilization of current \acp{UV}.  These results are also the starting
+point for algorithms which enable
+%increase \ac{UV} capacity to accomplish 
+complex, multifaceted missions of both the current generation of
+\acp{UV} and those to come.
+

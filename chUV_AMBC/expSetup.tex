@@ -1,0 +1,114 @@
+
+\subsection{Experimental Setup}
+\label{chUV_AMBC.sec.expSetup}
+
+
+We employed the Johns Hopkins University Hydrodynamic Test Facility
+(Appendix \ref{appenJHUHTF}) to evaluate \ac{UV} \ac{AMBC}.
+%
+To compare the trajectory-tracking performance of controllers we
+consider the \ac{MNE} for vectors such as the position error ($\Delta
+\psi$) and velocity error ($\Delta v$).
+%
+We also report the \ac{MAE} between the measured and reference
+values for the 12 position and velocity signals.
+%
+A smaller \ac{MNE} or \ac{MAE} value means the controller is doing a
+better job tracking the reference trajectory.
+%
+As with the adaptively identified \ac{UV} models in Sections
+\ref{chUV_AID.sec.UVSO3exp} and \ref{chUV_AID.sec.UVSE3exp},
+identified \ac{UV} models are evaluated by error between simulated
+model performance and the experimentally observed performance.
+%
+\ac{MAE} values between the simulated plant states and
+experimentally measured states are reported.
+%
+Appendix \ref{appenJHUHTF} provides further details about
+our hydrodynamic test facility and algorithm evaluation methods.
+
+
+The fully-coupled model of \ac{UV} dynamics used in
+(\ref{chUV_AMBC.eq.UVSE3plant}) requires 241 independent parameter
+values.
+%
+To simplify and clarify the experimental analysis of \ac{UV} \ac{AMBC}
+in the presence of unmodeled thruster dynamics, we have implemented a
+controller which employs an uncoupled model using 16 scalar terms: 6
+hydrodynamic mass, 6 quadratic drag terms (one for each \ac{DOF} which
+we will label as $m_i$ and $d_i$ respectively), and the 4
+gravitational parameters $g$ and $b$.
+%
+For a diagonal parameter adaptation gain matrix $K_\theta$, we can
+label the individual mass parameter gains as $\gamma_{m_i}$, the
+individual drag parameter gains as $\gamma_{d_i}$, the individual
+buoyancy parameter gains as $\gamma_{b_i}$ and the gravitational
+parameter gain as $\gamma_{g}$.
+%
+Both the \ac{AMBC} control process and parameter update process
+where implemented as a discrete time approximation of the
+continuous time algorithm.
+%
+Every 100ms the commanded torque and commanded force were recalculated
+using (\ref{chUV_AMBC.eq.AMBC_controlLaw}) as well as the most recent
+state measurements, reference state values, and parameter estimates.
+%
+These inputs signals are therefore piecewise constant.
+%
+Euler integration of (\ref{chUV_AMBC.eq.AMBC_paramUpdateLaw}) for
+100ms time steps provided the time series of parameter estimates.
+%
+The 100ms \ac{JHUROV} control system cycle period is one to two
+orders-of-magnitude smaller than the \ac{JHUROV} state variation rate
+of 1 second or greater observed during dynamic operation.
+%
+In practice the discrete time approximations were seen to provide
+similar performance to the continuous time algorithm implemented in
+simulation.
+
+
+Sinusoidal reference trajectories are used in this
+study. 
+%
+Table \ref{chUV_AMBC.tb.expStat} lists the frequencies and amplitudes
+for the 6-\ac{DOF} reference trajectories used.  
+
+
+\begin{table}[htbp]
+\ssp
+\caption{Reference Trajectory Information}
+\begin{center}
+\begin{tabular}{cccc}
+ & & RefTraj1& RefTraj2 \\
+\hline
+\multicolumn{2}{c}{Reference Trajectory}  &Trajectory Control      &  Parameter \\
+\multicolumn{2}{c}{Purpose}              & Evaluation &  Cross-Validation \\
+\hline
+\ac{DOF}      & {\it Excitation} & \multicolumn{2}{c}{\it Trajectory-Tracking} \\
+world x  &  Cos Freq  & 0.242 rad/sec & 0.185 rad/sec \\ 
+         &  Cos Amp  &    0.50 m     &     0.50 m    \\ 
+\hline
+\ac{DOF}      & {\it Excitation} & \multicolumn{2}{c}{\it Trajectory-Tracking} \\
+world y  &  Cos Freq  & 0.210 rad/sec & 0.286 rad/sec \\ 
+         &  Cos Amp  &    0.50 m     &     0.50 m    \\ 
+\hline
+\ac{DOF}      & {\it Excitation} & \multicolumn{2}{c}{\it Trajectory-Tracking} \\
+world z  &  Cos Freq  & 0.185 rad/sec & 0.242 rad/sec \\ 
+         &  Cos Amp  &    0.30 m     &     0.30 m    \\ 
+\hline
+\ac{DOF}      & {\it Excitation} & {\it Trajectory-Tracking} & {\it Torque Input} \\
+roll     &  Cos Frequency  & 0.5 rad/sec & 0.55 rad/sec \\ 
+         &  Cos Amplitude  &    6.9$^\circ$    &     35 N m     \\ 
+\hline
+\ac{DOF}      & {\it Excitation} & {\it Trajectory-Tracking} & {\it Torque Input} \\
+pitch    &  Cos Freq  & 0.6 rad/sec & 0.65 rad/sec \\ 
+         &  Cos Amp  &    8.6$^\circ$    &     30 N m     \\ 
+\hline
+\ac{DOF}      & {\it Excitation} & \multicolumn{2}{c}{\it Trajectory-Tracking} \\
+heading  &  Cos Freq  & 0.210 rad/sec & 0.0824 rad/sec \\ 
+         &  Cos Amp  &    135$^\circ$  &   135$^\circ$   \\  
+\hline \end{tabular}
+\end{center}
+\label{chUV_AMBC.tb.expStat}
+%\vspace*{-5mm}
+\end{table}

@@ -1,0 +1,103 @@
+\section{Literature Review}
+ 
+Adaptive controllers for linear plants are
+well understood 
+\cite{ksn&anu.book}.
+%\cite{ksn&anu.book,sastry&bodson.book,astrom.book}.
+% 
+Adaptive reference trajectory-tracking is well
+understood for several types of second-order holonomic nonlinear
+plants whose parameters enter linearly into the plant equations of
+motion, e.g. robot manipulator arms
+\cite{Craig&hsu&sastry.ijrr87,slotine&li.ijrr87,horowitz&sadegh.ijrr90},
+ spacecraft \cite{kod.cdc85a,slotine1990},
+and  rigid-body rotational plants \cite{Chaturvedi2006}.
+% rigid-body rotational plants \cite{Chaturvedi2006}, and general
+%mechanical systems \cite{Lain1997}.
+%
+Comparative experimental evaluations of \ac{AMBC} for robot manipulator
+arms have been reported, e.g. \cite{slotine.performance,whitcomb&kod.tra93}.
+
+
+
+The structure of the \ac{MBC} algorithm reported herein was
+inspired by the proportional derivative tracking control algorithm for
+rigid-body motion in free space reported by Bullo and
+Murray\cite{bullo1995_SE3_PD}.
+%
+Our controller can be seen as a specialization of this result for
+\ac{UV} control; we use their error coordinate structure with a
+fully-coupled lumped-parameter plant model of \ac{UV} dynamics,
+(\ref{chModels.eq.UVSE3plant}).
+%
+Fully-coupled lumped-parameter plant models for \acp{UV} use a finite
+set of plant parameters which have been shown empirically to be a good
+approximation for the complex dynamics of a rigid-body and
+associated fluid-vehicle interaction.
+%
+Lumped-parameter models of \ac{UV} dynamics are used in previously
+reported \ac{MBC} algorithms.
+%
+In \cite{fossen}, Fossen summarizes lumped-parameter modeling of
+\ac{UV} dynamics and \ac{UV} \ac{MBC} using a lumped-parameter
+modeling and traditional error coordinates.
+%
+\cite{smallwood2004JOE} reports and experimentally evaluates 
+single \ac{DOF} \ac{UV} \ac{MBC} algorithms for control of the 
+x, y, depth, and heading \ac{DOF}.
+%
+\cite{martinControl_ICRA13} reports and experimentally evaluates a
+\ac{UV} \ac{MBC} algorithm assuming a fully-coupled lumped-parameter
+model; this comparative experimental evaluation of \ac{MBC} and
+\ac{PDC} included reference trajectories requiring simultaneous motion
+in all \ac{DOF} and was conducted using the Johns Hopkins University
+Hydrodynamic Test Facility (Appendix \ref{appenJHUHTF}).
+
+
+
+Previous studies have utilized a lumped-parameter \ac{UV} models in
+the development of tracking control algorithms which are robust to
+model parameter uncertainty.
+%
+In \cite{yoerger&slotine.JOE85} a sliding mode controller and
+numerical simulations of performance in X, Y, and heading is reported.
+%
+In \cite{Yuh1990} a discrete time parameter adaptation algorithm is
+reported with a numerical simulation study.  
+%
+In \cite{Fossen1991} the authors report a hybrid (adaptive and
+sliding) nonlinear \ac{UV} controller which explicitly handles
+multiplicative uncertainty in the input mapping.
+
+
+Experimental evaluations of \ac{AMBC} algorithms have also been
+reported.
+%
+Yoerger et al. reported the first experimental evaluation of nonlinear
+adaptive sliding-mode control on an \ac{UV} \cite{yoerger.icra91}.
+%
+In \cite{yuhICRA1999} an experimental evaluation of \ac{UV} \ac{AMBC}
+performance in the presence of noisy position readings is reported.
+%
+In \cite{antonelli&sarkar.cst2001} an experimental evaluation of an
+\ac{AMBC} is reported for simultaneous motion in the translational
+\acp{DOF}.
+%
+Comparative experimental evaluations of linear controllers,
+model-based controllers, and their adaptive extensions for \ac{UV} single
+\ac{DOF} motion have been reported \cite{smallwood2004JOE, maalouf2013pd}.
+%are the subject of a compartive experimental evaluation using the JHU
+%ROV.
+%
+In \cite{zhao2005experimental} a comparative experimental evaluation
+in the presence of a common external disturbance for proportional
+integral derivative control, disturbance observer control and the
+adaptive extensions of both is reported.
+%
+%In \cite{} an \ac{AMBC} algorithm for \ac{UV} depth control is
+%presented and implemented on a test vehicle.
+%
+In each of these previously reported experimental evaluations at most
+two \ac{DOF} had a non-zero reference velocity at a given moment, and
+in all cases at most set-point regulation was reported in the pitch and
+roll \ac{DOF}.

@@ -1,0 +1,92 @@
+%\subsection{Background and Paper Contribution}
+
+% In addition to quantifying expected performance gains, it is also
+% important that experimental evaluations highlight any unfounded
+% assumptions made during the controller's formulation.
+% %
+% As is shown in Section \ref{sec.fullAnalysisFailure}, the assumption
+% that pitch and roll torque applied was close enough to torque
+% commanded was not a justified assumption.
+% %
+% Like the \ac{JHUROV}, many vehicles currently deployed in the open ocean
+% are equipped with actuators which can not guarantee the exact force
+% commanded will be applied in all operating conditions.
+% %
+% \ac{UV} \acp{AMBC} have yet to achieve widespread use due to their perceived
+% fragility in real world operating conditions.
+% %
+% We anticipate that this thrust reversal modeling error is one of
+% several \ac{UV} \ac{AMBC} failure modes which contribute to this perception.
+% %
+% However, documenting one such failure mode in laboratory conditions,
+% and presenting a modification to \ac{AMBC} which is robust to the
+% underlying cause of failure, is an important step to developing \ac{AMBC}
+% algorithms which are ready for the open ocean.
+
+
+
+%\ac{UV} \acp{AMBC} have yet to achieve widespread use due to their perceived
+%fragility in real world operating conditions.
+%%
+%The \ac{JHUROV}, like many vehicles currently deployed in the open ocean, 
+%is equipped with actuators which can not guarantee the exact force
+%commanded will be applied in all operating conditions.
+%%
+%In Section \ref{sec.fullAnalysisFailure} we investigate how modeling
+%inaccuracies near thrust reversals can cause unstable parameter
+%adaptation.
+%%
+%We anticipate that this thrust reversal modeling error is one of
+%several \ac{UV} \ac{AMBC} failure modes which contribute to the perception of 
+%\ac{AMBC} fragility.  
+%%
+%\hide{We feel documenting this failure mode in laboratory conditions,
+%and presenting a modification to \ac{AMBC} which is robust to the
+%underlying cause of failure, is an important step to developing \ac{AMBC}
+%algorithms which are ready for the open ocean.}
+
+
+\subsection{Unmodeled Thruster Dynamics within \\
+                the \acs{UV} Control Process}
+
+The \ac{JHUROV} control system uses the common assumption of {\it
+steady-state} thruster operation when calculating the actuator
+commands (see Appendix \ref{appenJHUHTF.sec.hydrolab}).
+%
+In {\it steady-state} operation at zero advance velocity the axial
+thrust of a bladed-propeller marine thruster is linearly proportional
+to the applied shaft torque, and is also linearly proportional to the
+signed-square of the shaft angular-velocity
+\cite{pona.book}.  
+%
+The parameters of these steady-state thruster models
+cannot be determined analytically, but are easily estimated with
+simple steady-state experiments.
+%
+Research has shown that the {\it transient} performance of marine
+thrusters can be accurately approximated by a finite-dimensional
+second-order plant model of propeller-fluid interaction.
+%
+The plant parameters of these dynamic thruster models cannot be
+determined analytically, and are difficult to estimate experimentally
+because such identification requires highly instrumented measurements
+of the thruster thrust, prop angular velocity, and fluid flow velocity
+in unsteady operation
+\cite{yoerger.oe90,healey.joe95,bachmayer&whitcomb&grosenbaugh.joe2000,kim2006accurate}.
+
+
+Because unsteady thruster model parameters are difficult to obtain
+experimentally, in the design of marine vehicle control systems it is
+common practice to employ easily-obtained steady-state thruster models.
+%
+This approach works extremely well for steady-state or slowly
+time-varying vehicle motion, but results in the presence of unmodeled 
+thruster dynamics during highly dynamic vehicle maneuvering.
+%
+In 1984, Rohrs et al. famously showed that stable adaptive controllers
+for linear time-invariant plants can be destabilized by the presence
+of unmodeled plant dynamics \cite{rohrs.1984}. % ,middleton1988design} 
+%
+To the best of our knowledge, this is the first observation of
+unmodeled thruster dynamics resulting in the destabilization of
+\ac{AMBC}. %model-based adaptive tracking control of an \ac{UV}.

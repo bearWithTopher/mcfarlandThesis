@@ -1,0 +1,71 @@
+%\section{Introduction}
+%\label{chSMS_ID.sec.intro}
+
+This Thesis reports advances in state estimation, parameter
+identification, and control algorithms applicable to \acfp{UV}.
+Chapters \ref{chUV_AID} and \ref{chUV_AMBC} present the development
+and experimental evaluation of \ac{UV} algorithms.  However, the
+theoretical antecedents of these algorithms are state and parameter
+estimation algorithms for a broader class of \acfp{SMS}.  This
+Chapter presents three separate algorithms: an angular velocity
+observer for a second-order rotating rigid-body plant (Section
+\ref{chSMS_ID.sec.SO3_velObs}); an \acl{AID} algorithm for the inertia
+tensor of a second-order rotating rigid-body plant (Section
+\ref{chSMS_ID.sec.SO3_AID}); and an \acl{AID} algorithm for the
+dynamic parameters of an \ac{OKC} (Section
+\ref{chSMS_ID.sec.OKC_AID}).
+
+
+
+The angular velocity observer and the inertia tensor \ac{AID}
+algorithm address 3-\ac{DOF} second-order rotating rigid-body plants.
+%
+As such, they are applicable for a number of space, air,
+and marine vehicle applications.
+%
+The \ac{AID} algorithm for second-order rotational
+plants preforms dynamic estimation of the inertia tensor from
+input-output signals.
+%
+In a variety of undersea, space, and air vehicle missions, the vehicle
+inertia tensor varies dynamically as consumables and payload vary over
+the duration of a mission.  Thus dynamic inertia tensor estimation
+could facilitate forward modeling and model-based control with such
+vehicles.
+%
+%Continuous parameter monitoring of the inertia tensor may also enable
+%the detection of unexpected changes that indicate system failures.
+
+
+
+
+The \ac{OKC} \ac{AID} algorithm estimates the plant model dynamic
+parameters that enter linearly into a general class of nonlinear
+second-order holonomic plants, including robotic manipulators.
+%
+Dynamic parameters that enter linearly into the plant model such as
+mass, inertia, and friction coefficients can be estimated.  
+%
+Most previously reported \ac{AID} algorithms methods for this
+class of plants have focused on model-based adaptive tracking
+controllers.
+%
+However these approaches are not applicable when the manipulator is
+either uncontrolled, under open-loop control, under actuated, or is
+using any control law other than a specific adaptive tracking
+controller.
+%
+The \ac{AID} reported herein does not require any
+particular control algorithm and is also suitable for uncontrolled
+plants.
+%
+In the case of both \ac{AID} algorithms presented in
+this Chapter, continuous parameter monitoring of plant parameters may
+enable the detection of unexpected changes that indicate system
+failures.
+
+
+
+
+The \ac{AID} algorithm presented in Section
+\ref{chSMS_ID.sec.SO3_AID_Der} was originally reported in 2012\cite{mcfarland2012}.

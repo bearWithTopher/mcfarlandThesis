@@ -1,0 +1,12 @@
+@Book{ fb-adl:04a,
+author = {F. Bullo and A. D. Lewis},
+title = {{Geometric Control of Mechanical Systems}},
+publisher = sv,
+year = 2004,
+fbvolume = 49,
+fbseries = tam,
+isbn = 0387221956,
+completeisbn = {0-387-22195-6},
+keyword = {Mechanical Control Systems},
+oldnote = {Book website at \ {http://penelope.mast.queensu.ca/smcs}} 
+}

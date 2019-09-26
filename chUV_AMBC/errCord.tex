@@ -1,0 +1,110 @@
+%probStatment.tex
+
+%\section{Problem Statement}
+%\label{chUV_AMBC.sec.probStatement}
+
+\subsection{Error Coordinates}
+\label{chUV_AMBC.sec.errCoord}
+
+The tracking control algorithms presented herein use the error
+coordinates $\Delta H$, $\Delta \psi$, $\Delta v$, and $\Delta \theta$.
+We define $\Delta H$ as
+%
+\begin{equation}
+\Delta H={^w_d}H^{-1}{^w_a}H.
+\end{equation}
+%
+Note that $\Delta H$ is the transform from the actual
+  to desired vehicle frame since $\Delta H={^d_w}H{^w_a}H={^d_a}H$. 
+We define the position tracking error ($\Delta
+\psi$), velocity tracking error ($\Delta v$), and parameter error
+vector ($\Delta \theta$) as, respectively, 
+%
+\begin{align}
+\Delta \psi=&\log_{\SE3}\left(\Delta H \right),
+\label{chUV_AMBC.eq.deltaPsi} \\
+\Delta v =& {^a}v_a-{^a}v_d,
+\label{chUV_AMBC.eq.deltav} \\
+x=&\left[ \begin{array}{c}
+     \Delta \psi           \\
+     \Delta v              \\
+\end{array} \right],  ~\text{and}
+\label{chVU_AMBC.eq.error_x} \\
+\Delta \theta =& \hat{\theta}_{UV}-\theta_{UV}
+\label{chUV_AMBC.eq.deltatheta} 
+\end{align}
+%
+where ${^a}v_d=\Ad_{\Delta H^{-1}}{^d}v_d$ is defined using the
+adjoint map, $Ad:\SE3\to\mathbb{R}^{6 \times 6}$ defined in
+(\ref{chModels.eq.Ad}), which transforms SE(3) velocity vectors
+between reference frames.  Using the fact that $\forall
+v\in\mathbb{R}^6$ and $\forall H\in\SE3\quad H\widehat{v}H^{-1}=\widehat{\Ad_H v}$ the time derivative of $\Delta
+H$ is
+%
+\begin{align}
+\Delta\dot{H}
+  =& {^w_d}H^{-1}{^w_a}\dot{H} + {^w_d}\dot{H}^{-1}{^w_a}H  
+\nonumber \\ 
+  =&\Delta H \widehat{{^a}v_a} -\widehat{{^d}v_d}\Delta H   
+\nonumber \\ 
+  =& \Delta H\widehat{{^a}v_a} -\Delta H \Delta H^{-1}\widehat{{^d}v_d}\Delta H 
+\nonumber \\ 
+  =&\Delta H\left( {^a}v_a -\Ad_{\Delta H^{-1}}{^d}v_d\right)^{\widehat{}} 
+\nonumber \\ 
+  =&\Delta H\widehat{\Delta v}. 
+\label{chUV_AMBC.eq.DeltaH_dot}
+\end{align}
+%
+The equality (\ref{chUV_AMBC.eq.DeltaH_dot}) implies that  
+%
+\begin{equation}\label{chUV_AMBC.eq.delta_psi_dot}
+\Delta \dot{ \psi} = \hat{\mathcal{A}}^{-1}(\Delta \psi) \Delta v
+\end{equation}
+%
+where \funDefn{\hat{\mathcal{A}}^{-1}}{\rSp{6}}{\rSp{6\times 6}} is
+the inverse SE(3) velocity Jacobian.  The reader is directed to Appendix
+\ref{appenJacSE3} for further information about this Jacobian.
+
+
+
+
+We now develop a useful expression for $\Delta \dot{v}$.
+Note from (\ref{chUV_AMBC.eq.deltav}) that $\widehat\Delta
+v=\widehat{{^a}v_a}-\Delta H^{-1}\widehat{{^d}v_d}\Delta H$. Consider
+the following expression for $\Delta\dot{ v}$,
+%
+\begin{align}
+\widehat{\Delta\dot{ v}}
+ =&\widehat{{^a}\dot{v}_a}
+  -\Delta H^{-1}\widehat{{^d}\dot{v}_d}\Delta H
+  -\Delta\dot{ H}^{-1}\widehat{{^d}v_d}\Delta H
+%\nonumber \\
+  -\Delta H^{-1}\widehat{{^d}v_d}\Delta\dot{ H} 
+\nonumber \\
+ =&\widehat{{^a}\dot{v}_a}
+  -\Delta H^{-1}\widehat{{^d}\dot{v}_d}\Delta H
+  +\widehat{\Delta v}\Delta H^{-1}\widehat{{^d}v_d}\Delta H
+%\nonumber \\
+  -\Delta H^{-1}\widehat{{^d}v_d}\Delta H\widehat{\Delta v}
+\nonumber \\
+ =&\widehat{{^a}\dot{v}_a}
+  -\left(\Ad_{\Delta H^{-1}}{^d}\dot{v}_d\right)^{\widehat{}}
+  +\widehat{\Delta v}\left(\Ad_{\Delta H^{-1}}{^d}v_d\right)^{\widehat{}}
+%\nonumber \\
+  -\left(\Ad_{\Delta H^{-1}}{^d}v_d\right)^{\widehat{}}\widehat{\Delta v}.
+\label{chUV_AMBC.eq.Delta_v_dot_se3}
+\end{align}
+%
+Note that the last two terms (\ref{chUV_AMBC.eq.Delta_v_dot_se3}) are
+the Lie bracket of $\Delta v$ and ${^a}v_d$. Using the se(3)
+adjoint operator, $\ad:\mathbb{R}^6\to\mathbb{R}^{6\times 6}$ defined
+in (\ref{chModels.eq.ad}), with $\mathbb{R}^6$ representation of
+velocities is analytically equivalent to the Lie bracket operation on
+their $\se3$ representations, i.e. $\forall x,y\in\mathbb{R}^6$ we
+know $\widehat{\ad_x y}=\widehat{x}\widehat{y}-\widehat{y}
+\widehat{x}$. Thus, from (\ref{chUV_AMBC.eq.Delta_v_dot_se3}), we have
+%
+\begin{equation}\label{chUV_AMBC.eq.delta_v_dot}
+\Delta\dot{ v} = {^a}\dot{v}{_a}-{^a}\dot{v}{_d}+\ad_{\Delta v} {^a}v_d.
+\end{equation}
+

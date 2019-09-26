@@ -1,0 +1,251 @@
+\subsection{\acs{UV} \acs{AMBC}}
+%\label{sec.AMBCder}
+\label{chUV_AMBC.sec.AMBC}
+
+This Section reports a nonlinear novel linearizing tracking controller
+for mechanical plants of the form (\ref{chUV_AMBC.eq.UVSE3plant})
+without requiring perfect knowledge of the plant parameters.  
+%
+A local stability analysis is also included. 
+%
+Section \ref{chUV_AMBC.sec.AMBC_goal} explicitly states the goal for
+\ac{UV} \ac{MBC}.
+%
+The proof that Theorem \ref{chUV_AMBC.theo.UV_AMBC} satisfies these
+conditions is presented in Section \ref{chUV_AMBC.sec.proof_AMBC}.
+%
+This result is an adaptive extension of the \ac{MBC} algorithm
+reported in Section \ref{chUV_AMBC.sec.MBC}.
+
+
+\subsubsection{\acs{UV} \acs{AMBC} Goal}
+\label{chUV_AMBC.sec.AMBC_goal}
+
+Given a desired reference trajectory
+$\{{^w_d}H,\;{^d}v_d,\;{^d}\dot{v}_d \}$ for a plant of the form
+(\ref{chUV_AMBC.eq.UVSE3plant}), where the signals
+$\{{^w_a}H,\;{^a}v_a,\; u\}$ are accessible and the parameters
+$\{M,\;D,\; g,\; b\}$ are constant but unknown, our goal is to develop
+a control law
+\funDefn{u}{\SE3\times\realSpace{6}\times\SE3\times\realSpace{6}\times\realSpace{6}\times\realSpace{241}}
+{\realSpace{6}} and parameter update law
+\funDefn{\dot{\hat{\theta}}_{UV}}{\SE3\times\realSpace{6}\times\SE3\times\realSpace{6}\times\realSpace{6}}{\realSpace{241}}
+which guarantee that all signals remain bounded and provide
+asymptotically exact reference trajectory-tracking, i.e.  $\lim_{t\to
+  \infty}\Delta \psi(t)=\vec{0}$ and $\lim_{t\to \infty}\Delta
+v(t)=\vec{0}$.
+
+\subsubsection{\acs{UV} \acs{AMBC} Theorem}
+
+\begin{UV_AMBC}
+\label{chUV_AMBC.theo.UV_AMBC}
+
+For plants of the form (\ref{chUV_AMBC.eq.UVSE3plant}) where the plant
+parameters, $\theta_{UV}\in\rSp{241}$, are unknown and the regressor
+matrix,
+$\MBCreg:\mathbb{R}^6\times\mathbb{R}^6\times\mathbb{R}^6\times\SE3\to
+\mathbb{R}^{6 \times 241}$, is defined in
+(\ref{chUV_AMBC.eq.MBC_regressor}), the control and parameter update
+laws
+%
+\begin{align}
+u( {^w_a}H, {^a}v_a, {^w_d}H, {^d}v_d, {^d}\dot{v}_d, \hat{\theta}_{UV})
+%\nonumber \\
+ =&-(k_p\hat{\mathcal{A}}^{-T}(\Delta \psi)+k_d\Delta v)
+  +\MBCreg({^a}\dot{v}_d,\Delta v, {^a}v_d , {^w_a}H)\hat{\theta}_{UV}
+\label{chUV_AMBC.eq.AMBC_controlLaw} \\
+\dot{\hat{\theta}}_{UV}({^w_a}H, {^a}v_a, {^w_d}H, {^d}v_d, {^d}\dot{v}_d)
+%\nonumber \\
+ =&-K_\theta \MBCreg^T ({^a}\dot{v}_d,\Delta v, {^a}v_d ,
+  {^w_a}H) (\epsilon \Delta \psi + \Delta v)
+\label{chUV_AMBC.eq.AMBC_paramUpdateLaw}
+\end{align}
+%
+provide asymptotically stable trajectory-tracking in the
+sense of Lyapunov, i.e.  $\lim_{t\to \infty}\Delta \psi(t)=\vec{0}$
+and $\lim_{t\to \infty}\Delta v(t)=\vec{0}$, and parameter estimates
+which converge to constant values, i.e. $\lim_{t\to
+  \infty}\dot{\hat{\theta}}(t)=0_{241 \times 1}$, if the following
+conditions are met:
+
+\begin{itemize}
+\item the signals $\{{^w_d}H,{^d}v_d,{^d}\dot{v}_d
+  \}\in\{\SE3,\realSpace{6},\realSpace{6}\}$ are continuous and bounded
+\item $k_d,\; k_p \in \mathbb{R}_+$
+\item $K_\theta$ is \ac{SPD}
+\item $\epsilon<\min\left(\frac{4 k_p k_d}{2 \lambda_1 k_p c
+    +k_d^2},\sqrt{\frac{k_p \lambda_6}{\lambda_1^{2}}} \right)$
+\item $\sqrt{
+      \frac{{_\epsilon}\lambda_1}{{_\epsilon}\lambda_{12}}\|x(t_0)\|^2+
+      \frac{k_\theta}{{_\epsilon}\lambda_{12}}\|\Delta \theta(t_0)\|^2
+       } <\pi \quad$
+%
+       for the state error vector (\ref{chVU_AMBC.eq.error_x}) and
+       parameter error vector (\ref{chUV_AMBC.eq.deltatheta})
+\end{itemize}
+%
+where $k_{\theta}=\frac{1}{\min{\eig{K_\theta}}}$,
+${_\epsilon}\lambda_{i}$ are the eigenvalues of
+$\mathcal{M}_\epsilon$, and $\lambda_i$ are the eigenvalues of $M$
+(noting the eigenvalue conventions from Section \ref{chModels.sec.normConventions}).
+%
+\end{UV_AMBC}
+
+%Note that limits on parameter stabilization in Theorem
+%\ref{theo.UV_AMBC} imply that the plant parameter estimates converges
+%to values that provide input-output behavior identical to that of the
+%actual experimental plant for the given reference trajectory signals.
+
+
+\subsubsection{\acs{UV} \acs{AMBC} Stability Proof}
+\label{chUV_AMBC.sec.proof_AMBC}
+
+The controlled plant equation takes the form
+%
+\begin{align}
+  M{^a}\dot{v}_a=
+     &\ad_{{^a}v_a}^T M{^a}v_a+\mathcal{D}({^a}v_a)+\mathcal{G}({^w_a}H)
+\nonumber \\ 
+     &-(k_p\hat{\mathcal{A}}^{-T}(\Delta \psi)+k_d\Delta v)
++\MBCreg({^a}\dot{v}_d,\Delta v, {^a}v_d , {^w_a}H)\hat{\theta}_{UV}
+\nonumber \\
+    =&\ad_{{^a}v_a}^T M{^a}v_a+\mathcal{D}({^a}v_a)+\mathcal{G}({^w_a}H)
+%\nonumber \\ 
+      -(k_p\hat{\mathcal{A}}^{-T}(\Delta \psi)+k_d\Delta v)
+\nonumber \\
+     &+\MBCreg({^a}\dot{v}_d,\Delta v, {^a}v_d ,
+     {^w_a}H)\left(\Delta \theta_{UV} + \theta \right)
+\nonumber \\
+    =&M{^a}\dot{v}_d - M\ad_{\Delta v}{^a}v_d
+      -(k_p\hat{\mathcal{A}}^{-T}(\Delta \psi)+k_d\Delta v)
+%\nonumber \\      
+      +\MBCreg({^a}\dot{v}_d,\Delta v, {^a}v_d ,
+      {^w_a}H)\Delta \theta.
+%\nonumber 
+\end{align}
+%
+From equation (\ref{chUV_AMBC.eq.delta_v_dot}) we have
+%
+\begin{equation}\label{chUV_AMBC.eq.Mdelta_v_dot_adapt}
+M \Delta\dot{ v} = -(k_p\hat{\mathcal{A}}^{-T}(\Delta \psi)+k_d\Delta
+v) +\MBCreg({^a}\dot{v}_d,\Delta v, {^a}v_d ,
+      {^w_a}H)\Delta \theta
+\end{equation}
+%
+which provides the error system
+%
+\begin{equation}\label{chUV_AMBC.eq.AMBC_errorDyn}
+\dot{x}=\hat{\mathbb{A}}(\Delta \psi) x +
+\left[\begin{array}{c}
+   0_{6\times 1}   \\ M^{-1}\MBCreg({^a}\dot{v}_d,\Delta v, {^a}v_d ,
+      {^w_a}H)\Delta \theta
+   \end{array} \right]. 
+\end{equation}
+%
+Consider the following candidate Lyapunov equation
+%
+\begin{align} \label{chUV_AMBC.eq.lyap_adapt}
+V_2(t)=&\frac{1}{2} x^T\mathcal{M}_\epsilon x 
+    +\frac{1}{2}\Delta\theta^T K_\theta^{-1} \Delta \theta
+\nonumber \\
+=&V_1(t) + \frac{1}{2}\Delta\theta^T K_\theta^{-1} \Delta \theta.
+\end{align}
+%
+Since we assume $\epsilon \leq \sqrt{\frac{k_p
+    \lambda_6}{\lambda_1^{2}}}$ and $K_\theta$ is \ac{SPD}; we know
+$V_2(t)$ is positive definite and equal 
+to zero if and only if $x=\vec{0}$ and $\Delta \theta=\vec{0}$.
+The time derivative of $V_2(t)$ is 
+%
+\begin{align}
+\dot{V}_2(t)
+%\nonumber \\
+&=\frac{1}{2}
+x^T\left(\hat{\mathbb{A}}^{T}(\Delta\psi)\mathcal{M}_\epsilon 
+        +\mathcal{M}_\epsilon\hat{\mathbb{A}}(\Delta\psi)\right) x
+        +\Delta\theta^T K_\theta^{-1} \Delta\dot{ \theta}+
+\nonumber \\
+&~\Delta \theta^T \left[\begin{array}{cc}
+   \epsilon \MBCreg^{T}({^a}\dot{v}_d,\Delta v, {^a}v_d ,
+      {^w_a}H) & \MBCreg^{T}({^a}\dot{v}_d,\Delta v, {^a}v_d ,
+      {^w_a}H)
+   \end{array} \right] x.
+ \label{chUV_AMBC.eq.lyap_dot_adapt_1}  
+\end{align}
+%
+Using the update law (\ref{chUV_AMBC.eq.AMBC_paramUpdateLaw}) results
+in
+%
+\begin{align} 
+\dot{V}_2(t)=&\frac{1}{2}
+x^T\left(\hat{\mathbb{A}}^{T}(\Delta\psi)\mathcal{M}_\epsilon 
+        +\mathcal{M}_\epsilon\hat{\mathbb{A}}(\Delta\psi)\right) x
+\nonumber \\
+    =&\dot{V}_1(t).
+\label{chUV_AMBC.eq.lyap_dot_adapt_2}  
+\end{align}
+%
+As with (\ref{chUV_AMBC.eq.lyap_dot_bound}), if
+$\epsilon<\min\left(\frac{4 k_p k_d}{2 \lambda_1 k_p c
+    +k_d^2},\sqrt{\frac{k_p \lambda_6}{\lambda_1^{2}}} \right)$ and
+$\|\Delta\psi\|<\pi$ we know
+$\dot{V}_2(t)<0\quad\forall t \geq t_0$.  
+%
+Therefore $\dot{V}_2$ is
+negative definite in $x$ and negative semidefinite in $\Delta \theta$
+assuming $\|\Delta\psi(t)\|<\pi\quad \forall t\geq t_0$ (a fact
+shown at the end of this Section).  
+%
+By Lyapunov's direct method, (\ref{chUV_AMBC.eq.lyap_adapt}) and
+(\ref{chUV_AMBC.eq.lyap_dot_adapt_2}) imply that all error coordinates
+are bounded and stable.
+%
+The structure of $\dot{V}_2(t)$ implies that
+$x \in \mathcal{L}_2$ or, equivalently, $\lim_{t\to\infty}\left(
+  \int_0^tx^T x \right)^{1/2}<\infty$.  
+%
+We must ensure every signal in (\ref{chUV_AMBC.eq.AMBC_errorDyn}) and
+(\ref{chUV_AMBC.eq.AMBC_paramUpdateLaw}) is bounded and
+(\ref{chUV_AMBC.eq.AMBC_controlLaw})  well defined for all time.
+%
+The facts that $\psi_d$, $\Delta \psi$, ${^d}v_d$, $\Delta v$,
+${^d}\dot{v}_d$, and $\Delta \theta$ are bounded, $\theta_{UV}$ is
+constant, and
+(\ref{chUV_AMBC.eq.deltaPsi})-(\ref{chUV_AMBC.eq.deltatheta}) imply
+that $\psi_a$, ${^a}v_a$, and $\hat{\theta}_{UV}$ are bounded.
+%
+If $\|\Delta\psi(t)\|<\pi$ then $\hat{\mathcal{A}}^{-1}$, and therefore $\hat{\mathbb{A}}$, is bounded.
+%
+Since every signal in (\ref{chUV_AMBC.eq.AMBC_errorDyn}) is bounded we
+know $\dot{x}$ is bounded. Note that bounded $\dot{x}$ and $x \in
+\mathcal{L}_2$ implies $\lim_{t\to \infty} x=\vec{0}$.  Since every
+signal in (\ref{chUV_AMBC.eq.AMBC_paramUpdateLaw}) being bounded and
+$\lim_{t\to \infty} x=\vec{0}$ implies that $\lim_{t\to
+  \infty}\dot{\hat{\theta}}=\vec{0}$.  Thus local stability of the
+system is shown, the \ac{UV} state asymptotically converges to the
+desired reference trajectory, and the estimated parameters converge to
+constant values.
+
+
+
+Above we require $\|\Delta\psi(t)\|<\pi\quad\forall t \geq t_0$.  To
+justify this assumption consider that the inequality
+%
+\begin{align}
+{_\epsilon}\lambda_{12}\|x(t)\|^2
+    \leq&x(t)^T \mathcal{M}_\epsilon x(t)
+\nonumber \\
+    \leq&V_2(t)
+\nonumber \\
+    \leq&V_2(t_0)
+\nonumber \\
+     \leq & {_\epsilon}\lambda_1\|x(t_0)\|^2+
+      k_\theta\|\Delta \theta(t_0)\|^2
+\end{align}
+%
+\noindent and the final condition from Theorem
+\ref{chUV_AMBC.theo.UV_AMBC} imply that $\|x(t)\|<\pi$ for all $t\geq
+t_0$, guaranteeing that $\|\Delta \psi(t)\|<\pi$ for all $t\geq t_0$.
+
+
+

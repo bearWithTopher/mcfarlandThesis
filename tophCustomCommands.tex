@@ -1,0 +1,52 @@
+%2013-10-15  toph  Created this file as a one-stop-shop for
+%                  all of my custom commands... I really need
+%                  TO COMMENT ANY CHANGES OR ADDITIONS
+%
+%2013-10-15  toph  added shorter \rSp{} since I use \realSpace{}
+%                  all the time
+%2013-10-16  toph  added the eig math operator
+%2013-10-21  toph  added the regressor new commands e.g. \UVreg
+%2013-10-31  toph  added space 0(3) 
+%2013-11-3   toph  added the math operator e
+%2013-11-4   toph  added cross operator in the heat of battle
+%------------------------------------------------------------
+%-----------------COMMENT ANY CHANGES OR ADDITIONS-----------
+\DeclareMathOperator{\cross}{cross}
+\DeclareMathOperator{\O3}{O(3)}
+\DeclareMathOperator{\SE3}{SE(3)}
+\DeclareMathOperator{\SO3}{SO(3)}
+\DeclareMathOperator{\se3}{se(3)}
+\DeclareMathOperator{\so3}{so(3)}
+\DeclareMathOperator{\e}{e}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\ad}{ad}
+\DeclareMathOperator{\Ad}{Ad}
+\DeclareMathOperator{\eig}{eig}
+\newcommand{\minNorm}[1]{\|#1\|_{\text{min}} }
+\newcommand{\soThreeMap}[1]{\mathcal{J}\left( #1 \right)}
+\newcommand{\realSpace}[1]{\mathbb{R}^{#1}}
+\newcommand{\rSp}[1]{\realSpace{#1}}
+\newcommand{\funDefn}[3]{$#1 : #2 \to #3$}
+\newcommand{\OKCg}{\mathfrak{g}}
+\newcommand{\OKCpos}{q}
+\newcommand{\OKCinput}{\tau}
+\newcommand{\Ireg}{\mathbb{W}_{I}}
+\newcommand{\Mreg}{\mathbb{W}_{M}}
+\newcommand{\Dreg}[1]{\mathbb{W}_{D #1}}
+\newcommand{\gbreg}{\mathbb{W}_{gb}}
+\newcommand{\UVreg}{\mathbb{W}_{UV}}
+\newcommand{\UVregStack}{\mathcal{W}_{UV}}
+\newcommand{\UVRreg}{\mathbb{W}_{UVR}}
+\newcommand{\UVRregStack}{\mathcal{W}_{UVR}}
+\newcommand{\OKCreg}{\mathbb{W}_{OKC}}
+\newcommand{\OKCparam}{\theta_{OKC}}
+\newcommand{\OKCparamDot}{\dot{\theta}_{OKC}}
+\newcommand{\OKCparamEst}{\hat{\theta}_{OKC}}
+\newcommand{\OKCparamEstDot}{\dot{\hat{\theta}}_{OKC}}
+\newcommand{\OKCparami}{\theta_{OKCi}}
+\newcommand{\MBCreg}{\mathbb{W}_{MBC}}
+\newcommand{\MBCregi}{\mathbb{W}_{MBC_i}}
+%-----------------COMMENT ANY CHANGES OR ADDITIONS-----------
+%------------------------------------------------------------

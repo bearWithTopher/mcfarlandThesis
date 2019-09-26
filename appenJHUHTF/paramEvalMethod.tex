@@ -1,0 +1,29 @@
+\section{Parameter Identification Evaluation}
+\label{appenJHUHTF.sec.paramEvalMethod}
+
+To evaluate the performance of the identified plant models we employ
+an approach that we refer to as {\it cross-validation}.  
+% 
+We use the plant model experimentally identified from one vehicle
+experimental trial to predict, in a numerical simulation, the
+performance of the plant in a different experimental trial
+whose trajectories differ from the identification trial.
+%
+The class of plants given by (\ref{chModels.eq.UVSO3plant}) and
+(\ref{chModels.eq.UVSE3plant}) are open-loop-stable in their velocity
+signals as a consequence of hydrodynamic damping. 
+%
+In the presence of significant buoyancy torque due to
+\ac{COB} to \ac{COG} separation, both classes of
+plants are also open-loop-stable in roll and pitch.
+%
+Because these open-loop signals are stable, we can employ these
+signals to compare a model plant's predicted performance to the
+actual plant's experimentally observed performance.
+% 
+The error between the predicted model performance and the
+experimentally observed performance is reported as the \ac{MAE}
+between the simulated plant roll, pitch, and velocity and the actual
+experimental plant roll, pitch, and velocity.
+
+

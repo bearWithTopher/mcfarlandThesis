@@ -1,0 +1,148 @@
+%leastSquares.tex
+\section{\acs{UV} Least Squares Parameter Identification} 
+\label{chUV_AID.sec.leastSquares}
+
+This Section reviews the method of least squares experimental
+identification of plant parameters for two \ac{UV} models.
+%
+%Section \ref{chUV_AID.sec.UVSO3_LS} reviews identification of the
+%parameters in (\ref{chModels.eq.UVSO3plant}), which models a \ac{UV}
+%subject to drag, buoyancy and external torques.
+%
+%Section \ref{chUV_AID.sec.UVSE3_LS} reviews identification of the
+%parameters in (\ref{chModels.eq.UVSE3plant}), which models a \ac{UV}
+%subject to drag, gravity, buoyancy external forces and torques.
+%
+%
+%
+%\subsection{Parameter \ac{LS} for a \ac{UV} Subject to Drag, Buoyancy
+%  and External Torques}
+%\label{chUV_AID.sec.UVSO3_LS}
+%
+%
+%TM_FIX both sentences below are too wordy and cam be SIMPLIFIED
+As shown in Section \ref{chModels.sec.UVSO3plant}, the \acl{UV}
+rotational dynamics plant model, (\ref{chModels.eq.UVSO3plant}), can
+be rewritten as
+%
+\begin{equation}\label{chUV_AID.eq.UVSO3_LS}
+\tau(t)=\UVRreg(\omega,\dot{\omega},R) \theta_{UVR}
+\end{equation}
+%
+\noindent where the $UVR$ subscript denotes \ac{UV} rotational dynamics,
+\funDefn{\UVRreg}{\realSpace{3}\times\realSpace{3}\times\SO3}{\realSpace{3\times
+    36}} is a regressor matrix, and $\theta_{UVR}\in\realSpace{36}$ is a
+vector of the unique scalar parameter values in $I$, $C$, and $b$. 
+%
+As shown in Section \ref{chModels.sec.UVSE3plant}, the \acl{UV} plant
+model, (\ref{chModels.eq.UVSE3plant}), can be rewritten as
+%
+\begin{equation}\label{chUV_AID.eq.UVSE3_LS}
+\tau(t)=\UVreg(v,\dot{v},R) \theta_{UV}
+\end{equation}
+%
+\noindent where the $UV$ subscript denotes 6-\ac{DOF} \ac{UV} dynamics,
+\funDefn{\UVreg}{\realSpace{6}\times\realSpace{6}\times\SO3}{\realSpace{6\times
+    241}} is a regressor matrix, and $\theta_{UV}\in\realSpace{241}$ is
+a vector of the unique scalar parameter values in $M$, $D$, $g$, and
+$b$.
+
+
+The linearity of (\ref{chUV_AID.eq.UVSO3_LS}) and
+(\ref{chUV_AID.eq.UVSE3_LS}) in their respective parameters allows the
+use of a number of methods to estimate these parameters. A common
+method is \acf{LS}.
+%
+\ac{LS} for (\ref{chUV_AID.eq.UVSO3_LS}) requires the signals
+$\tau(t)$, $\omega(t)$, $\dot{\omega}(t)$, and $R(t)$ to be
+instrumented.
+%
+Similarly, \ac{LS} for (\ref{chUV_AID.eq.UVSE3_LS}) requires the
+signals $f(t)$, $\tau(t)$, $\nu(t)$, $\dot{\nu}(t)$, $\omega(t)$,
+$\dot{\omega}(t)$, and $R(t)$ to be instrumented.
+%
+One method of formulating the \ac{LS} using the regressor matrix
+$\UVreg$ is to employ sampled experimental data of the form 
+$\{f(t_i),\;R(t_i),\;v(t_i),\;\dot{v}(t_i)\}$, $t_i\in\{1,2,\cdots n\}$.
+%
+From (\ref{chUV_AID.eq.UVSE3_LS}) we have
+$f(t_i)=\UVreg(v(t_i),\dot{v}(t_i),R(t_i)) \theta_{UV} \quad \forall
+i\in\{1,2,\cdots,n\}$.
+%
+Thus if we define $F=[f(t_1)^T\;f(t_2)^T\;\cdots\;f(t_n)^T]^T$ and
+%
+\begin{equation}
+\UVregStack=\left[ \begin{array}{c}
+ \UVreg(v(t_1),\dot{v}(t_1),R(t_1)) \\
+ \UVreg(v(t_2),\dot{v}(t_2),R(t_2)) \\
+ \vdots \\
+ \UVreg(v(t_n),\dot{v}(t_n),R(t_n)) \\
+ \end{array}\right],
+\end{equation}
+%
+\noindent then the following relation holds
+%
+\begin{equation}
+F=\UVregStack\theta_{UV}
+\end{equation}
+%
+where $F$ and $\UVregStack$ are know and $\theta_{UV}$ is unknown.  
+%
+The Moore-Penrose psudo inverse of $\UVregStack$ provides the
+best estimate of $\theta_{UV}$ in the least-squares sense through the
+formula
+%
+\begin{equation}
+\theta_{UV}=\UVregStack^\dagger F.
+\end{equation}
+%
+If $\UVregStack$ is full rank, then the solution $\theta_{UV}$ will be
+unique.  
+%
+A similar relationship can be derived for $\theta_{UVR}$.
+
+In most plants angular acceleration, $\dot{\omega}(t)$, is not
+instrumented directly and must be estimated by differentiating the
+angular velocity signal, $\omega(t)$, or twice differentiating angular
+position signals.  
+%
+The \ac{LS} algorithm was implemented using a single Moore-Penrose
+pseudo inverse for Sections \ref{chUV_AID.sec.UVSO3exp} and
+\ref{chUV_AID.sec.UVSE3exp}.
+%
+%Note that the \ac{AID} algorithm does not require access to the
+%vehicle's angular acceleration, whereas \ac{LS} 
+%does require instrumentation of angular acceleration.
+%
+In the experiments reported herein, the \ac{JHUROV} experienced angular
+velocities on the order of 10$^\circ$/s.  Since the PHINS \ac{INS}
+measures the vehicle's angular velocity to within
+0.01$^\circ$/s, we found that numerical differentiation of the angular
+velocity signals provided angular acceleration signals adequate for
+\ac{LS}.
+%
+Inertial-grade angular acceleration sensors are not widely available;
+many \ac{UV} are not equipped with angular velocity sensors accurate
+enough for precise numerical differentiation.
+%
+\ac{AID} might be a better option over \ac{LS} for some \ac{UV} in the
+field.
+%
+The \ac{UV} \ac{AID} algorithm reported herein
+requires only the signals $u(t)$, $\tau(t)$, $R(t)$, $\nu(t)$, and
+$\omega(t)$. 
+%and thus may offer some advantages for plants in which
+%acceleration signals are not available.
+%
+
+
+
+%\unit{10}{\Hz} is the update rate used by the \ac{JHUROV} control
+%software, and is the rate both state measurements and input torques are
+%being recorded.
+%
+%Our \ac{AID} implementation assumes the update rate of \unit{10}{\Hz}
+%is fast enough to allow for a constant parameter estimate update rate
+%for the \unit{0.1}{\s} interval between state measurements.
+
+

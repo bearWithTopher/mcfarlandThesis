@@ -1,0 +1,44 @@
+\subsection{Notating Actual and Desired Vehicle States}
+
+Throughout this chapter we will be concerned with two states in SE(3):
+the actual state of the vehicle and the desired state of the vehicle.
+%
+The actual state of the vehicle will be notated with subscript $a$.  
+%
+The desired states will be notated with subscript $d$.
+%
+These states will be represented in three reference frames: states
+represented in the inertial world-frame will be indicated using a
+forward superscript $w$, states represented in the actual body-frame
+will be indicated using a forward superscript $a$, and states
+represented in the desired body-frame will be indicated using a
+forward superscript $d$.  Homogenious transforms between these
+different reference frames will use forward superscripts and
+subscripts to indicate the transform being preformed, for instance the
+homogenious matrix ${^w_a}H$ when left multiplied by a vector
+represented in the actual vehicle reference frame would provide that
+vector's world reference frame coordinates.
+
+We represent the pose of the vehicle in exponential coordinates as
+$\psi_a\in\mathbb{R}^6$ and the velocity of the vehicle as
+${^a}v_a\in\mathbb{R}^6$.  Note that for ${^w_a}R\in\SO3$, the
+rotation matrix from the actual body-frame to the world-frame, and
+$p_a\in\mathbb{R}^3$, the position of the vehicle, we have
+%
+${^w_a}H=\left[ \begin{array}{cc}
+    {^w_a}R      & p_a  \\
+    0_{1 \times 3}  & 1  \\
+  \end{array} \right]
+=e^{\widehat{\psi_a}}$
+%
+where $\widehat{\dot{} }:\mathbb{R}^6\to\se3$ is the standard operator
+mapping $\mathbb{R}^6$ into the tangent space of $\SE3$.  ${^a}v_a$ is
+constructed of ${^a}\nu_a\in\mathbb{R}^3$, the vehicle's body-frame
+tranlational velocity, and ${^a}\omega_a\mathbb{R}^3$, the vehicle's
+body-frame angular velocity, using the following relation
+$v=\left[ \begin{array}{cc} {^a}\nu_a^T & {^a}\omega_a^T
+  \\ \end{array} \right]^T$.
+
+We represent the desired pose and velocity of the vehicle using 
+$\psi_d\in\mathbb{R}^6$ and ${^d}v_d\in\mathbb{R}^6$ with ${^w_d}H$,
+${^w_d}R$, $p_d$, ${^d}\nu_d$, and ${^d}\omega_d$ defined as above.    

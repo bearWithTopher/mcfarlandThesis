@@ -1,0 +1,229 @@
+\section{Matrix Factorization Through the \\Skew
+  Symmetric Operator}
+% factorization is the decomposistion of an object (e.g. a number, a
+% polynomial or a matrix) into the product of other objects, or
+% factors, which when multiplied together give the original.
+%
+% Jon B. like the title for this lemma of "Positive Definite Symmetric
+% Skew Symmetric Factorization" which should be abbreviated "PDS3
+% Factorization" according to him
+\label{chModels.sec.genMat_Factorization}
+
+
+\begin{realOrth_Factorization}
+\label{chModels.theo.realOrth_Factorization}
+For all real orthogonal matrices  $U\in\O3$ and $a\in\rSp{3}$ the
+following equality holds
+%
+\begin{equation}
+\label{chModels.eq.realOrth_Factorization}
+U\soThreeMap{x}U^T=\det(U)\soThreeMap{Ua}
+\end{equation}
+%
+\end{realOrth_Factorization}
+%
+\noindent Proof: Let $x,y,z\in\rSp{3}$ be defined such that
+%
+$U^T=\left[x \quad y \quad z \right]$.
+%$
+%U^T=
+%\left[ \begin{array}{ccc}
+%  x  &
+%  y  &
+%  z  
+%\end{array} \right].
+%$ 
+%
+The facts $UU^T=\mathbb{I}$ and $x^T\soThreeMap{y}z=\det(U)$
+imply that $\soThreeMap{y}z=\det(U)x$,
+$\soThreeMap{z}x=\det(U)y$, and $\soThreeMap{x}y=\det(U)z$.
+%
+Note that $\forall\;\psi_1,\psi_2,a\in\rSp{3}$ we know
+$\psi_1^T\soThreeMap{a}\psi_2=a^T\soThreeMap{\psi_2}\psi_1$ and consider
+%
+\begin{align}
+U\soThreeMap{a}U^T
+%  =&U \left[ \soThreeMap{a}x\;\;\soThreeMap{a}y\;\;\soThreeMap{a}z\right]
+  =&U \left[\begin{array}{ccc}\soThreeMap{a}x&\soThreeMap{a}y&\soThreeMap{a}z\end{array}\right]
+\nonumber \\
+  =&\left[
+\begin{array}{ccc}
+  x^T\soThreeMap{a}x  & x^T\soThreeMap{a}y  & x^T\soThreeMap{a}z  \\
+  y^T\soThreeMap{a}x  & y^T\soThreeMap{a}y  & y^T\soThreeMap{a}z  \\
+  z^T\soThreeMap{a}x  & z^T\soThreeMap{a}y  & z^T\soThreeMap{a}z  \\
+\end{array} \right]
+\nonumber \\
+  =&\left[
+\begin{array}{ccc}
+          0           & a^T\soThreeMap{y}x  & a^T\soThreeMap{z}x  \\
+  a^T\soThreeMap{x}y  &           0         & a^T\soThreeMap{z}y  \\
+  a^T\soThreeMap{x}z  & a^T\soThreeMap{y}z  &         0           \\
+\end{array} \right]
+\nonumber \\
+  =&\soThreeMap{\left[\begin{array}{ccc}a^T\soThreeMap{y}z \\a^T\soThreeMap{z}x \\a^T\soThreeMap{x}y \\\end{array} \right]}
+\nonumber \\
+ =&\det(U)\soThreeMap{Ua}
+\end{align}
+%
+
+
+\begin{diagMat_Factorization}
+\label{chModels.theo.diagMat_Factorization}
+For all diagonal matrices $D\in\rSp{3\times 3}$ and $x\in\rSp{3}$ the
+following equality holds
+
+\begin{equation}
+\label{chModels.eq.diagMat_Factorization}
+D\soThreeMap{Dx}D=\det(D)\soThreeMap{x}
+\end{equation}
+
+\end{diagMat_Factorization}
+
+\noindent Proof:
+%
+Let $\lambda_1,\lambda_2,\lambda_3\in\rSp{}$ be the diagonal entries 
+of $D$ and $x_1,x_2,x_3\in\realSpace{}$ be the entries of 
+$x\in\mathbb{R}^3$.
+%
+Note that we have the equality
+$\det\left(D\right)=\lambda_1\lambda_2\lambda_3$,
+thus
+
+
+\begin{align}
+D\soThreeMap{Dx} D
+   =&\
+    \left[ \begin{array}{ccc}
+      \lambda_1  &      0           &      0               \\
+          0          &   \lambda_2  &      0               \\
+          0          &      0           & \lambda_3        \\
+    \end{array} \right]
+    \left[ \begin{array}{ccc}
+               0       & -\lambda_3 x_3 &  \lambda_2 x_2    \\
+         \lambda_3 x_3  &    0          & -\lambda_1 x_1    \\
+        -\lambda_3 x_2  &  \lambda_3x_1 &    0              \\
+    \end{array} \right]
+    \left[ \begin{array}{ccc}
+      \lambda_1      &      0           &      0           \\
+          0          &   \lambda_2      &      0           \\
+          0          &      0           & \lambda_3        \\
+    \end{array} \right]
+   \nonumber \\
+   =&
+    \left[ \begin{array}{ccc}
+                       0  &  -\lambda_1\lambda_2\lambda_3x_3  &  \lambda_1\lambda_2\lambda_3x_2     \\
+          \lambda_1\lambda_2\lambda_3x_3  &          0        &  -\lambda_1\lambda_2\lambda_3x_1    \\
+         -\lambda_1\lambda_2\lambda_3x_2  &  \lambda_1\lambda_2\lambda_3x_1 &    0    \\
+    \end{array} \right]
+   \nonumber \\
+   =&\lambda_1\lambda_2\lambda_3
+    \left[ \begin{array}{ccc}
+         0  &  -x_3  &  x_2     \\
+         x_3  &  0  &  -x_1    \\
+        -x_2  &  x_1 &    0    \\
+    \end{array} \right]
+   \nonumber \\
+   =&\det(D)\soThreeMap{x}
+\end{align}
+
+
+\begin{genMat_Factorization}
+\label{chModels.theo.genMat_Factorization}
+For all matrices $A\in\rSp{3\times 3}$ and $x\in\rSp{3}$ the
+following equality holds
+
+\begin{equation}
+\label{chModels.eq.genMat_Factorization}
+A^T\soThreeMap{Ax}A=\det(A)\soThreeMap{x}
+\end{equation}
+
+\end{genMat_Factorization}
+
+Proof:
+%
+Consider the following facts
+%
+\begin{itemize}
+%
+\item From Lemma \ref{chModels.theo.diagMat_Factorization}, $U\in\O3$, and
+  $x\in\rSp{3}$ we know $\soThreeMap{U x}=\det(U) U\soThreeMap{x}U^T$.
+\item From Lemma \ref{chModels.eq.diagMat_Factorization}, for all
+  diagonal matrices $\Sigma\in\rSp{3\times 3}$, and all $x\in\rSp{3}$
+  we know $\Sigma^T\soThreeMap{\Sigma}\Sigma=\det(\Sigma)\soThreeMap{x}$.
+%
+\item For all $A\in\rSp{3\times 3}$ there exists an SVD decomposition
+  for which $A=U\Sigma V^T$ where $U\in\rSp{3\times 3}$ and
+  $V\in\rSp{3\times 3}$ are real orthogonal matrices, and
+  $\Sigma\in\rSp{3\times 3}$ is a diagonal matrix with the singular
+  values of $A$ along its diagonal.
+%
+\item $\det(A)=\det(U)\det(\Sigma)\det(V)$.
+%
+\end{itemize}
+%
+Thus
+%
+\begin{align}
+A^T\soThreeMap{Ax}A&=V \Sigma U^T \soThreeMap{U \Sigma V^T x} U \Sigma V^T
+\nonumber \\
+&=\det(U)V \Sigma U^TU \soThreeMap{\Sigma V^T x}U^TU\Sigma V^T
+\nonumber \\
+&=\det(U)V \Sigma \soThreeMap{\Sigma V^T x}\Sigma V^T
+\nonumber \\
+&=\det(U)\det(\Sigma) V \soThreeMap{V^T x} V^T
+\nonumber \\
+&=\det(U)\det(\Sigma)\det(V) V V^T \soThreeMap{x}V V^T
+\nonumber \\
+&=\det(A)\soThreeMap{x}
+\end{align}
+
+
+
+\begin{PDS3_Factorization}
+\label{chModels.theo.PDS3_Factorization}
+For all $a,b,c,d\in\mathbb{R}$, $x\in\mathbb{R}^3$, and 
+$I\in\realSpace{3\times 3}$ such that $I$ is \ac{SPD}, the following
+equality holds
+%
+\begin{equation}
+\label{chModels.eq.PDS3_Factorization}
+I^a\mathcal{J}\left(I^b x\right)I^c=\det(I)^d I^{a-d}\mathcal{J}
+\left(I^{b-d} x\right)I^{c-d}.
+\end{equation}
+%
+\end{PDS3_Factorization}
+%
+Proof: Let $\lambda_1$, $\lambda_2$ and $\lambda_3$ be the eigenvalues
+of $I$, where the $\lambda_i$ are labeled without regard to ordering
+for the largest or smallest eigenvalues. Since $I$ is \ac{SPD}, these
+eigenvalues are positive and there exists $R\in\SO3$ and \ac{SPD}
+diagonal matrix $D\in\mathbb{R}^{3 \times 3}$ such that $\lambda_1$,
+$\lambda_2$ and $\lambda_3$ are the diagonal terms of $D$ and
+$I=RDR^T$. Note that for $d\in\mathbb{R}$ we have the equality
+$\det(I)^d=\det(D)^d=\lambda_1^d\lambda_2^d\lambda_3^d$, from Lemma
+\ref{chModels.theo.diagMat_Factorization} we know $\det(D)^d
+D^{-d}\mathcal{J}(x) D^{-d}=\soThreeMap{D^d x}$ and for all $R\in\SO3$
+we have the equality $R\soThreeMap{x}R^T=\soThreeMap{Rx}$. Thus
+
+\begin{align}
+I^a\mathcal{J}\left(I^b x\right)I^c
+  =& RD^aR^T\mathcal{J}\left(RD^bR^T x\right)RD^cR^T
+\nonumber \\
+  =& RD^a\mathcal{J}\left(D^bR^T x\right)D^cR^T
+\nonumber \\
+  =& RD^a\mathcal{J}\left(D^dD^{b-d}R^T x\right)D^cR^T
+\nonumber \\
+  =& RD^a\left(\det\left(D^d\right)D^{-d}\mathcal{J}\left(D^{b-d}R^T x\right)D^{-d}\right)D^cR^T
+\nonumber \\
+  =&\det\left(I^d\right) RD^{a-d}\mathcal{J}\left(D^{b-d}R^T x\right)D^{c-d}R^T
+\nonumber \\
+  =&\det\left(I^d\right) RD^{a-d}R^T\mathcal{J}\left(R D^{b-d}R^T x\right)RD^{c-d}R^T
+\nonumber \\
+  =&\det\left(I^d\right) I^{a-d}\mathcal{J}\left(I^{b-d} x\right)I^{c-d}.
+\nonumber \\
+\end{align}
+
+This completes the proof. In the following Chapters Corollary
+\ref{chModels.theo.PDS3_Factorization} is not explicitly used, but has
+been useful in developing Lyapunov functions for second-order
+rotational plants.

@@ -1,0 +1,31 @@
+\section{Summary}
+\label{ch.UV_AID.summary}
+
+
+This Chapter reported two \acf{AID} algorithms  for the dynamic
+estimation of \acf{UV} plant parameters.
+% 
+The \acl{AID} algorithms require the signals of the plant's velocity,
+position, and external inputs force, but it does not require any
+specific controller, in contrast to previously reported model-based
+adaptive tracking controllers.
+% 
+Many \acl{UV} systems do not allow for adaptive tracking controllers because
+they are under-actuated or have other control constraints.
+%
+%Section \ref{sec.ROVAID} reported a new adaptive identification
+%algorithm which is locally asymptotically stable in the
+%velocity errors and locally stable in each parameter error.
+%
+Sections \ref{chUV_AID.sec.UVSO3exp} and \ref{chUV_AID.sec.UVSE3exp}
+report comparative experimental evaluations of the \acl{AID} algorithms.
+%
+Both the \acl{LSPM} and \acl{AIDPM} were shown to match
+closely the experimentally observed \acl{UV} input-output behavior.
+%
+Future work could address less conservative bounds for the initial
+error in the parameter estimates, characterize more
+precisely conditions for asymptotic parameter convergence, and compare
+the relative strengths and weaknesses of adaptive and least squares
+parameter identification methods.
+

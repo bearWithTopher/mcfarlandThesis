@@ -1,0 +1,118 @@
+
+This Section derives several facts about the inverse SE(3) velocity
+Jacobian.  This matrix valued function,
+\funDefn{\hat{\mathcal{A}}^{-1}}{\rSp{6}}{\rSp{6\times 6}}, relates
+the body-frame velocity and time derivative of exponential coordinate
+pose by the equality
+%
+\begin{equation}
+\dot{\psi}=\hat{\mathcal{A}}^{-1}(\psi) v.
+\end{equation}
+%
+In \cite{bullo1995_SE3_PD} the authors derive the following closed
+form equation for this matrix valued function
+%
+% \begin{equation}\label{appenJacSE3.eq.hatAinv}
+%   \hat{\mathcal{A}}^{-1}\left(\left[ \begin{array}{c} 
+% \xi \\ q  \\
+% \end{array} \right]\right)=
+%     I_{6\times 6}+\frac{1}{2}\ad\left(\left[ \begin{array}{c} 
+% \xi \\ q  \\
+% \end{array} \right]\right)
+% +\mathbb{B}_1\left(\|q\|\right)\ad^2\left(\left[ \begin{array}{c} 
+% \xi \\ q  \\
+% \end{array} \right]\right)+\mathbb{B}_2\left(\|q\|\right)\ad^4\left(\left[ \begin{array}{c} 
+% \xi \\ q  \\
+% \end{array} \right]\right)
+% \end{equation}
+% %
+% where 
+% %
+% \begin{equation}
+% y^2 \mathbb{B}_1\left( y \right)=2\left(1-\alpha(y))\right)+\frac{1}{2}\left(\alpha(y)-\beta(y)\right)
+% \end{equation}
+% %
+% \begin{equation}
+% y^4 \mathbb{B}_2\left( y \right)=\left(1-\alpha(y))\right)+\frac{1}{2}\left(\alpha(y)-\beta(y)\right)
+% \end{equation}
+% %
+% with $\alpha(y)=\frac{y}{2}\cot\left( \frac{y}{2}\right)$
+% and $\beta(y)=\left(\frac{y}{2}\right)^2\frac{1}{\sin\left(\frac{y}{2}\right)}$.
+% Using the fact that $\mathcal{J}(q)^3=-\|q\|^2 \mathcal{J}(q)$,
+% (\ref{appenJacSE3.eq.hatAinv}) can be show to be equivalent to
+% %
+% \begin{equation}
+%    \hat{\mathcal{A}}^{-1}\left(\left[ \begin{array}{c} 
+% \xi \\ q  \\
+% \end{array} \right]\right)=
+% \left[ \begin{array}{cc}
+%      \mathcal{A}^{-1}(q) &  \frac{1}{2}\soThreeMap{\xi} + 
+%                            \frac{1-\alpha(\|q\|)}{\|q\|^2}\left(\soThreeMap{\xi}\soThreeMap{q}+\soThreeMap{q}\soThreeMap{\xi}\right)+ 
+%                            \mathcal{B}_2(\|q\|)\mathcal{B}_3\left( \xi, q\right)   \\
+%       0_{3 \times 3}     & \mathcal{A}^{-1}(q)    \\
+% \end{array} \right]
+% \end{equation}
+% %
+% where 
+% \funDefn{ \mathcal{B}_3 }{ \rSp{3}\times\rSp{3} }{\rSp{3\times 3}} is defined by 
+% $\mathcal{B}_3(\xi,q)=\soThreeMap{q}\soThreeMap{\xi}\soThreeMap{q}^2+\soThreeMap{q}^2\soThreeMap{\xi}\soThreeMap{q}$.  
+% %
+% To the best of our knowledge a closed form expression for the SE(3)
+% angular velocity jacobian, $\hat{\mathcal{A}}\left(\psi\right)$, has
+% not been previously reported.
+%
+% %--------------------------
+% \subsubsection{devider}
+%
+\begin{equation}\label{appenJacSE3.eq.hatAinv}
+  \hat{\mathcal{A}}^{-1}\left(\left[ \begin{array}{c} 
+        \xi \\ q  \\
+\end{array} \right]\right)=
+    I_{6\times 6}+\frac{1}{2}\ad\left(\left[ \begin{array}{c} 
+\xi \\ q  \\
+\end{array} \right]\right)
++\mathcal{B}_1\left(\|q\|\right)\ad^2\left(\left[ \begin{array}{c} 
+\xi \\ q  \\
+\end{array} \right]\right)+\mathcal{B}_2\left(\|q\|\right)\ad^4\left(\left[ \begin{array}{c} 
+\xi \\ q  \\
+\end{array} \right]\right)
+\end{equation}
+%
+where 
+%
+\begin{equation}
+y^2 \mathcal{B}_1\left( y \right)=2\left(1-\alpha(y)\right)+\frac{1}{2}\left(\alpha(y)-\beta(y)\right)
+\end{equation}
+%
+\begin{equation}
+y^4 \mathcal{B}_2\left( y \right)=\left(1-\alpha(y)\right)+\frac{1}{2}\left(\alpha(y)-\beta(y)\right)
+\end{equation}
+%
+with $\alpha(y)=\frac{y}{2}\cot\left( \frac{y}{2}\right)$
+and $\beta(y)=\left(\frac{y}{2}\right)^2\frac{1}{\sin\left(\frac{y}{2}\right)^2}$.
+Using the fact that $\mathcal{J}(q)^3=-\|q\|^2 \mathcal{J}(q)$,
+(\ref{appenJacSE3.eq.hatAinv}) can be shown to be equivalent to
+%
+\begin{equation}\label{appenJacSE3.eq.hatAinv2} 
+ \hat{\mathcal{A}}^{-1}\left(\left[ \begin{array}{c} 
+\xi \\ q  \\
+\end{array} \right]\right)
+=\left[ \begin{array}{cc}
+     \mathcal{A}^{-1}(q) &  \frac{1}{2}\soThreeMap{\xi} + 
+                           \frac{1-\alpha(\|q\|)}{\|q\|^2}\mathcal{B}_4\left( \xi, q\right) 
+                           +\mathcal{B}_2(\|q\|)\mathcal{B}_3\left( \xi, q\right)   \\
+      0_{3 \times 3}     & \mathcal{A}^{-1}(q)    \\
+\end{array} \right]
+\end{equation}
+%
+\noindent where 
+\funDefn{ \mathcal{B}_4 }{
+  \realSpace{3}\times\realSpace{3} }{\realSpace{3\times 3}} is defined by
+$\mathcal{B}_4(\xi,q)=\soThreeMap{\xi}\soThreeMap{q}+\soThreeMap{q}\soThreeMap{\xi}$ and
+\funDefn{ \mathcal{B}_3 }{
+  \realSpace{3}\times\realSpace{3} }{\realSpace{3\times 3}} is defined
+by
+$\mathcal{B}_3(\xi,q)=\soThreeMap{q}\soThreeMap{\xi}\soThreeMap{q}^2+\soThreeMap{q}^2\soThreeMap{\xi}\soThreeMap{q}$.
+To the best of the author's knowledge a closed form expression for the
+SE(3) velocity Jacobian, $\hat{\mathcal{A}}\left(\psi\right)$,
+has not been reported.  

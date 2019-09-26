@@ -1,0 +1,42 @@
+\section{Open Kinematic Chain Dynamics Model}
+\label{chModels.sec.OKC}
+
+
+In Section \ref{chSMS_ID.sec.OKC_AID} a parameter identification
+algorithm for an {\it n}-link \ac{OKC} is reported.  Let
+$\mathfrak{J}\subset\rSp{n}$ be the joint space of a {\it n}-link
+\ac{OKC}, a commonly accepted model for this plant is
+
+\begin{equation} \label{chModels.eq.OKCplant}
+  \OKCinput =M(\OKCpos)\ddot{\OKCpos}+C(\OKCpos,\dot{\OKCpos})\dot{\OKCpos}+\OKCg(\OKCpos), 
+\end{equation}
+
+\noindent where $\OKCpos\in\mathfrak{J}$ is the vector of \ac{OKC}
+joint angles, $\OKCinput\in\realSpace{n}$ is the vector of torque
+inputs applied at each joint, $M\in\mathfrak{J}\to\mathbb{R}^{n \times
+  n}$ is the mass matrix,
+$C\in\mathfrak{J}\times\mathbb{R}^n\to\mathbb{R}^{n \times n}$ is the
+Coriolis matrix, and $\OKCg\in\mathfrak{J}\to\mathbb{R}^{n}$ is the
+gravity vector. Note that for all \acp{OKC} there exist functions
+$M(\OKCpos)$, $C(\OKCpos,\dot{\OKCpos})$, and $\OKCg(\OKCpos)$ such
+that $M(\OKCpos)$ is \ac{SPD} and
+$\dot{M}(\OKCpos)-2C(\OKCpos,\dot{\OKCpos})$ is skew symmetric
+\cite{takegaki1981new}. %\cite{Ortega1989}.
+%
+In the parameter identification algorithm presented, I assume that
+there exist $r$ unknown scalar parameters which enter linearly into
+the functions $M(\OKCpos)$, $C(\OKCpos,\dot{\OKCpos})$, and
+$\OKCg(\OKCpos)$.  
+%
+This assumption is common in the robotics literature; applies to a
+wide class of robotic manipulators; and 
+allows (\ref{chModels.eq.OKCplant}) to be factored as
+%
+\begin{equation} \label{chModels.eq.OKCplantW}
+  M(a)b+C(a,c)d+\OKCg(a)=\OKCreg(b,a,c,d)\OKCparam 
+\end{equation}
+%
+for all $a,b,c,d\in\rSp{n}$ where $\OKCparam\in\mathbb{R}^r$ is a
+vector of the parameters in the manipulator
+model\cite{Craig&hsu&sastry.ijrr87}.
+

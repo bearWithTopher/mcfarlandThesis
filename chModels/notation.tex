@@ -1,0 +1,226 @@
+\section{Notation Conventions}
+\label{chModels.sec.notation}
+
+We assume the readers are familiar with SO(3), the special orthogonal
+group for $\rSp{3}$, and SE(3), the special euclidean group for
+$\rSp{3}$.  We also assume readers are familiar with their tangent
+spaces so(3) and se(3) respectively.  Readers not familiar with these
+concepts are referred to \cite{murray&li&sastry}.
+
+\subsection{Function Definitions}
+\label{chModels.sec.functionDefn}
+
+\noindent Functions used throughout this text are defined as follows:
+%
+\begin{itemize}
+\item $\mathcal{J}:\mathbb{R}^3\to\mathbb{R}^{3\times 3}$ is
+the mapping from $\realSpace{3}$ to so(3), the tangent space of SO(3),
+and is defined by
+%
+\begin{equation}
+\mathcal{J}\left(
+\left[ \begin{array}{c} 
+\omega_1 \\\omega_2  \\ \omega_3 \\
+\end{array} \right]\right) =
+\left[ \begin{array}{ccc}
+     0     & -\omega_3 &  \omega_2                               \\
+   \omega_3  &    0    & -\omega_1                               \\
+  -\omega_2  &  \omega_1 &    0                                  \\
+\end{array} \right].
+\end{equation}
+%
+%
+\item $\widehat{\cdot}:\mathbb{R}^6\to\mathbb{R}^{4\times 4}$ is the
+  mapping from $\mathbb{R}^6$ to se(3), the tangent space of SE(3),
+  and (for $\nu,\omega\in\rSp{3}$) is defined by
+%
+\begin{equation}
+\widehat{
+\left[ \begin{array}{c} 
+\nu \\ \omega  \\
+\end{array} \right] } =
+\left[ \begin{array}{cc}
+     \mathcal{J}(\omega) & \nu        \\
+        0_{1 \times 3}     &  0         \\
+\end{array} \right].
+\end{equation}
+%
+%
+\item $\ad:\mathbb{R}^6\to\mathbb{R}^{6\times 6}$ is the se(3) adjoint
+operator. For the vector 
+%
+\begin{equation}
+v=\left[ \begin{array}{c} 
+\nu \\ \omega  \\
+\end{array} \right]
+\end{equation} 
+%
+the se(3) adjoint operator is defined as
+%
+\begin{equation}
+\label{chModels.eq.ad}
+\ad_v=
+\left[ \begin{array}{cc}
+     \mathcal{J}(\omega) &  \mathcal{J}(\nu)        \\
+      0_{3 \times 3}     & \mathcal{J}(\omega)    \\
+\end{array} \right].
+\end{equation}
+%
+%
+\item $\Ad:\SE3\to\mathbb{R}^{6\times 6}$ is the se(3) adjoint map,  defined as
+%
+\begin{equation}
+\label{chModels.eq.Ad}
+\Ad\left(
+\left[ \begin{array}{cc} 
+R &  p \\ 
+0_{1\times 3} &  1 \\
+\end{array} \right]\right) =
+\left[ \begin{array}{cc}
+             R           & \mathcal{J}(p) R   \\
+      0_{3 \times 3}        &    R  \\
+\end{array} \right].
+\end{equation}
+%
+%
+\item \funDefn{\otimes}{\realSpace{m\times n}\times\realSpace{p\times q}}{\realSpace{(m*p)\times (n*q)}}
+is the Kronecker product operator\cite{kron}.  
+%
+For matrices 
+%
+\begin{equation}
+A=\left[ \begin{array}{cccc} 
+a_{11} & a_{12} &\hdots & a_{1n}  \\
+a_{21} & a_{22} &       & a_{2n}  \\
+\vdots &      &\ddots & \vdots \\
+a_{m1} & a_{m2} &\hdots & a_{mn}  \\
+\end{array} \right]
+%
+\text{ and }
+%
+B=\left[ \begin{array}{cccc} 
+b_{11} & b_{12} &\hdots & b_{1q}  \\
+b_{21} & b_{22} &       & b_{2q}  \\
+\vdots &      &\ddots & \vdots \\
+b_{p1} & b_{p2} &\hdots & b_{pq}  \\
+\end{array} \right]
+\end{equation}
+%
+the Kronecker product is defined as
+%
+\vspace{5mm}
+\begin{equation}
+A\otimes B=\left[ \begin{array}{cccc} 
+a_{11}B & a_{12}B & \hdots & a_{1n}B  \\
+a_{21}B & a_{22}B &        & a_{2n}B  \\
+\vdots &        & \ddots & \vdots  \\
+a_{m1}B & a_{m2}B & \hdots & a_{mn}B  \\
+\end{array} \right].
+\end{equation}
+%
+%
+\item \funDefn{\cdot^S}{\realSpace{m\times n}}{\realSpace{(m*n)}} is the
+stack operator.  Using the definition of $A$ above, the stack operator is
+defined by stacking the columns of $A$ such that  
+%
+\begin{equation}
+A^S=\left[ \begin{array}{ccccccccccccc} 
+a_{11}  &
+a_{21}  &
+\cdots &
+a_{m1}  &
+a_{12}  &
+a_{22}  &
+\cdots &
+a_{m2}  & 
+\cdots &
+a_{1n}  &
+a_{2n}  &
+\cdots &
+a_{mn}
+\end{array} \right]^T.
+\end{equation}
+%
+%\begin{equation}
+%A^S=\left[ \begin{array}{c} 
+%a_{11}  \\
+%a_{21}  \\
+%\vdots \\
+%a_{m1}  \\
+%a_{12}  \\
+%a_{22}  \\
+%\vdots \\
+%a_{m2}  \\ 
+%\vdots \\
+%a_{1n}  \\
+%a_{2n}  \\
+%\vdots \\
+%a_{mn}
+%\end{array} \right].
+%\end{equation}
+\end{itemize}
+%
+This Thesis will also make use of 
+%
+\begin{itemize}
+\item the SO(3) exponential map, \funDefn{\e_{\SO3}}{\so3}{\SO3} 
+\item the SO(3) logarithmic map, \funDefn{\log_{SO3}}{\SO3}{\so3}
+\item the SE(3) exponential map, \funDefn{\e_{\SE3}}{\se3}{\SE3} 
+\item the SE(3) logarithmic map, \funDefn{\log_{SE3}}{\SE3}{\se3}
+\end{itemize}
+% 
+See \cite{murray&li&sastry} for additional information, including
+closed form functions, for these maps.
+
+\subsection{Vector Norm, Matrix Norm, and Eigenvalue  Conventions}
+\label{chModels.sec.normConventions}
+
+Let $M\in\mathbb{R}^{n\times n}$ represent a \ac{SPD} inertia tensor
+or hydrodynamic mass matrix. Note that the eigenvalues of symmetric
+matrices are always real.  This Thesis employs the following
+conventions for the eigenvalues of such matrices: $m_n$ is the
+smallest and $m_1$ is the largest eigenvalues of the mass matrix, the
+other eigenvalues are labeled such that $m_{i-1}\leq m_i\leq
+m_{i+1}$ $\forall i$ such that $2\leq i\leq n-1$. This convention will also be used for any mass matrix
+estimate or mass matrix error term, i.e. if $\hat{M}(t)$ is an
+estimate of a true mass matrix $M$ and $\Delta M(t)=\hat{M}(t)-M$ then
+these eigenvalues will be ordered such that $\hat{m}_{i-1}(t)\leq
+\hat{m}_i(t) \leq \hat{m}_{i+1}(t)$ and $\Delta m_{i-1}(t)\leq \Delta
+m_i(t) \leq \Delta m_{i+1}(t)$. We assume that the eigenvalues of
+physically realistic mass matrices are either constant or bounded for
+all time, i.e. there exists a scalar $a\in\mathbb{R}_+$ such that
+$m_1<a$.
+
+
+
+The $\ell 2$ norm, or Euclidean norm, for $x\in\mathbb{R}^n$ is
+defined as $\|x\|=\left(\sum_{i=1}^n x_i^2\right)^{1/2}$.  The $\ell 2$ induced
+matrix norm, also known as the spectral norm, for $M\in\mathbb{R}^{n
+  \times n}$ is defined as $\|M\|_2=\max_{\|x\|=1}\|Mx\|$.  Let
+$a_{ij}$ be the individual entries of $A\in\mathbb{R}^{n\times n}$,
+the Frobenius norm of $A$ is defined as
+$\|A\|_F=\left(\sum_{i,j=1}^n|a_{ij}|^{2} \right)^{1/2}$.  For more
+information on these norms see \cite{horn&johnson}. We define the
+following matrix semi-norm
+%
+\begin{equation}
+\minNorm{M}=\min_{\|x\|=1}\|Mx\|.
+\end{equation}
+%
+For a given mass matrix $M$, these definitions and the cross product
+property $\|x_1\times x_2\|\leq \|x_1\|\|x_2\|$ give rise to the
+following properties
+
+\begin{align}\label{chModels.eq.AVO_ineq}
+  m_n\|x\|&=\minNorm{M}\|x\|\leq\|Mx\|\leq\|M\|_2\|x\|=m_1\|x\|, 
+   \\
+  \|-Mx\|&\leq-m_n\|x\|,
+   \\
+  \|M^{-1/k}\|_2&=\|M^{-1}\|_2^{1/k}=\left(\frac{1}{m_n}\right)^{1/k},
+   \\
+  \|M L\|_2&\leq\|M\|_2\|L\|_2=m_{1} l_{1},~ \text{and} 
+   \\ 
+  \|\mathcal{J}(M x_1)x_2\|&\leq\|M x_1\|\|x_2\|\leq m_1\|x_1\|\|x_2\|.
+\end{align}
+
+

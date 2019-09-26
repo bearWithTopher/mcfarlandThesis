@@ -1,0 +1,105 @@
+\subsection{The Effects of Unmodeled Thruster Dynamics on \ac{AMBC}}
+
+The experiment reported in Section
+\ref{chUV_AMBC.sec.fullAnalysisFailure} shows, curiously, a clear
+differentiation in parameter adaptation performance; unstable
+parameter adaption occurred only in the parameter estimates associated
+with pitch and roll dynamics.
+%
+To further explore this effect, in Section
+\ref{chUV_AMBC.sec.singleDOFAnalysisFailure} we investigated parameter
+adaptation during pitch-only reference trajectory excitation.
+%
+These data show thrust reversals cause parameter instability.
+%
+Further, the thruster angular velocity data indicate a difference
+between the actual and commanded torques applied to the vehicle. 
+%
+Based on our knowledge of the \ac{JHUROV} control system and thruster
+design, the data from these pitch-only experiments suggest that
+unmodeled thruster dynamics are present during thrust reversals.
+%
+Without further experimental analysis we can not specify if the
+specific mechanism causing unstable parameter adaptation is unmodeled
+thruster mechanical dynamics, fluid dynamics, mechanical friction
+during thrust reversals, or some combination of these mechanisms.
+%
+Regardless of the underlying source of modeling error, these
+experiments suggest that unstable parameter adaptation will occur in
+parameters associated with a given \ac{DOF} if the following three
+conditions are met:
+%
+\begin{itemize}
+\item mass and gravitational parameter estimates are adapting, 
+\item there exists of a single attractive stability point for that \ac{DOF}, and
+\item unmodeled thruster dynamics are present.
+\end{itemize}
+
+
+The success of two-step parameter adaptation supports this hypothesis.
+%
+Implementing the parameter estimation process in two steps removed
+the need for simultaneous adaptation of the mass and buoyancy terms.
+%
+By separating parameter adaptation in this way, an ambiguity in the
+adaptation process was removed.
+%
+Note the three factors listed imply that both the buoyancy and
+mass parameter estimates will be affected in the same way by unmodeled
+thruster dynamics during thrust reversals.  
+%
+From the perspective of the \ac{AMBC} algorithm, the deviations from
+the position and velocity reference trajectories caused by unmodeled
+thruster dynamics are indistinguishable from the deviations which
+would occur if either of these parameter estimates (the buoyancy
+torque estimate or the inertia estimate) were too large.
+%
+The effects of the inertia tensor and buoyancy torque parameters on
+vehicle position and velocity are also coupled.
+%
+For instance there will be similarities between the dynamics of a
+\ac{UV} with a large mass and large buoyancy torque and a \ac{UV} with
+a small mass and small buoyancy torque for a proper scaling of these
+properties.
+%
+During each period of unmodeled thruster dynamics, the simultaneous
+unstable adaptation of the inertia and buoyancy estimates was
+difficult for the \ac{AMBC} algorithm to overcome because the estimate
+of vehicle dynamics was only slightly degraded by the physically
+unrealistic changes in these parameter estimates.
+%
+Setting the buoyancy torque estimate to a fixed value during dynamic
+maneuvers removes the possibility of simultaneous adaptation to
+physically unrealistic values.
+
+
+
+
+
+
+%  might still be close to values which are
+% still good at approximating vehicle dynamics.
+% %
+% However, the difference tween
+ 
+% adapt twoards physically unrealistic parameter values togeather, the
+% difference in vehicle dynamnics
+
+% Although these parameters play structrually
+% different roles in UV dynamics their effects on the
+
+% their effects for small angles are coupled,  that much
+% of the UV modeling errors both having physically unrealstic values can
+
+
+%  a different form when entering
+% into the dynamics equation
+
+
+
+%  or the if the
+% estimated pitch inertia were too large both parameter update laws will
+% experience a large negitive spike since the pitch or roll state
+% lingering near zero
+
+% Although   

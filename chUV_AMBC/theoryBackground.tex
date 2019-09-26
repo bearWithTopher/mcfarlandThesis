@@ -1,0 +1,69 @@
+
+Recent advances in enabling technologies for \acp{UV} including {\it in-situ}
+sensing, power storage, and communication modalities have enabled the
+development of \acp{UV} which can accomplish missions previously thought
+impractical or impossible.
+%
+Many of these missions, such as seafloor surveying and
+environmental monitoring, can depend on tracking a specified trajectory as
+closely as possible.
+%
+%Instrumentation placement is critical, requiring precise control of \ac{UV}
+%orientation as well as \ac{UV} location and speed.
+%
+To facilitate these missions, novel \ac{UV} control algorithms may
+provide improved trajectory-tracking precision.
+%greater than that of traditional \ac{PDC}.
+%
+\ac{UV} \ac{MBC} has been shown experimentally to provide significant
+performance gains over \ac{PDC} \cite{martinControl_ICRA13}, however \ac{MBC}
+requires model parameters to be known {\it a priori}.
+% %
+% however the parameters required for \ac{MBC} must be experimentally identified;
+% the drag parameters and mass parameters 
+% %(which include both the
+% %characteristics of the vehicle's mass and those of the ambient fluid
+% %surrounding the vehicle) 
+% cannot be computed analytically.
+%
+\ac{UV} \acf{AMBC} removes the need for a previously identified model.
+%
+In this Section we report novel \ac{MBC} and \ac{AMBC} algorithms for a
+fully-coupled \ac{UV} plant model.
+
+
+This Section is organized as follows: Sections
+\ref{chUV_AMBC.sec.states}, \ref{chUV_AMBC.sec.UV_dynamics},
+and \ref{chUV_AMBC.sec.errCoord} present the state
+representations, \ac{UV} plant model, and error coordinates used
+through the rest of this Section.
+%
+Section \ref{chUV_AMBC.sec.MBC} reports a \ac{UV} \ac{MBC} algorithm.
+%
+Section \ref{chUV_AMBC.sec.AMBC} reports a novel \ac{UV} \ac{AMBC}
+algorithm.
+%
+Both assume a model of rigid-body \ac{UV} dynamics parametrized by
+hydrodynamic mass parameters; quadratic drag parameters; gravitational
+force and buoyancy parameters.
+%
+For both results, a local stability proof is reported showing that the
+vehicle position and velocity states asymptotically converge to the
+desired reference trajectory.
+%
+For the \ac{AMBC} algorithm reported, the parameter estimates are shown
+to be stable and converge asymptotically to values that provide
+input-output model behavior identical to that of the actual plant.
+%
+Section \ref{chUV_AMBC.sec.twoStepMethod} reports how the \ac{MBC} and
+\ac{AMBC} algorithms reported herein can be used to identify subsets
+of plant parameters if other parameters are known.  
+%
+This Section also reports a two-step \ac{AMBC} algorithm shown
+experimentally in Section \ref{chUV_AMBC.sec.twoStepExp} to be robust
+to actuator modeling errors observed in our experimental vehicle.
+
+
+This Section omits explicit notation of variable dependence on time
+except where such dependence is required to discuss the initial
+condition of a controller.

@@ -1,0 +1,97 @@
+\section{Bounding $\|\hat{\mathcal{A}}^{-1}(\psi)x\|$}
+\label{appenJacSE3.sec.normBound}
+
+In this Section we show there $\exists c\in\rSp{}_+$ such
+that $\forall\psi,x\in\rSp{6}$ for which $\|\psi\|<\pi$ we have
+$\|\hat{\mathcal{A}}^{-1}(\psi)x\| <c\|x\|$.
+%
+Specifically, we prove  $c=6+\frac{5\pi}{2}+\frac{\pi^2}{8}$ satisfies this
+inequality. %, though it is likely not the minimum value which does so.
+%
+Let $\xi,\;q,\;x_1\;x_2\in\rSp{3}$ such that
+$\psi=[\xi^T \quad q^T ]^T$ and
+$x=[ x_1^T \quad x_2^T ]^T$, then
+%$x=\left[ \begin{array}{c} x_1 \\ x_2 \end{array} \right]$, then
+%
+\begin{align}
+\|\hat{\mathcal{A}}^{-1}(\psi)x\|\leq&\|\mathcal{A}^{-1}(q)x_1\|+\|\mathcal{A}^{-1}(q)x_2\|
+\nonumber \\
+    &+\|\left( \frac{1}{2}\soThreeMap{\xi} + 
+                           \frac{1-\alpha(\|q\|)}{\|q\|^2}\mathcal{B}_4\left( \xi, q\right) 
+                           +\mathcal{B}_2(\|q\|)\mathcal{B}_3\left( \xi, q\right)   \right)x_2\|.
+\label{appenJacSE3.eq.interimBound}
+\end{align}
+%
+Note that $\|x_1\|\leq\|x\|$, $\|x_2\|\leq\|x\|$,
+$\|\xi\|\leq\|\psi\|<\pi$, and $\|q\|\leq\|\psi\|<\pi$. Consider
+%
+\begin{align}
+\|\mathcal{A}^{-1}(q)x_i\|
+   \leq&\|x_i\|+\|\soThreeMap{q}x_i\|+
+        \|\left(1-\alpha(\|q\|)\right)\frac{\soThreeMap{q}^2}{\|q\|^2}x_i\|
+\nonumber \\
+   \leq&\|x_i\|+\|q\|\|x_i\|+
+        |\left(1-\alpha(\|q\|)\right)|\;\|x_i\|.
+\end{align}
+%
+For $q$ such that $\|q\|<\pi$ consider the value of
+$|(1-\alpha(\|q\|)|$.  Note that 
+for $y=\frac{\pi}{2}$ we know $1-y\cot(y)=1$;  by l'Hospital's rule we know
+%
+$\lim_{y\rightarrow 0^+}y\cot(y)=\lim_{y\rightarrow 0^+}\frac{\cos(y)-y\sin(y)}{\cos(y)}=1$;
+%
+and for $y\in\left(0,\; \frac{\pi}{2} \right)$ we know
+$\frac{d}{dy}\left(1-y\cot(y) \right)>0$.  These imply
+$\forall y\in\left[0,\; \frac{\pi}{2} \right)\quad |1-y\cot(y)| \leq
+1$ and therefore
+$\|\mathcal{A}^{-1}(q)x_i\|<\left(2+\pi\right)\|x_i\|$.
+%
+%\begin{equation}
+%\|\mathcal{A}^{-1}(q)x_i\|\leq\left(2+\pi\right)\|x_i\|
+%\end{equation}
+%
+
+A similar analysis can be used to bound other terms in
+(\ref{appenJacSE3.eq.interimBound}).  Using l'Hospital's rule and
+differiation it can be shown $\lim_{y\rightarrow
+  0^+}\frac{1-\alpha(y)}{y}=0$,
+$\frac{1-\alpha(\pi)}{\pi}=\frac{1}{\pi}$, and the function
+$\frac{1-\alpha(y)}{y}$ is strictly increasing for $y\in\left(0,\pi
+\right)$; these facts and previous definitions are used to show
+%
+\begin{align}
+\|\frac{1-\alpha(\|q\|)}{\|q\|^2}\mathcal{B}_4\left( \xi, q\right)x_2\|
+   =&\|\frac{1-\alpha(\|q\|)}{\|q\|}\mathcal{B}_4\left( \xi,\frac{q}{\|q\|}\right)x_2\|
+\nonumber \\
+   \leq& |\frac{1-\alpha(\|q\|)}{\|q\|}|\;\|\xi\|\|x_2\|
+\nonumber \\
+   <&\|x_2\|.
+\nonumber
+\end{align}
+%
+Using l'Hospital's rule and differiation it can be shown
+$\lim_{y\rightarrow 0^+}\frac{\alpha(y)-\beta(y)}{2y}=0$,
+$\frac{\alpha(\pi)-\beta(\pi)}{2\pi}=\frac{-\pi}{8}$, and the function
+$\frac{\alpha(y)-\beta(y)}{2y}$ is strictly decreasing for
+$y\in\left(0,\pi \right)$; these facts and previous definitions are
+used to show
+%
+\begin{align}
+\|\mathcal{B}_2(\|q\|)\mathcal{B}_3\left( \xi, q\right)x_2\|
+   =&\|\frac{(1-\alpha(\|q\|))+\frac{1}{2}(\alpha(\|q\|)
+     -\beta(\|q\|))}{\|q\|}\mathcal{B}_3\left( \xi,\frac{q}{\|q\|}\right)x_2\|
+\nonumber \\
+   \leq& \left(|\frac{1-\alpha(\|q\|)}{\|q\|}|+|
+         \frac{\alpha(\|q\|)-\beta(\|q\|)}{2\|q\|} |\right)\;\|\xi\| \|x_2\|
+\nonumber \\
+   <&\left(1+\frac{\pi^2}{8}\right)\|x_2\|.
+\end{align}
+%
+Therefore, using the bounds above, from (\ref{appenJacSE3.eq.interimBound}) we have
+%
+\begin{align}
+\|\hat{\mathcal{A}}^{-1}(\psi)x\|<& \left(2+\pi\right)\|x_1\|+\frac{1}{2}\|\xi\|\|x_2\|
+            +\|x_2\|+\left(1+\frac{\pi^2}{8}\right)\|x_2\|+\left(2+\pi\right)\|x_2\|
+\nonumber \\
+     <& \left(6+\frac{5\pi}{2}+\frac{\pi^2}{8}\right)\|x\|
+\end{align}

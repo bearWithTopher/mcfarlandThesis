@@ -1,0 +1,57 @@
+%\section{Introduction}
+%\label{chModels.sec.intro}
+
+This Chapter summarizes the notation, kinematic conventions, and plant
+models used in this Thesis.
+%
+With the exception of Section \ref{chModels.sec.genMat_Factorization},
+the models, functions, state spaces, and facts stated herein are commonly
+employed in the fields of geometric control,
+adaptive control, and  underwater robotics. 
+%
+Section \ref{chModels.sec.notation} states the functions, norms, and
+\ac{SPD} matrix eigenvalue conventions used herein.
+%
+Section \ref{chModels.sec.genMat_Factorization} reports a proof of
+Theorem \ref{chModels.theo.diagMat_Factorization}, which allows
+general 3-by-3 matrices to be factored through the skew symmetric
+operator.
+%
+Sections \ref{chModels.sec.SO3} and \ref{chModels.sec.SE3} detail
+the position and velocity state representations used herein for a
+rotating rigid-body and general rigid-body motion.
+%
+The analytic relationships between these state representations are
+also stated.
+%
+This Chapter presents second-order models for:
+\begin{itemize}
+\item 3-\ac{DOF} rotating rigid-body dynamics (Section \ref{chModels.sec.SO3plant}), 
+\item 3-\ac{DOF} rotating \ac{UV} dynamics  (Section \ref{chModels.sec.UVSO3plant}), 
+\item 6-\ac{DOF} \ac{UV} dynamics (Section \ref{chModels.sec.UVSE3plant}), and 
+\item {\it n}-link \ac{OKC} dynamics (Section \ref{chModels.sec.OKC}).
+\end{itemize}
+%
+For each of the four models, plant parameter properties and the
+model's regressor matrix factored form are also presented.
+%
+Readers seeking a presentation of this material in greater detail are
+referred to the texts cited in Section \ref{chModels.sec.litReview}.
+
+
+As noted in the summery above, we believe Theorem
+\ref{chModels.theo.diagMat_Factorization} is a novel result.
+%
+This Theorem states that $A^T((Ax)\times(Ay))=\det(A)(x\times y)$ for
+all $A\in\rSp{3\times 3}$ and $x,y\in\rSp{3}$, where $\times$ is the
+usual cross product operator for $\rSp{3}$ and $\det(\cdot)$ is the
+matrix determinate.
+%
+This result is a generalization of the well known fact $(Rx)\times y=
+R(x\times(Ry))$ for all $x,y\in\rSp{3}$ and $R\in\SO3$, where SO(3) is
+the special orthogonal group for $\rSp(3)$.
+%
+To the best of our knowledge, this relation has not been proposed or
+proven previously.
+
+

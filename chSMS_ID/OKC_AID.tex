@@ -1,0 +1,18 @@
+\section{Adaptive Identification for Open Kinematic Chains }
+\label{chSMS_ID.sec.OKC_AID}
+
+This Section addresses the problem of parameter estimation for an {\it n}-link
+\acf{OKC} of the form of (\ref{chModels.eq.OKCplant}). We report a
+novel \ac{AID} algorithm  which estimates these plant parameters.
+This algorithm assumes the joint torque inputs, $\OKCinput$, joint
+positions, $\OKCpos$, and joint velocities, $\dot{\OKCpos}$, are
+accessible signals. 
+
+
+%This Section proves the stability of a previously unreported
+%nonlinear adaptive identifier for general \ac{OKC}.
+
+
+
+\input{chSMS_ID/OKC_AID_Der}
+\input{chSMS_ID/OKC_AID_Conc}

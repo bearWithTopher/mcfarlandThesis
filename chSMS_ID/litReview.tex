@@ -1,0 +1,153 @@
+\section{Literature Review}
+\label{chSMS_ID.sec.litReview}
+
+State estimation and parameter identification algorithms for
+\acfp{SMS} has been an active research area for
+over three decades.  Controllers and observers that do not require
+access to angular velocity have been developed for plants for the form
+(\ref{chModels.eq.SO3plant}).  Lizarralde and Wen reported an attitude
+controller for (\ref{chModels.eq.SO3plant}) that does not require
+access to angular velocity\cite{Lizarralde1996}.
+%
+In \cite{Salcudean1991} Salcudean reported a stable velocity observer
+for plants of the form (\ref{chModels.eq.SO3plant}) using unit
+quaternion representation of plant angular position.
+%
+In \cite{Aghannan2003} the authors report general results for
+intrinsic observers on a broad class of Lagrangian systems.  In
+\cite{Maithripala2004} the authors use the general result of
+\cite{Aghannan2003} to address the special case of observers for
+mechanical systems on a Lie group.  In \cite{Mahony2005,Mahony2008}
+the authors address the problem of developing complementary filters
+for the special orthogonal group in the presence of noisy velocity data.
+In \cite{Baldwin2009} the authors apply the general approach of
+\cite{Mahony2005,Mahony2008} to develop observers
+for second-order SE(3) plants.
+
+
+% Over the past 20 years geometric control researchers have developed
+% general tracking controllers for both kinematic first order systems,
+% with state space $\SO3$, and dynamic second-order systems, with state
+% spaces $\SO3\times \mathbb{R}^3$. To the best of our knowledge, the
+% first nonlinear tracking controller for a second order rotating plant
+% was reported by Koditschek \cite{Koditschek1988}.  Wen and
+% Kreutz-Delgado summarize tracking controllers using unit quaternions
+% and full state access in \cite{Wen1991}.  In \cite{Bullo2004} Lewis
+% and Bullo report the development of tracking controllers from a
+% coordinate free differential geometry approach.  Several papers have
+% considered controlling plants similar to (\ref{chModels.eq.SO3plant})
+% but also possessing additional features inspired by specific
+% applications.  These include a tracking controller for underwater
+% vehicles with unknown (but bounded) disturbance forces and moments
+% \cite{Sanyal2009}, an attitude stabilizer for a spherically symmetric
+% satellite with only magnetic field measurement capabilities and, most
+% similar to the work presented herein, 
+
+
+% Over the past 30 years researchers have developed a number of methods
+% to deal with uncertainty in inertial parameters.  Improvements in
+% on-board sensor packages have allowed access to more detailed state
+% information, leading to the development of new parameter estimation
+% techniques that take advantage of these new measurement sources. Batch
+% methods such as least squares or extended Kalman filters have been
+% used with sets of on-board sensor data to estimate parameters for a
+% number of models for robotic systems such as subsea vehicles
+% \cite{caccia.joe2000,alessandri.ca98,martin.thesis} and spacecraft
+% \cite{Norman2011, Keim2006}.
+
+% Adaptive methods for stable linear plants have been well understood
+% for some time \cite{ksn&anu.book}. For plants with rotational DOF, adaptive
+% tracking controllers have been used to limit the effect of inertia
+% tensor uncertainty in application domains such as robotic manipulators
+% \cite{Craig&hsu&sastry.ijrr87,slotine&li.ijrr87}, subsea vehicles
+% \cite{Jordan2006}, spacecraft \cite{slotine1990}, and general
+% mechanical systems \cite{Lain1997}. Chatervendi et all presents an
+% adaptive tracking controller that also identifies the inertia tensor
+% of (\ref{eq.plant}) \cite{Chaturvedi2006}. Smallwood and
+% Whitcomb present an adaptive identifier for a 6 DOF underwater vehicle
+% assuming decoupled dynamics \cite{smallwood2003TCST}. To our
+% knowledge the method presented herein is the first to use adaptive
+% methods for inertia tensor estimation without the requirement of
+% taking control of the plant.
+
+%\cite{Mahony2005,Mahony2008}
+
+
+A broad class of nonlinear model-based trajectory tracking controllers
+developed since the 1980's --- for example Koditschek's nonlinear
+tracking controller for second-order rotating plants
+\cite{Koditschek1988} and exactly linearizing model-based trajectory
+tracking controllers for \acp{OKC}
+\cite{freund.ijrr.83,luh&walker&paul.tran.aut.con.80} --- require
+exact knowledge of the plant's kinematic and dynamic parameters.
+%
+Although kinematic parameters are often easily obtained, dynamic
+parameters generally must be measured empirically.
+%
+%The difficulty of measuring point dynamics
+%parameters motivated the development of adaptive model-based
+%trajectory tracking controllers that estimated plant dynamic
+%parameters online.
+%
+Most previously reported parameter identification methods for
+\acp{OKC} employ one of two general approaches: $(i)$ linear
+regression of experimental data or $(ii)$ adaptive model-based
+trajectory tracking control.
+
+
+A variety of previously reported studies have employed least-squares,
+total least-squares, or extended Kalman filters to identify
+plant parameters entering linearly into the plant equations of motion for 
+robot manipulators \cite{khosla&kanade,an&atkeson&hollerbach},
+\ac{UV} \cite{caccia.joe2000,alessandri.ca98,martin.thesis}, 
+and spacecraft \cite{Norman2011,Keim2006}.  Khalil and
+Dombre provide a summary of this work \cite{Khalil2002}.
+
+
+The problem of adaptive model-based reference trajectory tracking is
+well understood for several types of second-order holonomic nonlinear
+plants whose parameters enter linearly into the plant equations of
+motion, e.g., robot manipulator arms
+\cite{Craig&hsu&sastry.ijrr87,slotine&li.ijrr87,horowitz&sadegh.ijrr90},
+\acp{UV} \cite{Jordan2006}, spacecraft
+\cite{kod.cdc85a,slotine1990}, and general mechanical systems
+\cite{Lain1997}.
+% 
+The previously reported result most closely related to the adaptive
+identifier reported herein is reported in
+\cite{Chaturvedi2006}, which addresses the specific problem of
+adaptive model-based tracking control of rotational plants of the form
+(\ref{chModels.eq.SO3plant}).
+%
+\cite{hsu&bodson&sastry&paden.icra87} reports an adaptive
+identification algorithm for \ac{OKC}s that employs a low pass
+filter approach for the parameter update law to avoid instrumenting
+joint acceleration, and reports a numerical simulation.
+%
+Other than \cite{hsu&bodson&sastry&paden.icra87}, although a great
+variety of adaptive model-based trajectory tracking controllers have
+been developed, to the best of our knowledge the corresponding
+model-based \ac{AID} algorithm --- without requiring simultaneous
+trajectory tracking control --- have not been reported.
+
+
+Adaptive methods for parameter identification of linear plants are
+well understood \cite{ksn&anu.book,sastry&bodson.book,astrom.book} and
+have been employed for a few application-specific nonlinear models,
+such as decoupled model for \acp{UV}
+\cite{smallwood2003TCST}.
+% 
+To the best of our knowledge, the \ac{AID} algorithm reported in
+Section \ref{chSMS_ID.sec.SO3_AID} is the first reported inertia
+tensor adaptive estimation method for rotational plants of the
+form (\ref{chModels.eq.SO3plant}) {\it without} the additional need to
+simultaneously perform reference trajectory tracking.
+%
+Section \ref{chSMS_ID.sec.OKC_AID} reports an \ac{AID}
+algorithm which does not require joint acceleration signals and
+provides physically feasible models.
+%
+%These \ac{AID} algorithms may prove useful in applications with
+%controlled or uncontrolled plants in which reference trajectory
+%tracking is impractical or infeasible.
+

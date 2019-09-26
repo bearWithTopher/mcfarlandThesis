@@ -1,0 +1,92 @@
+
+\section{Adaptive Extension}
+
+now lets use the controller 
+
+\begin{equation}
+u=-(k_p\hat{\mathcal{A}}^{-T}(\Delta \psi)+k_d\Delta v)
++\mathbb{W}({^a}\dot{v}_d,\Delta v, {^a}v_d , {^w_a}H)\hat{\theta}
+\end{equation}
+
+where $\hat{\theta}\in\mathbb{R}^{241}$ is an estimate of $\theta$.
+Define $\Delta \theta=\hat{\theta} - \theta$ and note the controlled
+plant takes the form
+
+\begin{align}
+  M{^a}\dot{v}_a=
+     &-\ad_{{^a}v_a}M{^a}v_a+\mathcal{D}({^a}v_a)+\mathcal{G}({^w_a}H)
+\nonumber \\ 
+     &-(k_p\hat{\mathcal{A}}^{-T}(\Delta \psi)+k_d\Delta v)
++\mathbb{W}({^a}\dot{v}_d,\Delta v, {^a}v_d , {^w_a}H)\hat{\theta}
+\nonumber \\
+    =&-\ad_{{^a}v_a}M{^a}v_a+\mathcal{D}({^a}v_a)+\mathcal{G}({^w_a}H)
+\nonumber \\ 
+     &-(k_p\hat{\mathcal{A}}^{-T}(\Delta \psi)+k_d\Delta v)
++\mathbb{W}({^a}\dot{v}_d,\Delta v, {^a}v_d ,
+{^w_a}H)\left(\Delta \theta\ + \theta \right)
+\nonumber \\
+    =&M{^a}\dot{v}_d - M\ad_{\Delta v}{^a}v_d
+      -(k_p\hat{\mathcal{A}}^{-T}(\Delta \psi)+k_d\Delta v)
+      +\mathbb{W}({^a}\dot{v}_d,\Delta v, {^a}v_d ,
+      {^w_a}H)\Delta \theta
+\nonumber 
+\end{align}
+
+\noindent From equation (\ref{chUV_ATMC.eq.delta_v_dot}) we get
+
+\begin{equation}\label{chUV_AMTC.eq.Mdelta_v_dot_adapt}
+M \dot{\Delta v} = -(k_p\hat{\mathcal{A}}^{-T}(\Delta \psi)+k_d\Delta
+v) +\mathbb{W}({^a}\dot{v}_d,\Delta v, {^a}v_d ,
+      {^w_a}H)\Delta \theta
+\end{equation}
+
+\noindent which provides the error system
+
+\begin{equation}
+\dot{x}=\hat{\mathbb{A}}(\Delta \psi) x +
+\left[\begin{array}{c}
+   0_{6\times 1}   \\ M^{-1}\mathbb{W}({^a}\dot{v}_d,\Delta v, {^a}v_d ,
+      {^w_a}H)\Delta \theta
+   \end{array} \right]. 
+\end{equation}
+
+\noindent Consider the following candidate lyapunov equation
+
+\begin{equation} \label{chUV_AMTC.eq.lyap_adapt}
+V(t)=\frac{1}{2} x^T\mathcal{M}_\epsilon x 
+    +\frac{1}{2}\Delta\theta^T K_\theta^{-1} \Delta \theta
+\end{equation}
+
+\noindent where $K_\theta\in\mathbb{R}^{241\times 241}$ is a positive
+definite symmetric gain matrix.  The time derivative is
+
+\begin{align}
+\dot{V}(t)=&\frac{1}{2}
+x^T\left(\hat{\mathbb{A}}^{T}(\Delta\psi)\mathcal{M}_\epsilon 
+        +\mathcal{M}_\epsilon\hat{\mathbb{A}}(\Delta\psi)\right) x
+        +\Delta\theta^T K_\theta^{-1} \dot{\Delta \theta}
+\nonumber \\
+&+\Delta \theta^T \left[\begin{array}{cc}
+   \epsilon \mathbb{W}^{T}({^a}\dot{v}_d,\Delta v, {^a}v_d ,
+      {^w_a}H) & \mathbb{W}^{T}({^a}\dot{v}_d,\Delta v, {^a}v_d ,
+      {^w_a}H)
+   \end{array} \right] x
+ \label{chUV_AMTC.eq.lyap_dot_adapt}  
+\end{align}
+
+\noindent if, using the  update law
+
+\begin{equation}
+\dot{\hat{\theta}}=-K_\theta \mathbb{W}^T ({^a}\dot{v}_d,\Delta v, {^a}v_d ,
+      {^w_a}H) (\epsilon \Delta \psi + \Delta v)
+\end{equation}
+
+\noindent results in 
+
+\begin{equation}
+\dot{V}(t)=\frac{1}{2}
+x^T\left(\hat{\mathbb{A}}^{T}(\Delta\psi)\mathcal{M}_\epsilon 
+        +\mathcal{M}_\epsilon\hat{\mathbb{A}}(\Delta\psi)\right) x
+\end{equation}
+
+\noindent and the standard Adaptive Model Tracking Controller stability proof follows...

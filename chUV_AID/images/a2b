@@ -1,0 +1,45 @@
+#!/bin/bash
+#
+# 2008-01-28 LLW Created and Written program to batch convert image files
+#
+# check number of arguments
+if [ $# -lt 2 ]; then 
+   echo USAGE:   a2b destination_file_type_suffix source_files
+   echo EXAMPLE: a2b pdf a.jpeg 
+   echo EXAMPLE: a2b pdf a.jpeg b.tiff
+   echo EXAMPLE: a2b pdf \*.jpeg
+   exit 0
+fi
+
+# setup counting variables
+count=1
+nfiles=$(ls *.pdf | wc -l)
+
+# get destination file type
+dest_file_type=$1
+
+# shift the arguments to leave only source filenames
+shift
+
+for filenamesource in $( ls $@ ); do
+    filenameroot=$(echo $filenamesource | cut -d"." -f1)
+    filenamedest=$filenameroot.$dest_file_type
+
+    # debug statement
+    echo File ${count} of ${nfiles} -------------------- 
+    echo "source :" $filenamesource
+    # echo "root   :" ${filenameroot}
+    echo "dest   :" $filenamedest
+
+    # if destination file already exists, do nothing
+    if [ -e $filenamedest ]; then
+      echo $filenamedest already exists! conversion not performed.
+    else
+      echo convert $filenamesource $filenamedest
+      convert $filenamesource $filenamedest
+    fi
+    let count=count+1
+
+
+done
+              

@@ -1,0 +1,105 @@
+
+\subsection{State Error Coordinates}
+\label{chUV_AMTC.sec.SE3_errCoord}
+
+In this section we define the posistion error vector, $\Delta \psi$,
+the velocity error vector, $\Delta v$ and compute a useful expression 
+for $\dot{\Delta v}$. 
+
+
+We define $\Delta H$ as 
+
+\begin{equation}
+\Delta H={^w_d}H^{-1}{^w_a}H.
+\end{equation}
+
+\noindent Note that $\Delta H$ is the transfrom from the actual to desired
+vehicle frame since $\Delta H={^d_w}H{^w_a}H={^d_a}H$.  We use $\Delta
+H$ to define the position error vector, $\Delta \psi$, as 
+
+\begin{equation}
+\Delta \psi=\log_{\SE3}\left(\Delta H \right).
+\end{equation}
+
+\noindent We define our velocity error vector, $\Delta v$, as 
+
+\begin{equation}
+\Delta v = {^a}v_a-{^a}v_d
+\end{equation}
+ 
+\noindent where ${^a}v_d=\Ad_{\Delta H^{-1}}{^d}v_d$ is defined using
+the adjoint map $Ad:\SE3\to\mathbb{R}^{6 \times 6}$ which transforms
+SE(3) velocity vectors between reference frames (CITE-REFERENCE OR
+PREV CHAPTER).  Using the fact that $\forall v\in\mathbb{R}^6$ and 
+$\forall H\in\SE3$, $H\widehat{v}H^{-1}=\widehat{\Ad_H v}$, consider 
+the time derivative of $\Delta H$  
+
+\begin{align}
+\Dot{\Delta H}
+  =& {^w_d}H^{-1}{^w_a}\dot{H} + {^w_d}\dot{H}^{-1}{^w_a}H  
+\nonumber \\ 
+  =&\Delta H \widehat{{^a}v_a} -\widehat{{^d}v_d}\Delta H   
+\nonumber \\ 
+  =& \Delta H\widehat{{^a}v_a} -\Delta H \Delta H^{-1}\widehat{{^d}v_d}\Delta H 
+\nonumber \\ 
+  =&\Delta H\left( \Delta H {^a}v_a -\Ad_{\Delta H^{-1}}{^d}v_d\right)^{\widehat{}} 
+\nonumber \\ 
+  =&\Delta H\widehat{\Delta v}. 
+\end{align}
+
+\noindent The previous equation implies that $\Delta \psi$ and $\Delta
+v$ are consistent, thus
+
+\begin{equation}\label{chUV_AMTC.eq.delta_psi_dot}
+\dot{\Delta \psi} = \hat{\mathcal{A}}^{-1}(\Delta \psi) \Delta v
+\end{equation}
+
+\noindent where
+$\hat{\mathcal{A}}^{-1}:\mathbb{R}^6\to\mathbb{R}^6\times\mathbb{R}^6$ is
+the inverse of the SE(3) jacobian (CITE SOMEONE).  
+
+Finally, lets develop an expression for $\dot{\Delta v}$ which will
+turn out to be useful.  Note that $\widehat\Delta
+v=\widehat{{^a}v_a}-\Delta H^{-1}\widehat{{^d}v_d}\Delta H$ and
+consider the following expression for $\dot{\Delta v}$,
+
+\begin{align}
+\widehat{\dot{\Delta v}}
+ =&\widehat{{^a}\dot{v}_a}
+  -\Delta H^{-1}\widehat{{^d}\dot{v}_d}\Delta H
+  -\dot{\Delta H}^{-1}\widehat{{^d}v_d}\Delta H
+  -\Delta H^{-1}\widehat{{^d}v_d}\dot{\Delta H}
+\nonumber \\
+ =&\widehat{{^a}\dot{v}_a}
+  -\Delta H^{-1}\widehat{{^d}\dot{v}_d}\Delta H
+  +\widehat{\Delta v}\Delta H^{-1}\widehat{{^d}v_d}\Delta H
+  -\Delta H^{-1}\widehat{{^d}v_d}\Delta H\widehat{\Delta v}
+\nonumber \\
+ =&\widehat{{^a}\dot{v}_a}
+  -\left(\Ad_{\Delta H^{-1}}{^d}\dot{v}_d\right)^{\widehat{}}
+  +\widehat{\Delta v}\left(\Ad_{\Delta H^{-1}}{^d}v_d\right)^{\widehat{}}
+  -\left(\Ad_{\Delta H^{-1}}{^d}v_d\right)^{\widehat{}}\widehat{\Delta v}.
+\label{chUV_AMTC.eq.Delta_v_dot_se3}
+\end{align}
+
+
+\noindent Note that the last two terms of the final equality of
+(\ref{chUV_AMTC.eq.Delta_v_dot_se3}) are the Lie bracket $\Delta v$
+and ${^a}v_d$, and that using matrix commutator,
+$\ad:\mathbb{R}^6\to\mathbb{R}^{6\times 6}$, with the $\mathbb{R}^6$
+representations of velocities is analytically equivilent to the Lie
+bracket operation on their $\se3$ representations, i.e. $\forall
+x,y\in\mathbb{R}^6$ we know $\widehat{\ad_x
+  y}=\widehat{x}\widehat{y}-\widehat{y} \widehat{x}$. Therefore, based
+on (\ref{chUV_AMTC.eq.Delta_v_dot_se3}), we have the following
+expression
+
+\begin{equation}\label{chUV_ATMC.eq.delta_v_dot}
+\dot{\Delta v} = {^a}\dot{v}{_a}-{^a}\dot{v}{_d}+\ad_{\Delta v} {^a}v_d.
+\end{equation}
+
+
+\subsection{Parameter Error Coordinates}
+\label{chUV_AMTC.sec.param_errCoord}
+
+talk about $\Delta \theta$...

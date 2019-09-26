@@ -1,0 +1,352 @@
+\subsection{\acs{UV} \acs{MBC}}
+%\label{sec.MBCder}
+\label{chUV_AMBC.sec.MBC}
+
+This Section reports a linearizing tracking controller for mechanical
+plants of the form (\ref{chUV_AMBC.eq.UVSE3plant}). Note that this
+controller requires exact {\it a priori} parameter knowledge. 
+%
+A local stability analysis is also included. 
+%
+Section \ref{chUV_AMBC.sec.MBC_goal} explicitly states the goal for \ac{UV}
+\ac{MBC}.
+%
+The proof that Theorem \ref{chUV_AMBC.theo.UV_MBC} satisfies these
+conditions is provided in two parts.
+%
+First, in Section \ref{chUV_AMBC.sec.UV_MBC_controlledPlant}, the
+dynamics of the controlled plant is developed.
+%
+Then, in Section \ref{chUV_AMBC.sec.proof_MBC}, we prove the
+result.
+%
+Section \ref{chUV_AMBC.sec.AMBC} reports an adaptive extension to
+the \ac{MBC} algorithm reported in this Section.
+
+
+
+\subsubsection{\acs{UV} \acs{MBC} Goal}
+\label{chUV_AMBC.sec.MBC_goal}
+
+Given a desired reference trajectory
+$\{{^w_d}H,\;{^d}v_d,\;{^d}\dot{v}_d \}$ for a plant of the form
+(\ref{chUV_AMBC.eq.UVSE3plant}), where the signals
+$\{{^w_a}H,\;{^a}v_a,\; u\}$ are accessible and the parameters
+$\{M,\;D,\; g,\; b\}$ are known, our goal is to develop a control law
+\funDefn{u}{\SE3\times\realSpace{6}\times\SE3\times\realSpace{6}\times\realSpace{6}}
+{\realSpace{6}} which guarantees that all signals remain bounded and
+provides asymptotically exact reference trajectory tracking, i.e.
+$\lim_{t\to \infty}\Delta \psi(t)=\vec{0}$ and $\lim_{t\to
+  \infty}\Delta v(t)=\vec{0}$.
+
+\subsubsection{\acs{UV} \acs{MBC} Theorem}
+
+
+\begin{UV_MBC}
+\label{chUV_AMBC.theo.UV_MBC}
+
+For plants of the form (\ref{chUV_AMBC.eq.UVSE3plant}), %
+when the plant parameters % 
+ $\{M,D,g,b\}$
+ are known, the control law
+%
+\begin{equation}
+u\left( {^w_a}H, {^a}v_a, {^w_d}H, {^d}v_d, {^d}\dot{v}_d\right)
+=-(k_p\hat{\mathcal{A}}^{-T}(\Delta \psi)+k_d\Delta v)+ 
+\MBCreg({^a}\dot{v}_d,\Delta v, {^a}v_d , {^w_a}H)\theta_{UV},
+\label{chUV_AMBC.eq.MBC_controlLaw}
+\end{equation}
+%
+\noindent where the regressor matrix
+$\MBCreg:\mathbb{R}^6\times\mathbb{R}^6\times\mathbb{R}^6\times\SE3\to
+\mathbb{R}^{6 \times 241}$ is defined such that
+%
+\begin{equation}
+\MBCreg({^a}\dot{v}_d,\Delta v, {^a}v_d , {^w_a}H)\theta_{UV} =
+    M{^a}\dot{v}_d - M\ad_{\Delta v}{^a}v_d -\ad_{{^a}v_a}^T M{^a}v_a
+    -\mathcal{D}({^a}v_a)-\mathcal{G}({^w_a}H),
+\label{chUV_AMBC.eq.MBC_regressor}
+\end{equation}
+%
+provides asymptotically stable trajectory tracking in the
+sense of Lyapunov, i.e.  $\lim_{t\to \infty}\Delta \psi(t)=\vec{0}$
+and $\lim_{t\to \infty}\Delta v(t)=\vec{0}$, if the following
+conditions are met:
+
+\begin{itemize}
+\item the signals $\{{^w_d}H,{^d}v_d,{^d}\dot{v}_d
+  \}\in\{\SE3,\realSpace{6},\realSpace{6}\}$ are continuous and bounded 
+\item $k_d,\; k_p\in\mathbb{R}_+$
+\item $\|x(t_0)\|<\sqrt{
+                  \frac{ {_\epsilon}\lambda_{12} }
+                       { {_\epsilon}\lambda_1   }
+                       } \pi\quad$
+%
+for the state error vector $x$ defined in (\ref{chVU_AMBC.eq.error_x}) 
+\end{itemize}
+
+\noindent where, as per the eigenvalue ordering conventions from
+Section \ref{chModels.sec.normConventions}, ${_\epsilon}\lambda_{i}$
+are the eigenvalues of
+%
+$\mathcal{M}_\epsilon$ from (\ref{chUV_AMBC.eq.lyapM}).
+\end{UV_MBC}
+
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+%originally from 2013_McFarland_Thesis/chUV_AMBC/errorCords.tex
+%\subsubsection{Velocity Error Time Derivative}
+
+
+
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+%originally from 2013_McFarland_Thesis/chUV_AMBC/MBC.tex
+\subsubsection{\acs{UV} \acs{MBC} Controlled Plant}
+\label{chUV_AMBC.sec.UV_MBC_controlledPlant}
+
+The controlled plant is of the form
+%
+\begin{align}
+  M{^a}\dot{v}_a=
+     &\ad_{{^a}v_a}^T M{^a}v_a+\mathcal{D}({^a}v_a)+\mathcal{G}({^w_a}H)
+%\nonumber \\ 
+      -(k_p\hat{\mathcal{A}}^{-T}(\Delta \psi)+k_d\Delta v)
+\nonumber \\ 
+     &+\MBCreg({^a}\dot{v}_d,\Delta v, {^a}v_d , {^w_a}H)\theta_{UV}
+\nonumber \\
+     =&M{^a}\dot{v}_d - M\ad_{\Delta v}{^a}v_d
+      -(k_p\hat{\mathcal{A}}^{-T}(\Delta \psi)+k_d\Delta v)
+%\nonumber 
+\end{align}
+%
+From (\ref{chUV_AMBC.eq.delta_v_dot}) we get
+%
+\begin{equation}\label{chUV_AMBC.eq.Mdelta_v_dot}
+M \Delta\dot{ v} =       -(k_p\hat{\mathcal{A}}^{-T}(\Delta \psi)+k_d\Delta v).
+\end{equation}
+%
+Using the system error vector $x\in\mathbb{R}^{12}$ defined in
+(\ref{chVU_AMBC.eq.error_x}) as
+%
+\begin{equation}
+x=\left[ \begin{array}{c}
+     \Delta \psi           \\
+     \Delta v              \\
+\end{array} \right]
+\end{equation}
+%
+and the matrix valued function
+$\hat{\mathbb{A}}:\mathbb{R}^6\to\mathbb{R}^{12}\times\mathbb{R}^{12}$ defined as
+%
+\begin{equation}\label{chUV_AMBC.eq.error_A}
+\hat{\mathbb{A}}(\Delta \psi)=
+\left[ \begin{array}{cc}
+     0_{6\times 6}   & \hat{\mathcal{A}}^{-1}(\Delta \psi)             \\
+     -k_p M^{-1}\hat{\mathcal{A}}^{-T}(\Delta \psi)   &  -k_d M^{-1}   \\
+\end{array} \right]
+\end{equation}
+%
+then from (\ref{chUV_AMBC.eq.delta_psi_dot}),
+(\ref{chUV_AMBC.eq.Mdelta_v_dot}), (\ref{chVU_AMBC.eq.error_x}), and
+(\ref{chUV_AMBC.eq.error_A}) we see that the equation for the error
+dynamics of the system  is
+%
+\begin{equation} \label{chUV_AMBC.eq.err_sys}
+\dot{x}=\hat{\mathbb{A}}(\Delta \psi) x.
+\end{equation}
+
+%----------------------------------------------------------------
+%----------------------------------------------------------------
+%originally from 2013_McFarland_Thesis/chUV_AMBC/MBC.tex
+\subsubsection{\acs{UV} \acs{MBC} Stability Proof}\label{chUV_AMBC.sec.proof_MBC}
+
+Consider the following Lyapunov function candidate
+%
+\begin{equation} \label{chUV_AMBC.eq.lyap}
+V_1(t)=\frac{1}{2} x^T\mathcal{M}_\epsilon x
+\end{equation}
+%
+where 
+%
+\begin{equation}\label{chUV_AMBC.eq.lyapM}
+\mathcal{M}_\epsilon=\left[ 
+\begin{array}{cc}
+  k_p\mathbb{I}_{6\times 6}  & \epsilon M         \\
+  \epsilon M               &    M               \\
+\end{array} \right].
+\end{equation}
+%
+Consider that $\forall x$
+%
+\begin{equation} \label{chUV_AMBC.eq.lyap_bound}
+V_1(t)\geq\frac{1}{2}\left[\begin{array}{cc}
+   \|\Delta \psi\| & \|\Delta v\|
+   \end{array} \right] 
+  \left[\begin{array}{cc}
+       k_p             & -\epsilon \lambda_1  \\
+  -\epsilon \lambda_1  &  \lambda_6           \\
+  \end{array} \right] 
+\left[\begin{array}{c}
+   \|\Delta \psi\| \\ \|\Delta v\|
+   \end{array} \right]
+\end{equation}
+%
+%TM_ADD_BELOW
+%\noindent Consider that as $\epsilon \to 0$ the 2-by-2 symmetric
+%matrix in (\ref{chUV_AMBC.eq.lyap_bound}) has two positive eigenvalues $\forall
+%k_p\in\mathbb{R}_+$.  Since the determinate of this matrix is equal to
+%the product of its eigenvalues an eigenvalue can cross zero only if
+%the determinant crosses zero.  Since the determinate equals
+%$k_p\lambda_6-\epsilon^2\lambda_1^2$ we know for
+%$\forall\epsilon \in \mathbb{R}_+$ such that 
+%
+where 
+%
+ $  \left[\begin{array}{cc}
+       k_p             & -\epsilon \lambda_1  \\
+  -\epsilon \lambda_1  &  \lambda_6           \\
+  \end{array} \right]$  
+%
+is \ac{SPD} if 
+%
+\begin{equation}
+\epsilon \leq \sqrt{\frac{k_p \lambda_6}{\lambda_1^{2}}}.
+\end{equation}
+%
+Thus
+%
+\begin{itemize}
+\item $V_1(t)$ is positive definite and
+%\item $V_1(t)$ is radially unbounded, and
+\item $V_1(t)$ is equal to zero if and only if $x=\vec{0}$.
+\end{itemize}
+
+
+The time derivative of (\ref{chUV_AMBC.eq.lyap}) is 
+%
+\begin{equation} \label{chUV_AMBC.eq.lyap_dot}
+\dot{V}_1(t)=\frac{1}{2}
+x^T\left(\hat{\mathbb{A}}^{T}(\Delta\psi)\mathcal{M}_\epsilon 
+        +\mathcal{M}_\epsilon\hat{\mathbb{A}}(\Delta\psi)\right) x.
+\end{equation}
+% 
+Note that $\exists c\in\mathbb{R}_+$ for which
+$\|\hat{\mathcal{A}}^{-1}(\psi) x\| \leq c\|x\|\quad\forall\psi\in\rSp{6}$ such that $\|\psi\|<\pi$ (See Appendix
+\ref{appenJacSE3.sec.normBound}).  Therefore $\forall \Delta \psi$
+such that $\|\Delta\psi\|<\pi$ we have
+%$c$ and $\lambda_1$ (the max eigenvalue of $M$)
+%
+%
+\begin{equation}
+\Delta
+v^T \left(\hat{\mathcal{A}}^{-T}(\Delta\psi) M +M \hat{\mathcal{A}}^{-1}(\Delta \psi)
+  \right)\Delta v \leq 2 \lambda_1 c \|\Delta v\|^2.
+\end{equation}
+%
+%
+Using this bound and the equality
+$\Delta\psi^T\left(\hat{\mathcal{A}}^{-T}+\hat{\mathcal{A}}^{-1}\right)\Delta
+\psi=\Delta\psi^T\Delta\psi$ (shown in Appendix
+\ref{appenJacSE3.sec.PsiHatAinvPsiEquality}), we have
+%
+%\begin{widetext}
+\begin{align}
+\dot{V}_1(t) =&\frac{1}{2} x^T \left[\begin{array}{cc}
+  -\epsilon k_p \left(\hat{\mathcal{A}}^{-T}+\hat{\mathcal{A}}^{-1}\right) &
+ -\epsilon k_d \mathbb{I}_{6 \times 6}        \\
+  -\epsilon k_d \mathbb{I}_{6 \times 6}              &  
+\left(\hat{\mathcal{A}}^{-T} M +M \hat{\mathcal{A}}^{-1}
+\right)- 2k_d\mathbb{I}_{6 \times 6}                \\
+\end{array} \right] x
+\nonumber \\
+ =&\frac{1}{2} x^T \left[\begin{array}{cc}
+  -\epsilon2k_p\mathbb{I}_{6 \times 6}  &
+ -\epsilon k_d \mathbb{I}_{6 \times 6}        \\
+  -\epsilon k_d \mathbb{I}_{6 \times 6}              &  
+\left(\hat{\mathcal{A}}^{-T} M +M \hat{\mathcal{A}}^{-1}
+\right)- 2k_d\mathbb{I}_{6 \times 6}                \\
+\end{array} \right] x
+\nonumber \\
+\leq& -\epsilon  k_p \|\Delta\psi\|^2+\epsilon k_d\|\Delta
+\psi\|\|\Delta v\| +\frac{\epsilon}{2}\lambda_1 c \|\Delta v\|^2
+-  k_d \|\Delta v\|^2
+\nonumber \\
+ \leq&\frac{1}{2}\left[\begin{array}{cc}
+   \|\Delta \psi\| & \|\Delta v\|
+   \end{array} \right] 
+  \left[\begin{array}{cc}
+  -\epsilon 2 k_p  & \epsilon k_d    \\
+ \epsilon k_d      &   \epsilon \lambda_1 c- 2k_d\\
+  \end{array} \right] 
+\left[\begin{array}{c}
+   \|\Delta \psi\| \\ \|\Delta v\|
+   \end{array} \right]. 
+\label{chUV_AMBC.eq.lyap_dot_bound}
+\end{align}
+%\end{widetext}
+%
+$\forall \Delta \psi$ such that $\|\Delta\psi\|<\pi$.
+%\noindent Consider that as $\epsilon \to 0$ the 2-by-2 symmetric
+%matrix in (\ref{chUV_AMBC.eq.lyap_dot_bound}) has at least one
+%negative eigenvalue. Since the determinate of this matrix is equal to
+%the product of its eigenvalues, if the determinate is positive for
+%$\epsilon$ small enough, then both eigenvalues must be negative,
+%making the matrix negative definite.  Since the determinate equals
+%$\epsilon\left(-2\epsilon\lambda_1 c k_p +4k_pk_d- \epsilon k_d^2
+%\right)$, the  $\forall\epsilon$ such that
+Since
+%
+$ \left[\begin{array}{cc}
+  -\epsilon 2 k_p  & \epsilon k_d    \\
+ \epsilon k_d      &   \epsilon \lambda_1 c- 2k_d\\
+  \end{array} \right]$ 
+%
+is negative definite symmetric if
+%
+\begin{equation}
+\epsilon \leq \frac{4 k_p k_d}{2 \lambda_1 k_p c +k_d^2},
+\end{equation}
+%
+and $\dot{V}_1(t)$ is negative definite if this condition on
+$\epsilon$.
+%
+We are free to choose $\epsilon$ such that
+$\epsilon\leq\min\left(\frac{4 k_p k_d}{2 \lambda_1 k_p c
+    +k_d^2},\sqrt{\frac{k_p \lambda_6}{\lambda_1^{2}}} \right)$, thus
+we conclude that the system is locally asymptotically stable, i.e.
+$\lim_{t\to \infty}\Delta \psi(t)=\vec{0}$ and $\lim_{t\to
+  \infty}\Delta v(t)=\vec{0}$.
+
+
+
+This result is local because we require $\|\Delta\psi(t)\|<\pi\quad \forall t \geq t_0$. To justify this assumption note that
+$\forall t\in\rSp{}$ we know $\|\Delta\psi(t)\|\leq\|x(t)\|$ and
+consider the condition $\|x(t_0)\|<\sqrt{ \frac{
+    {_\epsilon}\lambda_{12} } { {_\epsilon}\lambda_1 } } \pi$.
+%
+Since ${_\epsilon}\lambda_{12}\leq{_\epsilon}\lambda_1$, this
+condition implies $\|x(t_0)\|< \pi$.  By the Lyapunov stability proof
+above, $V_1(t)\leq V_1(t_0)$ for all $t\geq t_0$, thus
+%
+\begin{align}
+{_\epsilon}\lambda_{12}\|x(t)\|^2
+    \leq&x(t)^T \mathcal{M}_\epsilon x(t)
+\nonumber \\
+    \leq&V_1(t)
+\nonumber \\
+    \leq&V_1(t_0)
+\nonumber \\
+    \leq&x(t_0)^T \mathcal{M}_\epsilon x(t_0)
+\nonumber \\  
+    \leq&{_\epsilon}\lambda_1\|x(t_0)\|^2
+\nonumber \\
+     <&{_\epsilon}\lambda_1\left(\sqrt{ \frac{ {_\epsilon}\lambda_{12} } {
+    {_\epsilon}\lambda_1 } } \pi  \right)^2.    
+\end{align}
+%
+\noindent This inequality implies $\|\Delta \psi(t)\|\leq\|x(t)\|<\pi$
+for all $t \geq t_0$.  The assumption is justified and local asymptotic
+stability is proven.
+
+

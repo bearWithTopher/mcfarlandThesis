@@ -1,0 +1,250 @@
+\subsection{3-\acs{DOF} Rotational Dynamics \acs{AID}} 
+\label{chSMS_ID.sec.SO3_AID_Der}
+
+\newcommand{\genericChar}{\psi}
+ 
+Consider a rotating rigid-body under the influence of an
+external torque of the form (\ref{chModels.eq.SO3plant}) where the
+plant's input torque $\tau(t)$, angular position $R(t)$, and angular
+velocity $\omega(t)$ are accessible signals and the plant's \ac{SPD}
+inertia tensor is assumed constant but is unknown.
+%
+We consider the class of inputs $\tau(t)$ such that both
+$\tau(t)$ and the angular velocity of the uncontrolled plant,
+$\omega(t)$, are bounded.
+%
+Throughout this Section we will use the following error signals
+%
+\begin{align}
+\Delta\omega(t)&=\hat{\omega}(t)-\omega(t)  \label{chSMS_ID.eq.SO3_AID_deltaw} \\
+\Delta I(t)&=\hat{I}(t) - I.                \label{chSMS_ID.eq.SO3_AID_deltaI} 
+\end{align}
+%
+In this Section we will omit explicit notation of variable
+dependence on time except where such dependence is required to discuss
+the initial condition of the \ac{AID} algorithm.
+%
+
+
+
+\begin{SO3_AID}
+\label{chSMS_ID.theo.SO3_AID}
+Consider the following \ac{AID} algorithm for plants of the form
+(\ref{chModels.eq.SO3plant})
+%
+\begin{align}
+  \dot{\hat{\omega}}&=\hat{I}^{-1} \mathcal{J}(\hat{I}\omega)\omega
+  - a \Delta \omega + \hat{I}^{-1} \tau   \label{chSMS_ID.eq.SO3_AID_estimator}\\
+  \dot{\hat{I}}&=-\frac{1}{2}\left(\genericChar_1 \omega^T +\omega \genericChar_1^T
+    -\Delta\omega \genericChar_2^T-\genericChar_2 \Delta\omega^T\right)
+  \label{chSMS_ID.eq.SO3_AID_identifier}
+\end{align}
+%
+where $a\in\mathbb{R}_+$,  $\genericChar_1=\mathcal{J}(\omega)\Delta \omega$, and 
+  $\genericChar_2=\hat{I}^{-1}\left(\mathcal{J}\left(\hat{I}\omega\right)
+    \omega +\tau\right)$
+with the following assumptions:
+%
+\begin{itemize}
+\item $\tau(t)$ and $\omega(t)$ are bounded
+\item $\hat{I}(t_0)$ is \ac{SPD}
+\item $\hat{\omega}(t_0)=\omega(t_0)$
+\item $\exists \epsilon \in \mathbb{R}_+$ such that $\|\Delta
+  I(t_0)\|_F+\epsilon \leq \lambda_3$
+\end{itemize}
+%
+Under these conditions $\lim_{t\to \infty}\Delta \omega=\vec{0}$,
+i.e. the estimated angular velocity is asymptotically stable in the
+sense of Lyapunov, and $\lim_{t\to \infty}\Delta
+\dot{I}=0_{3\times3}$, i.e. the estimated inertia tensor will converge
+to a constant value. These limits imply that the plant estimate
+converges to values that provide input/output behavior identical to
+that of the actual experimental plant for the given input torque
+$\tau(t)$.
+\end{SO3_AID}
+
+Note that since the initial parameter estimate is \ac{SPD} and the
+parameter estimate law is symmetric, both $\hat{I}(t)$ and $\Delta
+I(t)$ will be symmetric $\forall t>t_0$, and thus will have strictly
+real eigenvalues.
+
+
+\subsection{Error System}\label{chSMS_ID.sec.SO3_AID_error}
+
+The time derivative of (\ref{chSMS_ID.eq.SO3_AID_deltaI}) is 
+%
+\begin{align}\label{chSMS_ID.eq.SO3_AID_deltaIdot}
+\dot{\Delta I}&=\dot{\hat{I}} \nonumber \\
+              &=-\frac{1}{2}\left(\genericChar_1 \omega^T +\omega \genericChar_1^T 
+               -\Delta\omega \genericChar_2^T-\genericChar_2 \Delta\omega^T\right).
+\end{align}
+%
+We make use of the fact that $I \hat{I}^{-1}=
+\mathbb{I} - \Delta I \hat{I}^{-1}$, where $\mathbb{I}$ is the identity
+matrix, thus, 
+%
+ \begin{align}\label{chSMS_ID.eq.SO3_AID_Ideltawdot}
+I\dot{\Delta \omega}
+ =&I\left(\dot{\hat{\omega}} - \dot{\omega}\right)
+\nonumber \\
+ =&-a I \Delta \omega+I \hat{I}^{-1}\mathcal{J}(\hat{I}\omega)\omega
+   +I\hat{I}^{-1} \tau-\mathcal{J}(I\omega)\omega-\tau  
+\nonumber \\
+ =&-a I \Delta\omega+\left(\mathbb{I}-\Delta I\hat{I}^{-1}\right)
+    \mathcal{J}(\hat{I}\omega)\omega-\mathcal{J}(I\omega)\omega
+   -\Delta I \hat{I}^{-1} \tau
+\nonumber \\
+ =&-a I \Delta\omega-\mathcal{J}(\omega)\Delta I \omega 
+   -\Delta I\hat{I}^{-1}\left(\mathcal{J}(\hat{I}\omega)\omega+\tau\right)
+\nonumber \\
+ =&-a I \Delta\omega-\mathcal{J}(\omega)\Delta I \omega
+   -\Delta I \genericChar_2.
+\end{align}
+
+
+\subsection{Stability Proof}\label{chSMS_ID.sec.SO3_AID_proof}
+
+Consider the following Lyapunov function candidate
+%
+\begin{equation}\label{chSMS_ID.eq.SO3_AID_lyap}
+V(t)=\frac{1}{2}\left(\Delta \omega^{T} I \Delta \omega + 
+     \tr\left(\Delta I \Delta I^{T}\right)\right).
+\end{equation}
+%
+$V(t)$ is 
+%
+positive definite and equal to zero if and only if $\Delta
+\omega=\vec{0}$ and $\Delta I=0_{3\times 3}$.
+%
+%\begin{itemize}
+%\item 
+%%\item radially unbounded
+%\item equal to zero if and only if $\Delta \omega=\vec{0}$ and
+%$\Delta I=0_{3\times 3}$.
+%\end{itemize}
+%
+From (\ref{chSMS_ID.eq.SO3_AID_Ideltawdot}) and the fact that for any
+matrices $A$ and $B$ of appropriate dimension, $\tr(AB)=\tr(BA)$,
+the time derivative of (\ref{chSMS_ID.eq.SO3_AID_lyap}) is
+%
+\begin{align}
+\dot{V}(t) 
+ =&\frac{1}{2}\left(\dot{\Delta \omega}^{T} I\Delta\omega
+   +\Delta \omega^{T} I \dot{\Delta \omega}
+  +\tr\left(2\Delta I \dot{\Delta I}^{T}\right)\right)
+  \nonumber  \\
+ =&-a\Delta\omega^TI\Delta\omega+\frac{1}{2}\left(\omega^T\Delta I
+   \mathcal{J}(\omega)\Delta \omega\right)
+   + \tr\left(\Delta I \dot{\Delta I}^T\right)  
+  \nonumber  \\
+  &+\frac{1}{2}\left(-\genericChar_2^T\Delta I\Delta\omega
+  -\Delta \omega^T\mathcal{J}(\omega)\Delta I \omega
+  -\Delta \omega^T\Delta I \genericChar_2 \right)
+  \nonumber  \\
+ =&-a\Delta\omega^TI\Delta\omega+\tr\left(\Delta I \dot{\Delta I}^T\right)
+%\nonumber \\
+  +\frac{1}{2}\left(
+   \omega^T\Delta I\genericChar_1+\genericChar_1^T\Delta I\omega   
+   -\genericChar_2^T\Delta I\Delta\omega-\Delta \omega^T\Delta I \genericChar_2\right)
+  \nonumber  \\ 
+ =&-a\Delta\omega^TI\Delta\omega+\tr\left(\Delta I \dot{\Delta I}^T\right)
+% \nonumber \\  
+  +\frac{1}{2}\tr\left(
+   \Delta I\left(\genericChar_1\omega^T+\omega\genericChar_1^T   
+   -\Delta\omega\genericChar_2^T-\genericChar_2\Delta \omega^T\right)\right). 
+\end{align}
+
+
+Using the update law (\ref{chSMS_ID.eq.SO3_AID_identifier}) results in
+%
+\begin{equation}\label{chSMS_ID.eq.SO3_AID_lyapDot}
+\dot{V}(t)=-a\Delta\omega^{T}I\Delta\omega,
+\end{equation}
+%
+which is negative definite in $\Delta \omega$ and negative
+semidefinite in the error coordinates $\Delta \omega$ and $\Delta I$.
+Lyapunov's theorem and (\ref{chSMS_ID.eq.SO3_AID_lyap}) -
+(\ref{chSMS_ID.eq.SO3_AID_lyapDot}) imply that $\Delta \omega$ and
+$\Delta I$ are bounded and stable.  The structure of $\dot{V}(t)$
+implies that $\Delta \omega \in \mathcal{L}_2$ or, equivalently,
+$\lim_{t\to\infty}\left( \int_0^t\Delta \omega^T \Delta
+  \omega\right)^{1/2}<\infty$.  To ensure all the signals in
+(\ref{chSMS_ID.eq.SO3_AID_estimator}) are bounded, we must ensure that
+both $\hat{I}(t)$ and $\hat{I}^{-1}(t)$ remain bounded. The facts $0
+\leq V(t) \leq V(t_0)$, $\Delta \omega(t_0)=\vec{0}$, $ \Delta \omega
+^T(t) I \Delta \omega (t)\geq 0$ for all $t$, and $\tr\left(\Delta
+  I(t) \Delta I^T(t)\right)=
+\sum_{i=1}^3|\Delta\lambda_i(t)|^2=\|\Delta I(t)\|_F^2$ imply that the
+following inequality holds for all time:
+%
+\begin{equation}
+\|\Delta I(t)\|_F\leq \|\Delta I(t_o)\|_F.
+\end{equation}
+%
+By the Rayleigh-Ritz Theorem, $\min_{\|x\|=1} x^T \hat{I}(t)
+x=\hat{\lambda}_3(t)$.  Additionally since $\hat{I}(t)=I+\Delta I(t)$
+and by assumption $\|\Delta I(t_0)\|_F+\epsilon\leq\lambda_3$ the
+following inequalities hold
+%
+\begin{align}
+\hat{\lambda}_3(t)
+ &= \min_{\|x\|=1}\left(x^T I x + x^T \Delta I(t) x\right)
+\nonumber \\
+ &\geq\min_{\|x\|=1}\left(x^T I x\right)-\max_{\|x\|=1}|x^T\Delta I(t)x|
+\nonumber \\
+ &\geq\lambda_3-\|\Delta I(t)\|_2
+\nonumber \\
+ &\geq\lambda_3-\left(\sum_{i=1}^3|\Delta\lambda_i(t)|^2\right)^{1/2}
+\nonumber \\
+ &\geq\lambda_3-\|\Delta I(t)\|_F
+\nonumber \\
+ &\geq\lambda_3-\|\Delta I(t_0)\|_F
+\nonumber \\
+ &\geq\lambda_3-\left(\lambda_3-\epsilon\right)
+\nonumber \\
+ &\geq\epsilon
+\end{align}
+%
+\sloppy{ \noindent where $\epsilon$ is a finite positive scalar and we use the fact that
+$\|\Delta I(t)\|_2^2=\max(|\Delta \lambda_1(t)|^2,|\Delta \lambda_3(t)|^2)$
+because the singular values of a symmetric matrix are equal to the
+absolute values of its eigenvalues.  The above inequality guarantees
+that all eigenvalues of $\hat{I}(t)$ are positive and bounded away
+from zero for all time.  Similarly,}
+%
+\begin{align}
+\hat{\lambda}_1(t)
+ &= \max_{\|x\|=1}\left(x^T I x + x^T \Delta I(t) x\right)
+\nonumber \\
+ &\leq \lambda_1 +\max_{\|x\|=1}|\left(x^T \Delta I(t) x\right)|
+\nonumber \\
+  &\leq \lambda_1 +\left(\sum_{i=1}^3|\Delta\lambda_i(t)|^2\right)^{1/2}
+\nonumber \\
+  &\leq \lambda_1 +\lambda_3 -\epsilon
+\end{align}
+%
+which implies that the eigenvalues of $\hat{I}(t)$ are
+positive and bounded above for all time since $\epsilon<\lambda_3$. Since the 
+input $\tau$ and plant state $\omega$ are bounded by assumption,
+bounded $\Delta \omega$, $\hat{I}$, and $\hat{I}^{-1}$ imply that
+$\dot{\omega}$ and $\dot{\hat{\omega}}$ are bounded.  The bounded
+angular velocities imply $\Delta \dot{\omega}$ is bounded.  Note that
+bounded $\Delta \dot{\omega}$ and $\Delta \omega \in \mathcal{L}_2$
+implies
+%
+\begin{equation}
+\lim_{t\to \infty}\Delta\omega=\vec{0}.
+\end{equation}
+%
+Since every signal in $\dot{\hat{I}}$ is bounded and
+$\lim_{t\to \infty}\Delta\omega=\vec{0}$ this implies
+%
+\begin{equation}
+\lim_{t\to \infty}\dot{\hat{I}}=0_{3 \times 3}.
+\end{equation}
+%
+Thus, the estimator's angular velocity asymptotically converges to the
+angular velocity of the actual plant, and the estimated inertial
+tensor, $\hat{I}$, asymptotically converges to a constant value. The
+local stability of the \ac{AID} algorithm for 3-\ac{DOF} rotational
+plants is proven.

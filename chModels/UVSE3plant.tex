@@ -1,0 +1,212 @@
+\section{6-\acs{DOF} \acs{UV} Dynamics Model}
+\label{chModels.sec.UVSE3plant}
+
+Using the state representation conventions of Section
+\ref{chModels.sec.SE3}, we represent the pose and velocity of an
+\ac{UV} with $H\in\SE3$ and $v\in\mathbb{R}^6$ respectively.
+%
+We model a \ac{UV} as a rigid-body with added hydrodynamic mass,
+quadratic drag, gravitational force, and buoyancy torque moving under
+the influence of external torques $\tau \in \mathbb{R}^{3}$ and forces
+$f \in \mathbb{R}^{3}$.
+%Using the
+%functions defined in Section \ref{chModels.sec.functionDefn} and state
+%definitions from Section \ref{chModels.sec.SO3}, 
+The commonly accepted second-order finite-dimensional lumped parameter
+dynamic model for fully submerged rigid-body \ac{UV}, written in the
+body-frame, is
+
+\begin{align} \label{chModels.eq.UVSE3plant}
+\dot{H}=&H \widehat{v}
+\nonumber \\
+  M\dot{v}=&\ad_v^T\left(M v\right)+\left(\sum_{i=1}^6 |v_i|D_i
+           \right)v+\mathcal{G}(R)+u 
+\end{align}
+
+\noindent where 
+%
+%\begin{equation}
+%mathcal{G}(R)=\left[ \begin{array}{c} g R^T e_3   
+%    \\ \mathcal{J}(b)R^T e_3 \\ \end{array}\right],
+%\end{equation}
+%TM_FOR_SPACE_COULD_MOVE_INLINE
+%
+%\noindent 
+$\mathcal{G}(R)=\left[ \begin{array}{c} g R^T e_3 \\ \mathcal{J}(b)R^T
+    e_3 \\ \end{array}\right]$,
+$e_3=\left[ \begin{array}{c} 0\\ 0\\
+    1\\ \end{array}\right]$, $u=\left[ \begin{array}{c} f \\ \tau
+    \\ \end{array}\right]$, $M\in \mathbb{R}^{6 \times 6}$ is the
+vehicle's mass matrix, the set $D_i\in \mathbb{R}^{6 \times 6}$
+($i=1\cdots6$) are the 6 \ac{DOF} fully-coupled quadratic drag
+coefficients, $g\in \mathbb{R}$ is the net vertical force acting on
+the vehicle due to gravity and buoyancy (i.e. the net buoyancy), and
+$b\in\mathbb{R}^3$ is the torque applied to the vehicle due to the
+relative positions of the \ac{COG} and \ac{COB} (which will vary as a
+function of the vehicle's roll and pitch)\cite{fossen}.
+
+Although the model (\ref{chModels.eq.UVSE3plant}) is derived
+empirically, its structure is well established in the literature
+\cite{fossen}.  Previous studies have demonstrated this model's
+capacity to approximate \ac{UV} dynamics following typical operational
+trajectories and justified this model's exclusion of a linear drag
+term\cite{martinID_ICRA13}.  The parameters $M$, $D$, $g$, and $b$ are
+expected to have the following properties:
+\begin{itemize}
+\item the mass matrix $M$ is \ac{SPD}, the sum of the vehicle's
+  rigid-body mass matrix and its hydrodynamic added-mass matrix;
+\item the scalar $g$ is the net difference of the
+  force of gravity and force of buoyancy on the vehicle and is reported in newtons;
+\item the vector $b\in\mathbb{R}^3$ is the
+  body-frame \ac{COB} position multiplied by the force of buoyancy
+  added to the body-frame \ac{COG} position multiplied by the force of
+  gravity and is reported in newton meters; and
+\item the quadratic drag $D$ is dissipative (i.e. $v^T \left(\sum_{i=1}^6
+    |v_i|D_i\right)v\leq 0$ for all $v\in\mathbb{R}^6$ or,
+  equivalently, the symmetric part of $\sum_{i=1}^6 |v_i|D_i$ is
+  negative definite).
+\end{itemize}
+%
+%Note that (\ref{chModels.eq.UVSE3plant}) is linear in $M$, $D$, $g$
+%and $b$, thus it will be convenient to define a single parameter
+%vector, $\theta\in\realSpace{241}$. Let $\theta_M\in\realSpace{21}$ be
+%the unique values in the symmetric matrix $M$. Then there exists a
+%unique $P\in\realSpace{36\times 21}$ such that $M^S=P\theta_M$, where
+%$M^S$ is the stack operation on the matrix $M$\cite{kron}. The
+%plant parameter vector $\theta$ is defined as
+
+An alternate form of \ac{UV} dynamics can be developed using a
+regressor matrix since the second equality in
+(\ref{chModels.eq.UVSE3plant}) is linear in $M$, $D$, $g$, and $b$.
+Let $\{m_1,\;\cdots\;,m_{21}\}$ be the 21 unique scalar values in $M$
+such that
+%
+\begin{equation}
+\ssp
+  M=\left[\begin{array}{cccccc}
+      m_{1} & m_{2} & m_{3} & m_{4} & m_{5} & m_{6} \\
+      m_{2} & m_{7} & m_{8} & m_{9} & m_{10} & m_{11} \\
+      m_{3} & m_{8} & m_{12} & m_{13} & m_{14} & m_{15} \\
+      m_{4} & m_{9} & m_{13} & m_{16} & m_{17} & m_{18} \\
+      m_{5} & m_{10} & m_{14} & m_{17} & m_{19} & m_{20} \\
+      m_{6} & m_{11} & m_{15} & m_{18} & m_{20} & m_{21} 
+\end{array}\right].  
+\end{equation}
+%
+Defining the matrix $P_M$ as
+%
+\begin{equation}
+\ssp
+  P_M=\left[ \begin{array}{ccccccccccccccccccccc}
+      {\color{red}1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & {\color{red}1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & {\color{red}1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & {\color{red}1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & {\color{red}1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & {\color{red}1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & {\color{red}1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0 & {\color{red}1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0 & 0 & {\color{red}1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & {\color{red}1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & {\color{red}1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & {\color{red}1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & {\color{red}1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0 & 0 & {\color{red}1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & {\color{red}1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & {\color{red}1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & {\color{red}1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & {\color{red}1} & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & {\color{red}1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & {\color{red}1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & {\color{red}1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & {\color{red}1} & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & {\color{red}1} & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & {\color{red}1} & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & {\color{red}1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & {\color{red}1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & {\color{red}1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & {\color{red}1} & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & {\color{red}1} & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & {\color{red}1} & 0 \\
+      0 & 0 & 0 & 0 & 0 & {\color{red}1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & {\color{red}1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & {\color{red}1} & 0 & 0 & 0 & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & {\color{red}1} & 0 & 0 & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & {\color{red}1} & 0 \\
+      0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & {\color{red}1} \\
+   \end{array}\right],
+\end{equation}
+%
+and $\theta_M$ as
+%
+%\begin{equation}
+%\theta_M=\left[m_{1}\;m_{2}\;m_{3}\;m_{4}\;m_{5}\;m_{6}\;m_{7}\;m_{8}\;m_{9}\;m_{10}\;
+%              m_{11}\;m_{12}\;m_{13}\;m_{14}\;m_{15}\;m_{16}\;m_{17}\;m_{18}\;m_{19}\;m_{20}\;
+%              m_{21}\right]^T
+%\end{equation} 
+%
+a vector of the unique scalar terms $m_i$ from $M$ in numerical order,
+%
+we have the relation 
+%
+\begin{equation}
+M^S=P_M \theta_M.
+\end{equation}
+%
+Let the $UV$ subscript denotes 6-\ac{DOF} \ac{UV} dynamics and define $\theta_{UV}$ as
+%
+\begin{equation}\label{chModels.eq.paramVecUV}
+\theta_{UV}=\left[\begin{array}{cccccccccc}\theta_M^T&(D_1^S)^T&(D_2^S)^T&(D_3^S)^T
+&(D_4^S)^T&(D_5^S)^T&(D_6^S)^T&g&b^T\end{array}\right]^T.
+\end{equation}
+%
+Then the second equality in (\ref{chModels.eq.UVSE3plant}) can be factored as 
+%
+\begin{align}  
+  u(t)&=\left[\begin{array}{ccc} \Mreg(v,\dot{v})&\Dreg{}(v)&\gbreg(R)\end{array}\right]\theta
+\nonumber \\
+      &=\UVreg(v,\dot{v},R)\theta_{UV}
+\label{chModels.eq.UVSE3_LS} 
+\end{align}
+%
+using the following definitions
+%
+\begin{itemize}
+\item $\Mreg(v,\dot{v})=\left(\dot{v}(t)^T \otimes \mathbb{I}-v^T\otimes \ad^T(v)\right)P_M$,
+\item $\Dreg{i}(v)=-|v_i|v^T \otimes \mathbb{I}$ for all $i \in \{1,\cdots,6\}$, 
+\item $\Dreg{}(v)=\left[\begin{array}{cccccc} \Dreg{1}(v)&\Dreg{2}(v)&\Dreg{3}(v)&\Dreg{4}(v)&\Dreg{5}(v)&\Dreg{6}(v)\end{array}\right]$,
+\item $\gbreg(R)=\left[\begin{array}{cc} -R^Te_3 & 0_{3\times 3}\\ 
+                                   0_{3 \times 1} & \mathcal{J}(R^T e_3)\end{array}\right]$, and 
+\item $\UVreg=\left[\begin{array}{ccc} \Mreg(v,\dot{v})&\Dreg{}(v)&\gbreg(R)\end{array}\right]$.
+\end{itemize}
+%
+
+
+
+%TM_FIT_IN
+%
+%scrub of talking about linearity and instead talk about factoring...
+%MATCH LANGUAGE FROM OKC MODEL SECTION.
+%
+%Introduce P_M
+%
+%
+% A least squares estimate of the parameters in
+% (\ref{chModels.eq.UVSE3plant}) can be obtained using the signals
+% $\dot{v}(t)$, $v(t)$, $R(t)$ and $u(t)$. Let
+% $\theta_M\in\mathbb{R}^{21}$ be the unique values in the symmetric
+% matrix $M$. Then there exists a unique $P\in\mathbb{R}^{36\times 21}$
+% such that $M^S=P\theta_M$, where $M^S$ is the stack operation on the
+% matrix $M$\cite{kron}.  Note that $P$ is composed only of ones and
+% zeros, and only has a single one per row.  Using the Kronecker product
+% \cite{kron} we define the following functions
+
+
+
+% \noindent where $\mathbb{I}\in\mathbb{R}^{6\times 6}$ is the identity
+% matrix. Using the plant parameter vector
+% $\theta=\left[\begin{array}{cccccc}
+%     \theta_M^T&(D_1^S)^T&\cdots&(D_6^S)^T&g&b^T\end{array}\right]^T$,
+% (\ref{chModels.eq.UVSE3plant}) becomes
+
+

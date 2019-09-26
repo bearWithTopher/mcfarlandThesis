@@ -1,0 +1,27 @@
+\subsection {Velocity Observer from World Frame}
+\label{chSMS_ID.sec.AVO_Sal}
+
+In \cite{Salcudean1991} Salcudean reports a velocity observer of the form:
+%
+\begin{align}\label{chSMS_ID.eq.AVO_Sal}
+\dot{\hat{R}}=&\mathcal{J}\left(\hat{R} R^T \left(\hat{\omega}
+               +k_v\sgn{y_o}I_B^{-1}y \right)\right) \hat{R} 
+                                                          \nonumber \\
+\frac{d}{dt}\left(I_B\hat{\omega}\right) 
+  =&\frac{1}{2}k_pI_B^{-1}y\sgn(y_o)+R^T \tau
+\end{align}
+%
+\noindent where $I_B=\hat{R} I \hat{R}^T$; $\Delta
+\bar{q}=\log_{\SO3}(R \hat{R}^T)$; $y=\frac{1}{\|\Delta
+  \bar{q}\|}\sin{\frac{\|\Delta q\|}{2}}\Delta \bar{q}$;
+$y_o=\cos{\frac{\|\Delta \bar{q}\|}{2}}$; and  $k_v$ and $k_p$ are
+positive scalar observer gains.  
+%
+Note that \cite{Salcudean1991} uses the rotational error matrix
+$R\hat{R}^T$. This rotational error matrix structure is different than
+the definition used in this Section (\ref{chSMS_ID.eq.AVO_deltaR}); it
+can not be interpreted as the transformation between the body-frame
+and observer-frame. Possible rotational error matrix choices are
+discussed further in \cite{bullo1995_SE3_PD}.
+
+
